@@ -5,3 +5,4 @@ playwright-report
 dev-dist
 netcloud-academy.zip
 netcloud-academy.bundle
+tsconfig.tsbuildinfo
