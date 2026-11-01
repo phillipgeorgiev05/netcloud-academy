@@ -36,6 +36,8 @@ export function TopologyCanvas({
   onNodeClick,
   kindOf = (n) => n.kind,
   extra,
+  linkColor = () => '#64748b',
+  onLinkClick,
 }: {
   nodes: TopoNode[];
   links: TopoLink[];
@@ -43,26 +45,38 @@ export function TopologyCanvas({
   onNodeClick?: (id: string) => void;
   kindOf?: (n: TopoNode) => NodeKind;
   extra?: (n: TopoNode) => ReactNode;
+  /** Strichfarbe pro Verbindung (Index in `links`) */
+  linkColor?: (i: number) => string;
+  /** Macht die Beschriftung jeder Verbindung zum Klickziel */
+  onLinkClick?: (i: number) => void;
 }) {
   const pos = (id: string) => nodes.find((n) => n.id === id)!;
   return (
     <div className="relative w-full overflow-hidden rounded-xl border border-slate-700 bg-slate-900" style={{ aspectRatio: '16 / 11' }}>
       <svg className="absolute inset-0 h-full w-full" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden>
-        {links.map(([a, b]) => (
-          <line key={`${a}-${b}`} x1={pos(a).x} y1={pos(a).y} x2={pos(b).x} y2={pos(b).y} stroke="#64748b" strokeWidth="0.6" vectorEffect="non-scaling-stroke" />
+        {links.map(([a, b], i) => (
+          <line key={`${a}-${b}`} x1={pos(a).x} y1={pos(a).y} x2={pos(b).x} y2={pos(b).y} stroke={linkColor(i)} strokeWidth={onLinkClick ? 3 : 2} vectorEffect="non-scaling-stroke" />
         ))}
       </svg>
-      {links.map(([a, b, label]) =>
-        label ? (
-          <span
+      {links.map(([a, b, label], i) => {
+        const style = { left: `${(pos(a).x + pos(b).x) / 2}%`, top: `${(pos(a).y + pos(b).y) / 2}%` };
+        return onLinkClick ? (
+          <button
             key={`l-${a}-${b}`}
-            className="absolute -translate-x-1/2 -translate-y-1/2 rounded bg-slate-950 px-1 text-[10px] text-amber-300 sm:text-xs"
-            style={{ left: `${(pos(a).x + pos(b).x) / 2}%`, top: `${(pos(a).y + pos(b).y) / 2}%` }}
+            type="button"
+            onClick={() => onLinkClick(i)}
+            aria-label={`Verbindung ${a}–${b}${label ? ` (${label})` : ''}`}
+            className="absolute min-h-8 min-w-8 -translate-x-1/2 -translate-y-1/2 rounded-lg border-2 bg-slate-950 px-1.5 text-[10px] text-amber-300 sm:text-xs"
+            style={{ ...style, borderColor: linkColor(i) }}
           >
+            {label ?? '⋯'}
+          </button>
+        ) : label ? (
+          <span key={`l-${a}-${b}`} className="absolute -translate-x-1/2 -translate-y-1/2 rounded bg-slate-950 px-1 text-[10px] text-amber-300 sm:text-xs" style={style}>
             {label}
           </span>
-        ) : null,
-      )}
+        ) : null;
+      })}
       {nodes.map((n) => (
         <div key={n.id} className="absolute flex -translate-x-1/2 -translate-y-1/2 flex-col items-center" style={{ left: `${n.x}%`, top: `${n.y}%` }}>
           <button

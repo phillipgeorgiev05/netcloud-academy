@@ -37,7 +37,8 @@ export interface Progress {
   labsDone: Record<string, 1>; // Lab einmal komplett -> XP schon vergeben
   trainerBest: Record<string, number>; // Generator -> beste Zeit in ms für 10 richtige
   exams: Partial<Record<CertId, { best: number; last: number; date: string }>>;
-  settings: { focusCert?: CertId; reminder?: boolean };
+  settings: { focusCert?: CertId; reminder?: boolean; dailyGoal?: number };
+  daily: { day: string; xp: number }; // heute verdiente XP für das Tagesziel
 }
 
 export const emptyProgress = (): Progress => ({
@@ -56,6 +57,7 @@ export const emptyProgress = (): Progress => ({
   trainerBest: {},
   exams: {},
   settings: {},
+  daily: { day: '', xp: 0 },
 });
 
 export const emptyLevel = (): LevelProgress => ({
@@ -103,6 +105,16 @@ function touchStreak(p: Progress, now: string): Progress['streak'] {
   if (s.lastDay === now) return s;
   const current = s.lastDay === addDays(now, -1) ? s.current + 1 : 1;
   return { current, longest: Math.max(s.longest, current), lastDay: now };
+}
+
+export const DEFAULT_DAILY_GOAL = 30;
+
+export const dailyXp = (p: Progress, now = today()) => (p.daily.day === now ? p.daily.xp : 0);
+
+/** Rechnet den XP-Zuwachs einer Änderung dem heutigen Tagesziel zu. */
+export function trackDaily(before: Progress, after: Progress, now = today()): Progress {
+  const gain = after.xp - before.xp;
+  return gain > 0 ? { ...after, daily: { day: now, xp: dailyXp(after, now) + gain } } : after;
 }
 
 export type AnswerMode = 'quiz' | 'boss' | 'review';

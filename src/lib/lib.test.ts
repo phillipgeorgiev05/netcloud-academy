@@ -1,6 +1,7 @@
+import { tablesOf } from './sheet';
 import { describe, expect, it } from 'vitest';
 import { broadcastOf, generateSubnetProblem, networkOf, prefixForHosts, prefixToMask, subnetAnswerMatches, usableHosts } from './subnet';
-import { addDays, emptyProgress, finishBoss, finishQuiz, isPassed, levelProgress, parseImport, playerLevel, recordAnswer } from './progress';
+import { addDays, emptyProgress, finishBoss, finishQuiz, isPassed, levelProgress, parseImport, playerLevel, recordAnswer, dailyXp, trackDaily } from './progress';
 import type { SubnetTask } from '../types/content';
 
 describe('subnet', () => {
@@ -85,5 +86,21 @@ describe('progress', () => {
   it('Import lehnt Fremddaten ab', () => {
     expect(() => parseImport('{"foo":1}')).toThrow();
     expect(parseImport(JSON.stringify(emptyProgress())).version).toBe(1);
+  });
+
+  it('Tagesziel zählt nur XP von heute', () => {
+    const p0 = emptyProgress();
+    const p1 = trackDaily(p0, recordAnswer(p0, 'a/q1', true, 'quiz', '2026-05-01'), '2026-05-01');
+    expect(dailyXp(p1, '2026-05-01')).toBe(10);
+    const p2 = trackDaily(p1, recordAnswer(p1, 'a/q2', true, 'quiz', '2026-05-02'), '2026-05-02');
+    expect(dailyXp(p2, '2026-05-02')).toBe(10);
+    expect(dailyXp(p2, '2026-05-03')).toBe(0);
+    // Alte Exporte ohne `daily` bekommen den Standardwert
+    const { daily: _, ...old } = p0;
+    expect(parseImport(JSON.stringify(old)).daily).toEqual({ day: '', xp: 0 });
+  });
+
+  it('Spickzettel findet nur Tabellen', () => {
+    expect(tablesOf('Text\n| a | b |\n|---|---|\n| 1 | 2 |\nmehr\n\n| x |')).toEqual(['| a | b |\n|---|---|\n| 1 | 2 |', '| x |']);
   });
 });

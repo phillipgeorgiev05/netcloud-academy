@@ -11,7 +11,8 @@ export interface GenField {
   /** Auswahlfeld statt Freitext */
   options?: string[];
   /** Vergleichsart für Freitext. Standard: Text ohne Groß/Klein und Mehrfach-Leerzeichen. */
-  kind?: 'text' | 'number' | 'ipv6' | 'hex';
+  /** 'links': Antwort durch Antippen der Verbindungen in `topology` (siehe `linkNames`). */
+  kind?: 'text' | 'number' | 'ipv6' | 'hex' | 'links';
   /** Erlaubte Abweichung bei kind 'number' */
   tolerance?: number;
 }
@@ -332,8 +333,11 @@ export function stpSolve(sw: StpSwitch[], links: StpLink[]) {
         return { port: l.a === id ? l.aPort : l.bPort, nb, cost: dist[nb] + l.cost, nbBid: bid(byId[nb]) };
       })
       .sort((x, y) => x.cost - y.cost || x.nbBid - y.nbBid || x.port.localeCompare(y.port))[0];
-  return { root, dist, rootPort };
+  return { root, dist, rootPort, bid };
 }
+
+/** Name von Verbindungen für Felder vom Typ 'links': sortiert, durch Komma getrennt. */
+export const linkNames = (ls: { a: string; b: string }[]) => ls.map((l) => `${l.a}–${l.b}`).sort().join(', ');
 
 function stp(rng: Rng): GenProblem {
   const ids = ['SW1', 'SW2', 'SW3', 'SW4'].slice(0, int(rng, 3, 4));
@@ -350,12 +354,22 @@ function stp(rng: Rng): GenProblem {
     const s = pick(rng, speeds);
     return { a: ids[i], b: ids[j], aPort: nextPort(ids[i]), bPort: nextPort(ids[j]), cost: s.cost, label: s.label };
   });
-  const { root, dist, rootPort } = stpSolve(sw, links);
+  const { root, dist, rootPort, bid } = stpSolve(sw, links);
   const target = pick(rng, ids.filter((i) => i !== root.id));
   const rp = rootPort(target);
   const portLabel = (id: string, l: StpLink) => (l.a === id ? `${l.aPort} (zu ${l.b})` : `${l.bPort} (zu ${l.a})`);
   const targetLinks = links.filter((l) => l.a === target || l.b === target);
   const pos = ids.length === 3 ? [[20, 25], [80, 25], [50, 85]] : [[20, 20], [80, 20], [80, 80], [20, 80]];
+  // Jeder Nicht-Root-Switch nutzt genau einen Link als Root Port, alle übrigen Links blockieren an einem Ende.
+  const treeLinks = ids.filter((i) => i !== root.id).map((i) => {
+    const p = rootPort(i).port;
+    return links.find((l) => (l.a === i && l.aPort === p) || (l.b === i && l.bPort === p))!;
+  });
+  const blocked = links.filter((l) => !treeLinks.includes(l));
+  // Designated ist die Seite mit geringeren Kosten zur Root, bei Gleichstand die niedrigere Bridge ID; die andere Seite blockiert.
+  const byId = (id: string) => sw.find((s) => s.id === id)!;
+  const blockedPort = (l: StpLink) =>
+    dist[l.a] < dist[l.b] || (dist[l.a] === dist[l.b] && bid(byId(l.a)) < bid(byId(l.b))) ? `${l.b} ${l.bPort}` : `${l.a} ${l.aPort}`;
   return {
     prompt: `Bestimme Root Bridge und den Root Port von **${target}** (Kosten: 10G = 2, 1G = 4, 100M = 19).\n\n${sw.map((s) => `- ${s.id}: Priorität ${s.prio}, MAC \`${s.mac}\``).join('\n')}`,
     topology: {
@@ -365,11 +379,13 @@ function stp(rng: Rng): GenProblem {
     fields: [
       { label: 'Root Bridge', answer: root.id, options: ids },
       { label: `Root Port von ${target}`, answer: portLabel(target, targetLinks.find((l) => (l.a === target ? l.aPort : l.bPort) === rp.port)!), options: targetLinks.map((l) => portLabel(target, l)) },
+      { label: 'Blockierte Verbindung(en): im Diagramm antippen', answer: linkNames(blocked), kind: 'links' },
     ],
     explanation: [
       `Root Bridge = niedrigste Priorität, bei Gleichstand niedrigste MAC → **${root.id}** (${root.prio}, ${root.mac}).`,
       `Pfadkosten zur Root: ${ids.map((i) => `${i} = ${dist[i]}`).join(', ')}.`,
       `Root Port = Port mit den geringsten Gesamtkosten zur Root (Link + Kosten des Nachbarn), bei Gleichstand niedrigere Bridge ID des Nachbarn, dann niedrigere Port-ID → **${rp.port}** (Kosten ${rp.cost}).`,
+      `Blockiert: ${blocked.map((l) => `${l.a}–${l.b} (Port ${blockedPort(l)} blockiert, das andere Ende ist Designated Port)`).join(', ')}. Alle anderen Links tragen einen Root Port und bilden den schleifenfreien Baum.`,
     ].join('\n'),
   };
 }

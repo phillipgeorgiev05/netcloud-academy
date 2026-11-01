@@ -4,7 +4,7 @@ import { levels } from '../content';
 import { badges } from '../content/badges';
 import { certs } from '../content/certs';
 import type { CertId } from '../types/content';
-import { emptyProgress, isPassed, levelProgress, parseImport, playerLevel, reviewKey } from '../lib/progress';
+import { DEFAULT_DAILY_GOAL, emptyProgress, isPassed, levelProgress, parseImport, playerLevel, reviewKey } from '../lib/progress';
 import { useProgress } from '../lib/ProgressContext';
 
 export function ProfilePage() {
@@ -140,6 +140,16 @@ function Settings() {
         >
           <option value="">Kein Fokus – alle Fragen</option>
           {(Object.keys(certs) as CertId[]).map((c) => <option key={c} value={c}>{certs[c].name} ({certs[c].exam})</option>)}
+        </select>
+      </label>
+      <label className="block text-sm">
+        <span className="mb-1 block text-slate-300">Tagesziel (Ring oben in der Leiste)</span>
+        <select
+          value={s.dailyGoal ?? DEFAULT_DAILY_GOAL}
+          onChange={(e) => setSetting({ dailyGoal: Number(e.target.value) })}
+          className="w-full rounded-lg border-2 border-slate-700 bg-slate-900 px-3 py-2"
+        >
+          {[10, 30, 50, 100, 200].map((g) => <option key={g} value={g}>{g} XP pro Tag</option>)}
         </select>
       </label>
       <label className="flex items-center gap-3 text-sm">

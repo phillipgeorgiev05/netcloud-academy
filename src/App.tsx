@@ -3,7 +3,7 @@ import { HashRouter, NavLink, Route, Routes } from 'react-router-dom';
 import { badges } from './content/badges';
 import { DEV_UNLOCK } from './lib/dev';
 import { useStreakReminder } from './lib/reminder';
-import { dueReviews, playerLevel } from './lib/progress';
+import { DEFAULT_DAILY_GOAL, dailyXp, dueReviews, playerLevel } from './lib/progress';
 import { ProgressProvider, useProgress } from './lib/ProgressContext';
 import { HomePage } from './pages/HomePage';
 import { LevelPage } from './pages/LevelPage';
@@ -12,6 +12,7 @@ import { DecidePage } from './pages/DecidePage';
 import { ExamPage } from './pages/ExamPage';
 import { GlossaryPage } from './pages/GlossaryPage';
 import { ReviewPage } from './pages/ReviewPage';
+import { SheetPage } from './pages/SheetPage';
 import { ToolsPage } from './pages/ToolsPage';
 import { TrainerPage } from './pages/TrainerPage';
 
@@ -31,6 +32,7 @@ export function App() {
             <Route path="/exam" element={<ExamPage />} />
             <Route path="/glossary" element={<GlossaryPage />} />
             <Route path="/decide" element={<DecidePage />} />
+            <Route path="/sheet/:id" element={<SheetPage />} />
             <Route path="*" element={<HomePage />} />
           </Routes>
         </main>
@@ -48,12 +50,13 @@ function Header() {
   const link = ({ isActive }: { isActive: boolean }) =>
     `relative rounded-lg px-2 py-1 text-sm sm:px-3 ${isActive ? 'bg-slate-800 text-white' : 'text-slate-300 hover:text-white'}`;
   return (
-    <header className="sticky top-0 z-40 border-b border-slate-800 bg-slate-950/90 backdrop-blur">
+    <header className="print:hidden sticky top-0 z-40 border-b border-slate-800 bg-slate-950/90 backdrop-blur">
       {DEV_UNLOCK && <div className="bg-amber-500 px-4 py-0.5 text-center text-xs font-semibold text-slate-950">Testmodus: alle Level offen, getrennter Speicher</div>}
       <div className="mx-auto flex max-w-3xl items-center gap-2 px-4 py-2">
         <NavLink to="/" className="mr-auto font-bold text-cyan-400">
           NetCloud<span className="hidden sm:inline"> Academy</span>
         </NavLink>
+        <DailyRing xp={dailyXp(progress)} goal={progress.settings.dailyGoal ?? DEFAULT_DAILY_GOAL} />
         <span className="whitespace-nowrap text-sm" title="Streak (Tage am Stück)">🔥 {progress.streak.current}</span>
         <span className="whitespace-nowrap text-sm text-yellow-300" title={`${pl.into}/${pl.needed} XP bis Level ${pl.level + 1}`}>
           ⭐ Lv {pl.level}
@@ -73,6 +76,20 @@ function Header() {
         </nav>
       </div>
     </header>
+  );
+}
+
+function DailyRing({ xp, goal }: { xp: number; goal: number }) {
+  const r = 9;
+  const c = 2 * Math.PI * r;
+  const f = Math.min(xp / goal, 1);
+  return (
+    <NavLink to="/profile" title={`Tagesziel: ${xp}/${goal} XP`} aria-label={`Tagesziel ${xp} von ${goal} XP`} className="shrink-0">
+      <svg viewBox="0 0 24 24" className="h-6 w-6 -rotate-90">
+        <circle cx="12" cy="12" r={r} fill="none" strokeWidth="3" className="stroke-slate-700" />
+        <circle cx="12" cy="12" r={r} fill="none" strokeWidth="3" strokeLinecap="round" strokeDasharray={c} strokeDashoffset={c * (1 - f)} className={f >= 1 ? 'stroke-emerald-400' : 'stroke-cyan-400'} />
+      </svg>
+    </NavLink>
   );
 }
 

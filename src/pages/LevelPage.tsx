@@ -228,6 +228,7 @@ function LevelFlow({ level }: { level: Level }) {
           </button>
         )}
       </div>
+      <Link to={`/sheet/${level.id}`} className="mt-3 inline-block text-sm text-cyan-400 hover:underline">🖨️ Spickzettel zum Drucken</Link>
       {mistakes.length > 0 && (
         <section className="mt-6 rounded-xl border border-rose-500/30 bg-rose-500/5 p-4">
           <h2 className="mb-2 font-semibold text-rose-300">⚠️ Deine häufigsten Fehler in diesem Level</h2>

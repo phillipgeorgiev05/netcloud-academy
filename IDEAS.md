@@ -1,6 +1,6 @@
 # Ideen & Verbesserungsvorschläge
 
-## Umsetzungsstand (2026-11-01, Schritt 10)
+## Umsetzungsstand (2026-11-01, Schritt 11)
 
 Alle 35 Ideen aus den Schritten 1–9 sind eingebaut: Mechanik plus Beispielinhalte in den vorhandenen Leveln. Vereinfachungen gegenüber der Idee:
 
@@ -40,6 +40,11 @@ Alle 35 Ideen aus den Schritten 1–9 sind eingebaut: Mechanik plus Beispielinha
 | B5/3 Netzwerkkosten | Generator `cost-nat` | VPN vs. ExpressRoute und Regions-Traffic fehlen noch |
 | B5/4 Fehler-Diagramme | 2 `topology`-Fragen in B5 | – |
 | B5/5 Glossar-Verlinkung | **fette** Begriffe → Level | nur exakte Treffer auf Begriff/Abkürzung |
+| 10/1 Anklickbare Links | `TopologyCanvas` `onLinkClick`/`linkColor`, Feldtyp `links`; STP fragt blockierte Verbindungen ab | Baukästen (`config`) noch mit Schaltern |
+| 10/2 Tagesziel | Ring im Header, Ziel im Profil (10–200 XP), `daily` im Fortschritt | Streak zählt weiter ab der ersten Antwort, nicht erst ab Ziel |
+| 10/3 Prüfungsmodus wie echt | `/exam`: speichern statt auswerten, markieren, springen, Abgabe, Übersicht aller Antworten | Fehlersuche-Ketten sind aus dem Prüfungspool raus (geben Sofort-Feedback) |
+| 10/4 Link-Check | `npm run check:links` (HEAD, Fallback GET) | kein CI eingerichtet (kein Remote-Repo) |
+| 10/5 Spickzettel | `/sheet/:id`, Print-CSS, Link in der Level-Übersicht | Inhalt = Tabellen, Vergleiche, Analogien, Begriffe; keine eigenen Merksätze |
 
 ## Schritt 1–3: Grundgerüst + A1–A4, B1 (2026-11-01)
 
@@ -104,3 +109,11 @@ Alle 35 Ideen aus den Schritten 1–9 sind eingebaut: Mechanik plus Beispielinha
 3. **Prüfungsmodus wie echt:** Fragen markieren, frei zwischen Fragen springen und erst am Ende abgeben, ohne Sofort-Feedback. Am Schluss eine Übersicht aller Antworten mit Erklärungen. Das trainiert das Zeitmanagement realer Prüfungen.
 4. **Link-Check für Quellen:** Ein Skript (`npm run check:links`), das alle `sources`-URLs per HEAD-Anfrage prüft. In CI regelmäßig laufen lassen, damit veraltete Doku-Links auffallen. Das ist wichtig, weil Microsoft und AWS URLs öfter umbauen.
 5. **Spickzettel pro Level drucken:** Eine Druckansicht (Print-CSS) mit allen Tabellen, `terms` und Merksätzen eines Levels auf 1–2 Seiten, als PDF speicherbar. Nützlich zur Prüfungsvorbereitung offline und auf Papier.
+
+## Schritt 11: Ideen aus Schritt 10, git, Handy (2026-11-01)
+
+1. **HTTPS im WLAN für echte Installation:** Optionales `@vitejs/plugin-basic-ssl` oder ein mkcert-Zertifikat für `npm run handy`, damit der Service Worker auch auf dem Handy läuft und die App offline geht. Alternative: statisches Hosting (GitHub Pages) mit `base: './'`, das schon passt.
+2. **Fortschritt zwischen Geräten per QR-Code:** Export als komprimierter QR-Code im Profil, am Handy einscannen. So kommen PC- und Handy-Fortschritt ohne Datei-Hin-und-her zusammen.
+3. **Merksätze als eigenes Feld:** `LessonSection.remember?: string[]` für 1–3 Kernaussagen pro Abschnitt. Sie erscheinen am Abschnittsende hervorgehoben und füllen den Spickzettel gezielter als nur Tabellen.
+4. **Prüfung: Zeit pro Frage auswerten:** Im Prüfungsmodus die Verweildauer pro Frage messen und in der Auswertung zeigen, welche Fragetypen am meisten Zeit fressen. Das hilft beim Zeitmanagement.
+5. **Streak an Tagesziel koppeln (Einstellung):** Wahlweise zählt die Streak erst, wenn das Tagesziel erreicht ist. Als Option, damit bestehende Streaks nicht plötzlich anders zählen.

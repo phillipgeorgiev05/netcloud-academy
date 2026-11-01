@@ -2,7 +2,7 @@ import { createContext, useCallback, useContext, useEffect, useRef, useState, ty
 import { badges } from '../content/badges';
 import { levels } from '../content';
 import { DEV_UNLOCK } from './dev';
-import { emptyProgress, parseImport, today, type Progress } from './progress';
+import { emptyProgress, parseImport, today, trackDaily, type Progress } from './progress';
 
 const STORAGE_KEY = DEV_UNLOCK ? 'netcloud-progress-dev' : 'netcloud-progress-v1';
 
@@ -50,7 +50,7 @@ export function ProgressProvider({ children }: { children: ReactNode }) {
   }, [progress]);
 
   const update = useCallback((fn: (p: Progress) => Progress) => {
-    setProgress((prev) => withBadges(fn(prev)));
+    setProgress((prev) => withBadges(trackDaily(prev, fn(prev))));
   }, []);
 
   const replace = useCallback((p: Progress) => {

@@ -63,7 +63,7 @@ export function QuestionRenderer({ q, result, onResult }: { q: Question; result:
   );
 }
 
-function Feedback({ q, r }: { q: Question; r: Result }) {
+export function Feedback({ q, r }: { q: Question; r: Result }) {
   const explanation = r.explanation ?? q.explanation;
   return (
     <div

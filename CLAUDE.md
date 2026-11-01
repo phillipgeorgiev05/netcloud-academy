@@ -11,9 +11,15 @@ npm test          # Vitest: Lib-Logik, Generatoren, Content-Validierung
 npm run build     # Typecheck (tsc -b) + Produktions-Build inkl. Service Worker nach dist/
 npm run test:e2e  # Playwright: alle Seiten/Lektionen bei 375 px ohne horizontalen Überlauf
 npm run icons     # PWA-Icons in public/ neu erzeugen
+npm run check:links  # alle https-Links in src/content erreichbar? (Exit 1 bei Fehlern)
+npm run handy     # Build + Server im WLAN (http://<PC-IP>:4173) zum Öffnen auf dem Handy
 ```
 
+**Handy im WLAN:** `npm run handy`, dann am Handy `http://<PC-IP>:4173` öffnen (IP mit `ipconfig`). Windows-Firewall muss Node.js im privaten Netz erlauben. Über http im LAN gibt es keinen Service Worker: „Zum Startbildschirm“ legt nur eine Verknüpfung an, die App braucht den laufenden PC. Fortschritt liegt pro Gerät getrennt (Export/Import im Profil).
+
 Vor jedem Commit: `npm test` und `npm run build` müssen grün sein. Nach Layout-Änderungen zusätzlich `npm run test:e2e`.
+
+**Git:** Projekt ist ein git-Repo (`main`). Zeilenenden LF (`.gitattributes`).
 
 **Testmodus:** `http://localhost:5173/?dev=unlock-all#/` schaltet alle Level frei und nutzt einen getrennten Speicher (`netcloud-progress-dev`). Für Browser-Tests immer den Testmodus (oder `http://[::1]:5173`) nutzen. Auf `localhost` ohne `?dev` liegt der echte Fortschritt des Nutzers.
 

@@ -57,6 +57,14 @@ describe('Auswerter', () => {
     expect(r.root.id).toBe('SW3');
     expect(r.rootPort('SW2').port).toBe('Gi0/1'); // über SW1: 4 + 4 = 8 < 19
   });
+
+  it('STP: genau Links − (Switches − 1) Verbindungen blockieren', () => {
+    for (let i = 0; i < 200; i++) {
+      const p = generate('stp');
+      const blocked = p.fields.find((f) => f.kind === 'links')!.answer.split(', ');
+      expect(blocked).toHaveLength(p.topology!.links.length - p.topology!.nodes.length + 1);
+    }
+  });
 });
 
 describe('Generatoren', () => {
