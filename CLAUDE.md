@@ -19,7 +19,7 @@ npm run handy     # Build + Server im WLAN (http://<PC-IP>:4173) zum Öffnen auf
 
 Vor jedem Commit: `npm test` und `npm run build` müssen grün sein. Nach Layout-Änderungen zusätzlich `npm run test:e2e`.
 
-**Git:** Projekt ist ein git-Repo (`main`). Zeilenenden LF (`.gitattributes`).
+**Git & Veröffentlichung:** Repo https://github.com/phillipgeorgiev05/netcloud-academy (öffentlich, `main`), Zeilenenden LF (`.gitattributes`). Jeder Push auf `main` testet, baut und veröffentlicht per `.github/workflows/pages.yml` auf https://phillipgeorgiev05.github.io/netcloud-academy/ (dort als PWA installierbar und offline nutzbar).
 
 **Testmodus:** `http://localhost:5173/?dev=unlock-all#/` schaltet alle Level frei und nutzt einen getrennten Speicher (`netcloud-progress-dev`). Für Browser-Tests immer den Testmodus (oder `http://[::1]:5173`) nutzen. Auf `localhost` ohne `?dev` liegt der echte Fortschritt des Nutzers.
 
