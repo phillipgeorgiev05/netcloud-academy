@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { HashRouter, NavLink, Route, Routes } from 'react-router-dom';
 import { badges } from './content/badges';
+import { Flame, Icon, Logo, Star } from './components/Icons';
 import { DEV_UNLOCK } from './lib/dev';
 import { useStreakReminder } from './lib/reminder';
 import { useThemeSync } from './lib/theme';
@@ -46,42 +47,65 @@ export function App() {
   );
 }
 
+const tabs = [
+  { to: '/', label: 'Pfad', icon: 'path' },
+  { to: '/review', label: 'Wiederholen', icon: 'review' },
+  { to: '/tools', label: 'Tools', icon: 'tools' },
+  { to: '/profile', label: 'Profil', icon: 'profile' },
+] as const;
+
 function Header() {
   const { progress } = useProgress();
   const pl = playerLevel(progress.xp);
   const due = dueReviews(progress).length;
-  const link = ({ isActive }: { isActive: boolean }) =>
-    `relative rounded-full px-2 py-1 text-sm font-medium sm:px-3 ${isActive ? 'bg-slate-800 text-white' : 'text-slate-300 hover:text-white'}`;
+  const badge = (cls: string) => due > 0 && <span className={`absolute rounded-full bg-rose-500 px-1.5 text-[10px] font-bold leading-4 text-snow ${cls}`}>{due}</span>;
   return (
-    <header className="print:hidden sticky top-0 z-40 border-b border-white/10 bg-slate-950/75 backdrop-blur-xl backdrop-saturate-150">
-      {DEV_UNLOCK && <div className="bg-amber-500 px-4 py-0.5 text-center text-xs font-semibold text-ink">Testmodus: alle Level offen, getrennter Speicher</div>}
-      <div className="mx-auto flex max-w-3xl items-center gap-1.5 px-3 py-2 sm:gap-2 sm:px-4">
-        <NavLink to="/" className="mr-auto font-semibold tracking-tight text-white">
-          NetCloud<span className="hidden sm:inline"> Academy</span>
-        </NavLink>
-        <DailyRing xp={dailyXp(progress)} goal={progress.settings.dailyGoal ?? DEFAULT_DAILY_GOAL} />
-        <span className="whitespace-nowrap text-sm" title="Streak (Tage am Stück)">🔥 {progress.streak.current}</span>
-        <span className="whitespace-nowrap text-sm text-yellow-300" title={`${pl.into}/${pl.needed} XP bis Level ${pl.level + 1}`}>
-          ⭐ Lv {pl.level}
-        </span>
-        <nav className="flex gap-0.5 sm:gap-1">
-          <NavLink to="/" end className={link}>Pfad</NavLink>
-          <NavLink to="/review" className={link} aria-label="Wiederholen">
-            <span className="sm:hidden">🧠</span>
-            <span className="hidden sm:inline">Wiederholen</span>
-            {due > 0 && <span className="absolute -right-1 -top-1 rounded-full bg-rose-500 px-1.5 text-[10px] font-bold text-snow">{due}</span>}
+    <>
+      <header className="print:hidden sticky top-0 z-40 border-b border-white/10 bg-slate-950/75 backdrop-blur-xl backdrop-saturate-150">
+        {DEV_UNLOCK && <div className="bg-amber-500 px-4 py-0.5 text-center text-xs font-semibold text-ink">Testmodus: alle Level offen, getrennter Speicher</div>}
+        <div className="mx-auto flex h-12 max-w-3xl items-center gap-2.5 px-4">
+          <NavLink to="/" className="mr-auto flex min-w-0 items-center gap-2" aria-label="NetCloud Academy, Startseite">
+            <Logo className="h-7 w-7 shrink-0 drop-shadow-sm" />
+            <span className="truncate text-[17px] font-semibold tracking-tight text-white">NetCloud Academy</span>
           </NavLink>
-          <NavLink to="/tools" className={link} aria-label="Werkzeuge">
-            <span className="sm:hidden">🧰</span>
-            <span className="hidden sm:inline">Tools</span>
+          <nav className="hidden gap-1 sm:flex">
+            {tabs.map((t) => (
+              <NavLink
+                key={t.to}
+                to={t.to}
+                end={t.to === '/'}
+                className={({ isActive }) => `relative rounded-full px-3 py-1 text-sm font-medium ${isActive ? 'bg-slate-800 text-white' : 'text-slate-400 hover:text-white'}`}
+              >
+                {t.label}
+                {t.to === '/review' && badge('-right-1 -top-1')}
+              </NavLink>
+            ))}
+          </nav>
+          <DailyRing xp={dailyXp(progress)} goal={progress.settings.dailyGoal ?? DEFAULT_DAILY_GOAL} />
+          <span className="flex items-center gap-0.5 whitespace-nowrap text-sm font-semibold text-amber-400" title="Streak (Tage am Stück)">
+            <Flame />{progress.streak.current}
+          </span>
+          <span className="flex items-center gap-0.5 whitespace-nowrap text-sm font-semibold text-yellow-400" title={`${pl.into}/${pl.needed} XP bis Level ${pl.level + 1}`}>
+            <Star />{pl.level}
+          </span>
+        </div>
+      </header>
+      {/* iOS-Tab-Bar auf schmalen Bildschirmen */}
+      <nav className="print:hidden fixed inset-x-0 bottom-0 z-40 flex border-t border-white/10 bg-slate-950/80 pb-[env(safe-area-inset-bottom)] backdrop-blur-xl backdrop-saturate-150 sm:hidden">
+        {tabs.map((t) => (
+          <NavLink
+            key={t.to}
+            to={t.to}
+            end={t.to === '/'}
+            className={({ isActive }) => `relative flex flex-1 flex-col items-center gap-0.5 pb-1 pt-1.5 text-[10px] font-medium ${isActive ? 'text-cyan-400' : 'text-slate-500'}`}
+          >
+            <Icon name={t.icon} className="h-6 w-6" />
+            {t.label}
+            {t.to === '/review' && badge('left-1/2 top-0.5 ml-1.5')}
           </NavLink>
-          <NavLink to="/profile" className={link} aria-label="Profil">
-            <span className="sm:hidden">👤</span>
-            <span className="hidden sm:inline">Profil</span>
-          </NavLink>
-        </nav>
-      </div>
-    </header>
+        ))}
+      </nav>
+    </>
   );
 }
 
@@ -109,11 +133,11 @@ function BadgeToast() {
   }, [b, dismissBadge]);
   if (!b) return null;
   return (
-    <div className="fixed inset-x-0 bottom-4 z-50 flex justify-center px-4">
+    <div className="fixed inset-x-0 bottom-20 z-50 sm:bottom-4 flex justify-center px-4">
       <button
         type="button"
         onClick={dismissBadge}
-        className="flex items-center gap-3 rounded-2xl border border-yellow-400/50 bg-slate-900 px-4 py-3 shadow-2xl"
+        className="flex items-center gap-3 rounded-2xl border border-white/10 bg-slate-900/90 px-4 py-3 shadow-2xl backdrop-blur-xl"
       >
         <span className="text-3xl">{b.icon}</span>
         <span className="text-left">

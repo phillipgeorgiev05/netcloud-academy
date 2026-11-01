@@ -34,7 +34,7 @@ export function CheckButton({ disabled, onClick, children = 'Prüfen' }: { disab
       type="button"
       disabled={disabled}
       onClick={onClick}
-      className="mt-4 w-full rounded-xl bg-cyan-500 px-4 py-3 font-semibold text-snow transition hover:bg-cyan-400 disabled:cursor-not-allowed disabled:opacity-40 sm:w-auto"
+      className="mt-4 w-full rounded-full bg-cyan-500 px-5 py-3 font-semibold text-snow transition hover:bg-cyan-400 disabled:cursor-not-allowed disabled:opacity-40 sm:w-auto"
     >
       {children}
     </button>

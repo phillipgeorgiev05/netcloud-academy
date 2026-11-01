@@ -1,9 +1,10 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useState, type ReactNode } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { getLevel, levels } from '../content';
 import { certs } from '../content/certs';
 import { QuestionSession, type SessionSummary } from '../components/QuestionSession';
 import { LessonView } from '../components/LessonView';
+import { Icon, type IconName } from '../components/Icons';
 import { generatorNames } from '../lib/generators';
 import { RichText, shuffle } from '../components/questions/shared';
 import type { CertId, Level, Question } from '../types/content';
@@ -77,7 +78,7 @@ function LevelFlow({ level }: { level: Level }) {
     return (
       <div>
         {back}
-        <h1 className="mb-4 text-2xl font-bold">📖 {level.title}</h1>
+        <h1 className="mb-4 text-[28px] font-bold leading-tight tracking-tight">{level.title}</h1>
         <LessonView level={level} />
         <button
           type="button"
@@ -85,7 +86,7 @@ function LevelFlow({ level }: { level: Level }) {
             update((p) => completeLesson(p, level.id));
             start('quiz');
           }}
-          className="mt-6 w-full rounded-xl bg-cyan-500 px-4 py-3 font-semibold text-snow hover:bg-cyan-400"
+          className="mt-6 w-full rounded-full bg-cyan-500 px-5 py-3 font-semibold text-snow hover:bg-cyan-400"
         >
           Lektion abgeschlossen – zum Quiz →
         </button>
@@ -98,7 +99,7 @@ function LevelFlow({ level }: { level: Level }) {
     return (
       <div>
         {back}
-        <h1 className="mb-1 text-xl font-bold">🧪 Praxis-Lab: {lab.title}</h1>
+        <h1 className="mb-1 text-xl font-bold">Praxis-Lab: {lab.title}</h1>
         <p className="mb-4 text-sm text-slate-400">Du brauchst: {lab.needs}</p>
         <ol className="space-y-2">
           {lab.steps.map((st, i) => (
@@ -126,7 +127,7 @@ function LevelFlow({ level }: { level: Level }) {
     return (
       <div>
         {back}
-        <h1 className="mb-4 text-xl font-bold">📝 Quiz: {level.title}</h1>
+        <h1 className="mb-4 text-xl font-bold">Quiz: {level.title}</h1>
         <QuestionSession key={run} items={quizItems} mode="quiz" onFinish={done('quiz')} />
       </div>
     );
@@ -135,7 +136,7 @@ function LevelFlow({ level }: { level: Level }) {
     return (
       <div>
         {back}
-        <h1 className="mb-4 text-xl font-bold">👾 Boss-Challenge: {level.title}</h1>
+        <h1 className="mb-4 text-xl font-bold">Boss-Challenge: {level.title}</h1>
         <QuestionSession
           key={run}
           items={bossItems}
@@ -152,7 +153,7 @@ function LevelFlow({ level }: { level: Level }) {
     return (
       <div className="space-y-4 text-center">
         <div className="text-6xl">{ok ? (last.kind === 'boss' ? '🏆' : '🎉') : '💪'}</div>
-        <h1 className="text-2xl font-bold">{ok ? (last.kind === 'boss' ? 'Boss besiegt!' : 'Quiz bestanden!') : 'Noch nicht ganz'}</h1>
+        <h1 className="text-[28px] font-bold leading-tight tracking-tight">{ok ? (last.kind === 'boss' ? 'Boss besiegt!' : 'Quiz bestanden!') : 'Noch nicht ganz'}</h1>
         <p className="text-slate-300">
           {last.s.correct} von {last.s.total} richtig ({pct} %).
           {last.kind === 'boss' && last.s.heartsLeft <= 0 && ' Alle Herzen verloren.'}
@@ -166,69 +167,49 @@ function LevelFlow({ level }: { level: Level }) {
             </button>
           )}
           {!ok && (
-            <button type="button" onClick={() => start(last.kind)} className="rounded-xl bg-cyan-500 px-4 py-3 font-semibold text-snow hover:bg-cyan-400">
+            <button type="button" onClick={() => start(last.kind)} className="rounded-full bg-cyan-500 px-5 py-3 font-semibold text-snow hover:bg-cyan-400">
               Nochmal versuchen
             </button>
           )}
-          <button type="button" onClick={() => start('overview')} className="rounded-xl bg-slate-800 px-4 py-3 hover:bg-slate-700">
+          <button type="button" onClick={() => start('overview')} className="rounded-full bg-slate-800 px-5 py-3 hover:bg-slate-700">
             Level-Übersicht
           </button>
-          <Link to="/" className="rounded-xl bg-slate-800 px-4 py-3 hover:bg-slate-700">Lernpfad</Link>
+          <Link to="/" className="rounded-full bg-slate-800 px-5 py-3 hover:bg-slate-700">Lernpfad</Link>
         </div>
       </div>
     );
   }
 
-  const stepCls = 'flex w-full items-center gap-3 rounded-xl border p-4 text-left transition';
   return (
     <div>
-      <Link to="/" className="mb-3 inline-block text-sm text-slate-400 hover:text-white">← Lernpfad</Link>
-      <h1 className="text-2xl font-bold">{level.title}</h1>
+      <Link to="/" className="mb-3 inline-flex items-center gap-0.5 text-[17px] text-cyan-400 hover:opacity-70">
+        <Icon name="chevron" className="h-5 w-5 rotate-180" />Lernpfad
+      </Link>
+      <h1 className="text-[28px] font-bold leading-tight tracking-tight">{level.title}</h1>
       <p className="text-sm text-slate-400">{level.titleEn}</p>
       <p className="mt-3 text-slate-300">{level.summary}</p>
       <div className="mt-3 flex flex-wrap gap-2">
         {level.certs.map((c) => (
-          <span key={c} className="rounded-full bg-slate-800 px-2 py-0.5 text-xs text-slate-300">🎓 {certs[c].name} ({certs[c].exam})</span>
+          <span key={c} className="rounded-full bg-slate-800 px-2.5 py-0.5 text-xs font-medium text-slate-300">{certs[c].name} ({certs[c].exam})</span>
         ))}
       </div>
-      <div className="mt-6 space-y-3">
-        <button type="button" onClick={() => start('lesson')} className={`${stepCls} border-transparent bg-slate-900 hover:border-cyan-400`}>
-          <span className="text-2xl">📖</span>
-          <span className="flex-1"><b>1. Lektion</b><br /><span className="text-sm text-slate-400">{level.lesson.length} Abschnitte</span></span>
-          {lp.lessonDone && <span className="text-emerald-400">✓</span>}
-        </button>
-        <button type="button" onClick={() => start('quiz')} className={`${stepCls} border-transparent bg-slate-900 hover:border-cyan-400`}>
-          <span className="text-2xl">📝</span>
-          <span className="flex-1"><b>2. Quiz</b><br /><span className="text-sm text-slate-400">{quizQs.length} Fragen{quizQs.length < level.quiz.length ? ` (Fokus ${focus?.toUpperCase()})` : ''} · Bestwert {Math.round(lp.quizBest * 100)} % · mind. 80 %</span></span>
-          {quizOk && <span className="text-emerald-400">✓</span>}
-        </button>
-        <button
-          type="button"
-          disabled={!quizOk}
-          onClick={() => start('boss')}
-          className={`${stepCls} ${quizOk ? 'border-rose-500/50 bg-slate-900 hover:border-rose-400' : 'cursor-not-allowed border-transparent bg-slate-900/50 opacity-50'}`}
-        >
-          <span className="text-2xl">{quizOk ? '👾' : '🔒'}</span>
-          <span className="flex-1">
-            <b>3. Boss-Challenge</b><br />
-            <span className="text-sm text-slate-400">
-              {quizOk ? `${level.boss.questions.length} schwere Fragen · ${'❤️'.repeat(level.boss.hearts)}` : 'Erst Quiz mit mind. 80 % bestehen'}
-            </span>
-          </span>
-          {lp.bossPassed && <span className="text-emerald-400">✓</span>}
-        </button>
+      <div className="mt-6 divide-y divide-slate-800 overflow-hidden rounded-2xl bg-slate-900">
+        <Step icon="book" tint="bg-cyan-500" title="1. Lektion" done={lp.lessonDone} onClick={() => start('lesson')}>
+          {level.lesson.length} Abschnitte
+        </Step>
+        <Step icon="list" tint="bg-violet-500" title="2. Quiz" done={quizOk} onClick={() => start('quiz')}>
+          {quizQs.length} Fragen{quizQs.length < level.quiz.length ? ` (Fokus ${focus?.toUpperCase()})` : ''} · Bestwert {Math.round(lp.quizBest * 100)} % · mind. 80 %
+        </Step>
+        <Step icon={quizOk ? 'bolt' : 'lock'} tint={quizOk ? 'bg-rose-500' : 'bg-slate-600'} title="3. Boss-Challenge" done={lp.bossPassed} disabled={!quizOk} onClick={() => start('boss')}>
+          {quizOk ? `${level.boss.questions.length} schwere Fragen · ${level.boss.hearts} Herzen` : 'Erst Quiz mit mind. 80 % bestehen'}
+        </Step>
         {level.lab && (
-          <button type="button" onClick={() => start('lab')} className={`${stepCls} border-transparent bg-slate-900 hover:border-emerald-400`}>
-            <span className="text-2xl">🧪</span>
-            <span className="flex-1">
-              <b>Bonus: Praxis-Lab</b><br />
-              <span className="text-sm text-slate-400">{level.lab.title} · {(progress.labs[level.id] ?? []).length}/{level.lab.steps.length} Schritte</span>
-            </span>
-            {progress.labsDone[level.id] && <span className="text-emerald-400">✓</span>}
-          </button>
+          <Step icon="flask" tint="bg-emerald-500" title="Bonus: Praxis-Lab" done={!!progress.labsDone[level.id]} onClick={() => start('lab')}>
+            {level.lab.title} · {(progress.labs[level.id] ?? []).length}/{level.lab.steps.length} Schritte
+          </Step>
         )}
       </div>
-      <Link to={`/sheet/${level.id}`} className="mt-3 inline-block text-sm text-cyan-400 hover:underline">🖨️ Spickzettel zum Drucken</Link>
+      <Link to={`/sheet/${level.id}`} className="mt-3 inline-block px-1 text-sm text-cyan-400 hover:underline">Spickzettel zum Drucken</Link>
       {mistakes.length > 0 && (
         <section className="mt-6 rounded-xl border border-rose-500/30 bg-rose-500/5 p-4">
           <h2 className="mb-2 font-semibold text-rose-300">⚠️ Deine häufigsten Fehler in diesem Level</h2>
@@ -244,5 +225,18 @@ function LevelFlow({ level }: { level: Level }) {
         </section>
       )}
     </div>
+  );
+}
+
+function Step({ icon, tint, title, done, disabled, onClick, children }: { icon: IconName; tint: string; title: string; done: boolean; disabled?: boolean; onClick: () => void; children: ReactNode }) {
+  return (
+    <button type="button" disabled={disabled} onClick={onClick} className="flex w-full items-center gap-3 px-4 py-3 text-left hover:bg-slate-800/50 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-transparent">
+      <span className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-[9px] text-snow ${tint}`}><Icon name={icon} className="h-5 w-5" /></span>
+      <span className="min-w-0 flex-1">
+        <span className="block font-semibold">{title}</span>
+        <span className="block text-sm text-slate-400">{children}</span>
+      </span>
+      {done ? <Icon name="check" className="h-5 w-5 shrink-0 text-emerald-400" /> : !disabled && <Icon name="chevron" className="h-4 w-4 shrink-0 text-slate-500" />}
+    </button>
   );
 }

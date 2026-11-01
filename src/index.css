@@ -123,6 +123,14 @@ body {
   -webkit-tap-highlight-color: transparent;
 }
 h1, h2 { letter-spacing: -0.022em; }
+
+/* Bedien-Gefühl wie iOS: weiche Übergänge, leichtes Eindrücken beim Tippen */
+@layer base {
+  a, button, summary { transition: background-color 0.2s, color 0.2s, border-color 0.2s, opacity 0.2s, transform 0.12s ease-out; }
+  button:not(:disabled):active { transform: scale(0.98); }
+  :focus-visible { outline: 3px solid color-mix(in srgb, var(--color-cyan-400) 55%, transparent); outline-offset: 2px; }
+  ::selection { background: color-mix(in srgb, var(--color-cyan-400) 30%, transparent); }
+}
 code, .mono { font-family: var(--font-mono); letter-spacing: 0; }
 
 /* Spickzettel: hell und kompakt drucken */

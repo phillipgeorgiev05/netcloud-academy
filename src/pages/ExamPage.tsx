@@ -85,7 +85,7 @@ export function ExamPage() {
   if (!cert)
     return (
       <div className="space-y-4">
-        <h1 className="text-2xl font-bold">🎓 Prüfungssimulation</h1>
+        <h1 className="text-[28px] font-bold leading-tight tracking-tight">Prüfungssimulation</h1>
         <p className="text-sm text-slate-400">
           Bis zu {MAX_QUESTIONS} zufällige Fragen aus allen verfügbaren Leveln des Zertifikats, {SECONDS_PER_QUESTION} s pro Frage. Wie in der echten Prüfung: kein Sofort-Feedback, Fragen markieren, frei springen und am Ende abgeben. Falsche Antworten landen im Wiederholen-Stapel. Bisher deckt die App nur einen Teil der Prüfungsthemen ab.
         </p>
@@ -125,7 +125,7 @@ export function ExamPage() {
     const score = right / items.length;
     return (
       <div className="space-y-4">
-        <h1 className="text-2xl font-bold">Ergebnis {certs[cert].exam}</h1>
+        <h1 className="text-[28px] font-bold leading-tight tracking-tight">Ergebnis {certs[cert].exam}</h1>
         <p className="text-lg">
           {right}/{items.length} richtig ({Math.round(score * 100)} %) {score >= PASS_THRESHOLD ? '🎉' : '💪'}
         </p>
@@ -167,7 +167,7 @@ export function ExamPage() {
             );
           })}
         </div>
-        <button type="button" onClick={() => setCert(null)} className="rounded-xl bg-slate-800 px-4 py-3">Zurück</button>
+        <button type="button" onClick={() => setCert(null)} className="rounded-full bg-slate-800 px-5 py-3">Zurück</button>
       </div>
     );
   }
@@ -180,7 +180,7 @@ export function ExamPage() {
   return (
     <div>
       <div className="mb-3 flex items-center justify-between">
-        <h1 className="text-xl font-bold">🎓 {certs[cert].exam}</h1>
+        <h1 className="text-xl font-bold">{certs[cert].exam}</h1>
         <span className={`font-mono ${left < 60 ? 'text-rose-400' : 'text-slate-300'}`} aria-label="Restzeit">⏱ {Math.floor(left / 60)}:{String(left % 60).padStart(2, '0')}</span>
       </div>
       <nav aria-label="Fragenübersicht" className="mb-4 flex flex-wrap gap-1.5">
@@ -211,7 +211,7 @@ export function ExamPage() {
         </div>
       ))}
       <div className="mt-5 flex flex-wrap gap-2">
-        <button type="button" disabled={idx === 0} onClick={() => go(idx - 1)} className="rounded-xl bg-slate-800 px-4 py-3 disabled:opacity-40">← Zurück</button>
+        <button type="button" disabled={idx === 0} onClick={() => go(idx - 1)} className="rounded-full bg-slate-800 px-5 py-3 disabled:opacity-40">← Zurück</button>
         <button
           type="button"
           onClick={() => setMarked((m) => m.map((x, j) => (j === idx ? !x : x)))}
@@ -220,7 +220,7 @@ export function ExamPage() {
         >
           🚩 {marked[idx] ? 'Markiert' : 'Markieren'}
         </button>
-        {idx + 1 < items.length && <button type="button" onClick={() => go(idx + 1)} className="rounded-xl bg-slate-800 px-4 py-3">Weiter →</button>}
+        {idx + 1 < items.length && <button type="button" onClick={() => go(idx + 1)} className="rounded-full bg-slate-800 px-5 py-3">Weiter →</button>}
         <button type="button" onClick={submit} className="ml-auto rounded-xl bg-white px-4 py-3 font-semibold text-slate-950 hover:bg-slate-200">Abgeben</button>
       </div>
     </div>

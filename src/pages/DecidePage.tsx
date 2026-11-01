@@ -8,7 +8,7 @@ export function DecidePage() {
   const node = decisionTree[path[path.length - 1]];
   return (
     <div className="space-y-4">
-      <h1 className="text-2xl font-bold">🧭 Entscheidungshilfe</h1>
+      <h1 className="text-[28px] font-bold leading-tight tracking-tight">Entscheidungshilfe</h1>
       {path.length > 1 && (
         <button type="button" onClick={() => setPath(path.slice(0, -1))} className="text-sm text-slate-400 hover:text-white">← Zurück</button>
       )}
@@ -32,7 +32,7 @@ export function DecidePage() {
           </div>
           {node.levelId && <Link to={`/level/${node.levelId}`} className="inline-block text-sm text-cyan-400">→ Mehr dazu im Level</Link>}
           <div>
-            <button type="button" onClick={() => setPath(['start'])} className="rounded-xl bg-slate-800 px-4 py-2 text-sm">Neu starten</button>
+            <button type="button" onClick={() => setPath(['start'])} className="rounded-full bg-slate-800 px-5 py-2 text-sm">Neu starten</button>
           </div>
         </div>
       )}

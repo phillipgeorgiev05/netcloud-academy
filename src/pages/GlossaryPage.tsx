@@ -8,7 +8,7 @@ export function GlossaryPage() {
   const hits = s ? glossary.filter((g) => g.de.toLowerCase().includes(s) || g.en.toLowerCase().includes(s)) : glossary;
   return (
     <div className="space-y-4">
-      <h1 className="text-2xl font-bold">📚 Glossar</h1>
+      <h1 className="text-[28px] font-bold leading-tight tracking-tight">Glossar</h1>
       <input
         value={q}
         onChange={(e) => setQ(e.target.value)}

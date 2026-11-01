@@ -37,7 +37,7 @@ export function ProfilePage() {
   return (
     <div className="space-y-8">
       <section>
-        <h1 className="text-2xl font-bold">Profil</h1>
+        <h1 className="text-[28px] font-bold leading-tight tracking-tight">Profil</h1>
         <div className="mt-3 grid grid-cols-2 gap-2 text-center sm:grid-cols-4">
           <Stat label="Spielerlevel" value={pl.level} />
           <Stat label="XP" value={progress.xp} />
@@ -92,8 +92,8 @@ export function ProfilePage() {
         <h2 className="text-lg font-bold">💾 Daten</h2>
         <p className="text-sm text-slate-400">Der Fortschritt liegt nur in diesem Browser. Exportiere ihn als Backup oder für ein anderes Gerät.</p>
         <div className="flex flex-wrap gap-2">
-          <button type="button" onClick={exportJson} className="rounded-xl bg-slate-800 px-4 py-2 hover:bg-slate-700">⬇️ Export (JSON)</button>
-          <button type="button" onClick={() => fileRef.current?.click()} className="rounded-xl bg-slate-800 px-4 py-2 hover:bg-slate-700">⬆️ Import</button>
+          <button type="button" onClick={exportJson} className="rounded-full bg-slate-800 px-5 py-2 hover:bg-slate-700">⬇️ Export (JSON)</button>
+          <button type="button" onClick={() => fileRef.current?.click()} className="rounded-full bg-slate-800 px-5 py-2 hover:bg-slate-700">⬆️ Import</button>
           <button
             type="button"
             onClick={() => confirm('Gesamten Fortschritt unwiderruflich löschen?') && replace(emptyProgress())}

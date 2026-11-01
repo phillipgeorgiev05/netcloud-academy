@@ -30,7 +30,7 @@ export function DeskPage() {
   return (
     <div className="space-y-5">
       <div>
-        <h1 className="text-2xl font-bold">🎧 Service Desk</h1>
+        <h1 className="text-[28px] font-bold leading-tight tracking-tight">Service Desk</h1>
         <p className="mt-1 text-sm text-slate-400">
           Echte Störungen aus dem Firmenalltag: Netzwerk, Cloud und allgemeine IT. Prüfen, Ursache finden, lösen, dokumentieren. {solved}/{tickets.length} gelöst.
         </p>
@@ -119,12 +119,12 @@ function TicketView({ ticket, isDaily, onClose }: { ticket: Ticket; isDaily: boo
       {result && (
         <div className="flex flex-wrap gap-2">
           {!result.correct && (
-            <button type="button" onClick={() => { setResult(null); setAttempt((a) => a + 1); }} className="rounded-xl bg-cyan-500 px-4 py-2 font-semibold text-snow">
+            <button type="button" onClick={() => { setResult(null); setAttempt((a) => a + 1); }} className="rounded-full bg-cyan-500 px-5 py-2 font-semibold text-snow">
               Nochmal bearbeiten
             </button>
           )}
-          <button type="button" onClick={onClose} className="rounded-xl bg-slate-800 px-4 py-2">Nächstes Ticket</button>
-          {learn && <Link to={`/level/${learn.id}`} className="rounded-xl bg-slate-800 px-4 py-2">📖 Nachlernen: {learn.title}</Link>}
+          <button type="button" onClick={onClose} className="rounded-full bg-slate-800 px-5 py-2">Nächstes Ticket</button>
+          {learn && <Link to={`/level/${learn.id}`} className="rounded-full bg-slate-800 px-5 py-2">📖 Nachlernen: {learn.title}</Link>}
         </div>
       )}
     </div>

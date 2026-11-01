@@ -27,7 +27,7 @@ export function ReviewPage() {
   if (items)
     return (
       <div>
-        <h1 className="mb-4 text-xl font-bold">🧠 Wiederholen</h1>
+        <h1 className="mb-4 text-xl font-bold">Wiederholen</h1>
         <QuestionSession
           items={items}
           mode="review"
@@ -42,7 +42,7 @@ export function ReviewPage() {
   const dueNow = due();
   return (
     <div className="space-y-4">
-      <h1 className="text-2xl font-bold">🧠 Wiederholen</h1>
+      <h1 className="text-[28px] font-bold leading-tight tracking-tight">Wiederholen</h1>
       {summary && (
         <p className="rounded-xl bg-emerald-500/10 p-3 text-emerald-200">
           Runde beendet: {summary.correct}/{summary.total} richtig. Richtige Antworten rücken eine Box weiter.
@@ -62,7 +62,7 @@ export function ReviewPage() {
       </div>
       <p className="text-sm text-slate-400">{total} im Stapel · {progress.mastered} gemeistert</p>
       {dueNow.length ? (
-        <button type="button" onClick={() => setItems(dueNow)} className="w-full rounded-xl bg-cyan-500 px-4 py-3 font-semibold text-snow hover:bg-cyan-400">
+        <button type="button" onClick={() => setItems(dueNow)} className="w-full rounded-full bg-cyan-500 px-5 py-3 font-semibold text-snow hover:bg-cyan-400">
           {dueNow.length} fällige Fragen wiederholen
         </button>
       ) : (
