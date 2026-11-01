@@ -14,7 +14,7 @@ async function overflow(page: Page) {
 }
 
 test('Werkzeug-Seiten passen auf 375 px', async ({ page }) => {
-  for (const path of ['/', '/review', '/profile', '/tools', '/trainer', '/exam', '/glossary', '/decide', '/sheet/net-04', '/sheet/cloud-03']) {
+  for (const path of ['/', '/review', '/profile', '/tools', '/trainer', '/exam', '/glossary', '/decide', '/desk', '/sheet/net-04', '/sheet/cloud-03']) {
     await page.goto(DEV + path);
     await page.waitForSelector('main');
     const o = await overflow(page);

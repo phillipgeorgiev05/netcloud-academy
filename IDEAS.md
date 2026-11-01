@@ -118,7 +118,7 @@ Alle 35 Ideen aus den Schritten 1–9 sind eingebaut: Mechanik plus Beispielinha
 4. **Prüfung: Zeit pro Frage auswerten:** Im Prüfungsmodus die Verweildauer pro Frage messen und in der Auswertung zeigen, welche Fragetypen am meisten Zeit fressen. Das hilft beim Zeitmanagement.
 5. **Streak an Tagesziel koppeln (Einstellung):** Wahlweise zählt die Streak erst, wenn das Tagesziel erreicht ist. Als Option, damit bestehende Streaks nicht plötzlich anders zählen.
 
-## Schritt 14: Service Desk, Lernplan, A7 Routing, A8 Netzwerkdienste (2026-11-01)
+## Schritt 12: Service Desk, Lernplan, A7 Routing, A8 Netzwerkdienste (2026-11-01)
 
 1. **SLA-Timer im Service Desk:** Jedes Ticket bekommt je nach Priorität eine Zielzeit (P1 wenige Minuten). Wer schneller löst, bekommt einen kleinen Bonus. Das übt das Gefühl für Dringlichkeit, ohne die Erklärungen zu kürzen.
 2. **Ticket-Notiz schreiben:** Nach der Lösung wählt man aus Textbausteinen die passende Ticket-Dokumentation (Ursache, Lösung, Prävention). Dokumentieren ist im echten Support Pflicht und wird in Bewerbungsgesprächen oft abgefragt.
