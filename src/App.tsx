@@ -48,12 +48,12 @@ function Header() {
   const pl = playerLevel(progress.xp);
   const due = dueReviews(progress).length;
   const link = ({ isActive }: { isActive: boolean }) =>
-    `relative rounded-lg px-2 py-1 text-sm sm:px-3 ${isActive ? 'bg-slate-800 text-white' : 'text-slate-300 hover:text-white'}`;
+    `relative rounded-full px-2 py-1 text-sm font-medium sm:px-3 ${isActive ? 'bg-slate-800 text-white' : 'text-slate-300 hover:text-white'}`;
   return (
-    <header className="print:hidden sticky top-0 z-40 border-b border-slate-800 bg-slate-950/90 backdrop-blur">
+    <header className="print:hidden sticky top-0 z-40 border-b border-white/10 bg-slate-950/75 backdrop-blur-xl backdrop-saturate-150">
       {DEV_UNLOCK && <div className="bg-amber-500 px-4 py-0.5 text-center text-xs font-semibold text-slate-950">Testmodus: alle Level offen, getrennter Speicher</div>}
-      <div className="mx-auto flex max-w-3xl items-center gap-2 px-4 py-2">
-        <NavLink to="/" className="mr-auto font-bold text-cyan-400">
+      <div className="mx-auto flex max-w-3xl items-center gap-1.5 px-3 py-2 sm:gap-2 sm:px-4">
+        <NavLink to="/" className="mr-auto font-semibold tracking-tight text-white">
           NetCloud<span className="hidden sm:inline"> Academy</span>
         </NavLink>
         <DailyRing xp={dailyXp(progress)} goal={progress.settings.dailyGoal ?? DEFAULT_DAILY_GOAL} />
@@ -61,7 +61,7 @@ function Header() {
         <span className="whitespace-nowrap text-sm text-yellow-300" title={`${pl.into}/${pl.needed} XP bis Level ${pl.level + 1}`}>
           ⭐ Lv {pl.level}
         </span>
-        <nav className="flex gap-1">
+        <nav className="flex gap-0.5 sm:gap-1">
           <NavLink to="/" end className={link}>Pfad</NavLink>
           <NavLink to="/review" className={link} aria-label="Wiederholen">
             <span className="sm:hidden">🧠</span>
@@ -72,7 +72,10 @@ function Header() {
             <span className="sm:hidden">🧰</span>
             <span className="hidden sm:inline">Tools</span>
           </NavLink>
-          <NavLink to="/profile" className={link}>Profil</NavLink>
+          <NavLink to="/profile" className={link} aria-label="Profil">
+            <span className="sm:hidden">👤</span>
+            <span className="hidden sm:inline">Profil</span>
+          </NavLink>
         </nav>
       </div>
     </header>

@@ -17,7 +17,7 @@ export function SheetPage() {
     <div className="sheet space-y-4">
       <div className="flex items-center justify-between gap-2 print:hidden">
         <Link to={`/level/${level.id}`} className="text-sm text-slate-400 hover:text-white">← Level</Link>
-        <button type="button" onClick={() => window.print()} className="rounded-xl bg-cyan-500 px-4 py-2 font-semibold text-slate-950">🖨️ Drucken / als PDF</button>
+        <button type="button" onClick={() => window.print()} className="rounded-xl bg-cyan-500 px-4 py-2 font-semibold text-white">🖨️ Drucken / als PDF</button>
       </div>
       <h1 className="text-2xl font-bold">Spickzettel: {level.title}</h1>
       <p className="text-sm text-slate-400">{level.summary}</p>

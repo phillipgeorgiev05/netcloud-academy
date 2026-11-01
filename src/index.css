@@ -1,13 +1,72 @@
 @import "tailwindcss";
+@import "@fontsource-variable/inter";
 
+/* Apple-Look: Systemfarben (Dark Mode) statt Tailwind-Standard. Die Klassennamen im JSX bleiben gleich. */
 @theme {
-  --color-brand: #22d3ee;
-  --color-xp: #facc15;
+  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter Variable", system-ui, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", "Cascadia Code", Menlo, Consolas, monospace;
+
+  --color-slate-50: #f9f9fb;
+  --color-slate-100: #f2f2f7;
+  --color-slate-200: #d1d1d6;
+  --color-slate-300: #aeaeb2;
+  --color-slate-400: #8e8e93;
+  --color-slate-500: #636366;
+  --color-slate-600: #48484a;
+  --color-slate-700: #38383a;
+  --color-slate-800: #2c2c2e;
+  --color-slate-900: #1c1c1e;
+  --color-slate-950: #000000;
+
+  /* Akzent = systemBlue; 500 etwas dunkler, damit weiße Schrift auf Buttons gut lesbar ist */
+  --color-cyan-200: #b3d7ff;
+  --color-cyan-300: #5eadff;
+  --color-cyan-400: #0a84ff;
+  --color-cyan-500: #0071e3;
+  --color-cyan-600: #0060c0;
+
+  --color-sky-300: #8ee0ff;
+  --color-sky-400: #64d2ff;
+  --color-sky-500: #5ac8fa;
+
+  --color-emerald-200: #b4f0c4;
+  --color-emerald-300: #6ee58a;
+  --color-emerald-400: #30d158;
+  --color-emerald-500: #30d158;
+
+  --color-rose-200: #ffc2be;
+  --color-rose-300: #ff7b72;
+  --color-rose-400: #ff453a;
+  --color-rose-500: #ff453a;
+  --color-rose-900: #4a1210;
+
+  --color-amber-300: #ffc266;
+  --color-amber-400: #ff9f0a;
+  --color-amber-500: #ff9f0a;
+
+  --color-yellow-300: #ffe14d;
+  --color-yellow-400: #ffd60a;
+
+  --color-violet-500: #5e5ce6;
+
+  --radius-lg: 0.625rem;
+  --radius-xl: 0.875rem;
+  --radius-2xl: 1.25rem;
+
+  --color-brand: #0a84ff;
+  --color-xp: #ffd60a;
 }
 
 html, body, #root { min-height: 100%; }
-body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; -webkit-tap-highlight-color: transparent; }
-code, .mono { font-family: ui-monospace, "Cascadia Code", Consolas, monospace; }
+body {
+  font-family: var(--font-sans);
+  letter-spacing: -0.011em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-tap-highlight-color: transparent;
+}
+h1, h2 { letter-spacing: -0.022em; }
+code, .mono { font-family: var(--font-mono); letter-spacing: 0; }
 
 /* Spickzettel: hell und kompakt drucken */
 @media print {

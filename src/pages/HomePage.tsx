@@ -74,7 +74,7 @@ function LevelCard({ level }: { level: Level }) {
     <div className={`flex items-center gap-3 rounded-xl border p-3 transition ${
       done ? 'border-emerald-500/50 bg-emerald-500/5' : open ? 'border-slate-700 bg-slate-900 hover:border-cyan-400' : 'border-slate-800 bg-slate-900/50 opacity-60'
     }`}>
-      <span className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full font-bold ${done ? 'bg-emerald-500 text-slate-950' : open ? 'bg-cyan-500 text-slate-950' : 'bg-slate-800'}`}>
+      <span className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full font-bold ${done ? 'bg-emerald-500 text-white' : open ? 'bg-cyan-500 text-white' : 'bg-slate-800'}`}>
         {done ? '✓' : open ? level.order : '🔒'}
       </span>
       <div className="min-w-0 flex-1">

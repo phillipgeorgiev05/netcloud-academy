@@ -191,7 +191,7 @@ export function ExamPage() {
             onClick={() => go(i)}
             aria-current={i === idx}
             aria-label={`Frage ${i + 1}${answers[i] ? ', beantwortet' : ''}${marked[i] ? ', markiert' : ''}`}
-            className={`relative h-8 w-8 rounded-lg text-xs font-semibold ${i === idx ? 'ring-2 ring-white' : ''} ${answers[i] ? 'bg-cyan-500 text-slate-950' : 'bg-slate-800 text-slate-300'}`}
+            className={`relative h-8 w-8 rounded-lg text-xs font-semibold ${i === idx ? 'ring-2 ring-white' : ''} ${answers[i] ? 'bg-cyan-500 text-white' : 'bg-slate-800 text-slate-300'}`}
           >
             {i + 1}
             {marked[i] && <span className="absolute -right-1 -top-1 text-[10px]">🚩</span>}

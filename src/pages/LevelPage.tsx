@@ -85,7 +85,7 @@ function LevelFlow({ level }: { level: Level }) {
             update((p) => completeLesson(p, level.id));
             start('quiz');
           }}
-          className="mt-6 w-full rounded-xl bg-cyan-500 px-4 py-3 font-semibold text-slate-950 hover:bg-cyan-400"
+          className="mt-6 w-full rounded-xl bg-cyan-500 px-4 py-3 font-semibold text-white hover:bg-cyan-400"
         >
           Lektion abgeschlossen – zum Quiz →
         </button>
@@ -166,7 +166,7 @@ function LevelFlow({ level }: { level: Level }) {
             </button>
           )}
           {!ok && (
-            <button type="button" onClick={() => start(last.kind)} className="rounded-xl bg-cyan-500 px-4 py-3 font-semibold text-slate-950 hover:bg-cyan-400">
+            <button type="button" onClick={() => start(last.kind)} className="rounded-xl bg-cyan-500 px-4 py-3 font-semibold text-white hover:bg-cyan-400">
               Nochmal versuchen
             </button>
           )}

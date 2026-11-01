@@ -99,7 +99,7 @@ export function TrainerPage() {
         <p>{right}/{ROUND} richtig in {fmt(finished)}.</p>
         {right === ROUND && <p className="text-yellow-300">Bestzeit: {fmt(Math.min(finished, progress.trainerBest[task] ?? finished))}</p>}
         <div className="flex justify-center gap-2">
-          <button type="button" onClick={() => begin(task)} className="rounded-xl bg-cyan-500 px-4 py-3 font-semibold text-slate-950">Neue Runde</button>
+          <button type="button" onClick={() => begin(task)} className="rounded-xl bg-cyan-500 px-4 py-3 font-semibold text-white">Neue Runde</button>
           <button type="button" onClick={() => setTask(null)} className="rounded-xl bg-slate-800 px-4 py-3">Andere Aufgabe</button>
         </div>
       </div>
