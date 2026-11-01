@@ -1,28 +1,26 @@
 // App-Logo und Linien-Icons im Stil von SF Symbols. Geometrie des Logos identisch mit scripts/make-icons.mjs.
 
 /**
- * Monogramm „NC“: Das N ist ein Netzwerkpfad aus vier Knoten (Net), der offene Bogen ein C
- * mit Satellitenknoten am Ende (Cloud, Verbindung nach außen).
+ * Eine Wolke mit einer Netzwerkbuchse (RJ45) als Aussparung: Cloud und Netzwerk in einer Silhouette.
+ * Die Buchse hat die Farbe des Hintergrunds, darum nutzen beide denselben Verlauf im Nutzerraum.
  */
 export function Logo({ className = 'h-7 w-7' }: { className?: string }) {
   return (
     <svg viewBox="0 0 64 64" className={className} aria-hidden="true">
       <defs>
-        <linearGradient id="logo-bg" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stopColor="#00c2ff" />
-          <stop offset="1" stopColor="#5b3df5" />
+        <linearGradient id="logo-bg" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="64" y2="64">
+          <stop offset="0" stopColor="#1f6bff" />
+          <stop offset="1" stopColor="#7a3cff" />
         </linearGradient>
       </defs>
       <rect width="64" height="64" rx="14.5" fill="url(#logo-bg)" />
-      <path d="M47.43 50.39A24 24 0 1 1 47.43 13.61" fill="none" stroke="#fff" strokeOpacity="0.5" strokeWidth="3.5" strokeLinecap="round" />
-      <circle cx="47.43" cy="13.61" r="3.2" fill="#fff" />
-      <path d="M21 43V21L41 43V21" fill="none" stroke="#fff" strokeWidth="4.5" strokeLinecap="round" strokeLinejoin="round" />
       <g fill="#fff">
-        <circle cx="21" cy="43" r="4.4" />
-        <circle cx="21" cy="21" r="4.4" />
-        <circle cx="41" cy="43" r="4.4" />
-        <circle cx="41" cy="21" r="4.4" />
+        <circle cx="21" cy="37" r="10" />
+        <circle cx="34" cy="29" r="14" />
+        <circle cx="45" cy="38" r="9" />
+        <rect x="21" y="37" width="24" height="10" />
       </g>
+      <path d="M25 29h16a1 1 0 0 1 1 1v9h-4v3.5h-10V39h-4v-9a1 1 0 0 1 1-1z" fill="url(#logo-bg)" />
     </svg>
   );
 }

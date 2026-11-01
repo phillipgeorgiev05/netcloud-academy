@@ -1,10 +1,10 @@
 // Erzeugt die PWA-Icons (PNG) ohne Zusatzpakete: `node scripts/make-icons.mjs`.
-// Motiv wie src/components/Icons.tsx (Logo): Monogramm „NC“ – N als Netzwerkpfad aus vier Knoten, offener C-Bogen mit Satellitenknoten.
+// Motiv wie src/components/Icons.tsx (Logo): weiße Wolke mit Netzwerkbuchse (RJ45) als Aussparung auf Blau-Violett-Verlauf.
 import { writeFileSync, mkdirSync } from 'node:fs';
 import { deflateSync } from 'node:zlib';
 
-const TOP = [0, 194, 255];
-const BOTTOM = [91, 61, 245];
+const TOP = [31, 107, 255];
+const BOTTOM = [122, 60, 255];
 const WHITE = [255, 255, 255];
 const SS = 4; // Unterabtastung pro Achse für glatte Kanten
 
@@ -26,25 +26,11 @@ function chunk(type, data) {
   return Buffer.concat([len, td, crc]);
 }
 
-function distToSegment(px, py, [ax, ay], [bx, by]) {
-  const dx = bx - ax;
-  const dy = by - ay;
-  const t = Math.max(0, Math.min(1, ((px - ax) * dx + (py - ay) * dy) / (dx * dx + dy * dy)));
-  return Math.hypot(px - (ax + t * dx), py - (ay + t * dy));
-}
-
 // Logo-Koordinaten 0–64 wie im SVG
-const nNodes = [[21, 43], [21, 21], [41, 43], [41, 21]];
-const arcEnd = 50 * (Math.PI / 180);
-const arcTop = [32 + 24 * Math.cos(arcEnd), 32 - 24 * Math.sin(arcEnd)];
-const arcBottom = [32 + 24 * Math.cos(arcEnd), 32 + 24 * Math.sin(arcEnd)];
-const onN = (x, y) =>
-  nNodes.some(([nx, ny]) => Math.hypot(x - nx, y - ny) <= 4.4) || [0, 1, 2].some((i) => distToSegment(x, y, nNodes[i], nNodes[i + 1]) <= 2.25);
-const onDot = (x, y) => Math.hypot(x - arcTop[0], y - arcTop[1]) <= 3.2;
-// Bogen um (32,32), Radius 24, rechts offen (±50°), mit runden Enden
-const onArc = (x, y) =>
-  (Math.abs(Math.hypot(x - 32, y - 32) - 24) <= 1.75 && Math.abs(Math.atan2(y - 32, x - 32)) >= arcEnd) ||
-  [arcTop, arcBottom].some(([ex, ey]) => Math.hypot(x - ex, y - ey) <= 1.75);
+const lobes = [[21, 37, 10], [34, 29, 14], [45, 38, 9]];
+const inCloud = (x, y) => lobes.some(([cx, cy, r]) => Math.hypot(x - cx, y - cy) <= r) || (x >= 21 && x <= 45 && y >= 37 && y <= 47);
+// Buchse: Körper 24–42 × 29–39, Rastnase 28–38 × bis 42,5 (Eckenrundung vernachlässigt)
+const inPort = (x, y) => (x >= 24 && x <= 42 && y >= 29 && y <= 39) || (x >= 28 && x <= 38 && y >= 39 && y <= 42.5);
 
 /** Abstand-Test für ein abgerundetes Quadrat 0–64 mit Radius r. */
 function inRounded(x, y, r) {
@@ -53,7 +39,7 @@ function inRounded(x, y, r) {
   return Math.hypot(qx, qy) <= r;
 }
 
-/** rounded: transparente Ecken (Android/Desktop). Sonst randlos (iOS maskiert selbst, maskable). glyph: Skalierung des Monogramms. */
+/** rounded: transparente Ecken (Android/Desktop). Sonst randlos (iOS maskiert selbst, maskable). glyph: Skalierung der Wolke. */
 function icon(size, { rounded, glyph = 1 }) {
   const rows = [];
   for (let py = 0; py < size; py++) {
@@ -69,8 +55,7 @@ function icon(size, { rounded, glyph = 1 }) {
           const gy = 32 + (y - 32) / glyph;
           const t = (x + y) / 128;
           const bg = TOP.map((v, i) => v + (BOTTOM[i] - v) * t);
-          // Bogen mit 50 % Deckkraft über dem Verlauf, N und Satellit voll weiß
-          const c = onN(gx, gy) || onDot(gx, gy) ? WHITE : onArc(gx, gy) ? bg.map((v) => (v + 255) / 2) : bg;
+          const c = inCloud(gx, gy) && !inPort(gx, gy) ? WHITE : bg;
           r += c[0]; g += c[1]; b += c[2]; a += 255;
         }
       }
