@@ -1,4 +1,5 @@
 import type { Badge, Level } from '../types/content';
+import { tracks } from './index';
 import { isPassed, levelProgress, type Progress } from '../lib/progress';
 
 export interface BadgeDef extends Badge {
@@ -21,6 +22,8 @@ export const badges: BadgeDef[] = [
   { id: 'streak-30', icon: '🏆', name: 'Unaufhaltsam', description: '30 Tage Streak', earned: (p) => p.streak.longest >= 30 },
   { id: 'review-10', icon: '🧠', name: 'Gedächtnis-Champion', description: '10 Fragen im Wiederholen-Stapel gemeistert', earned: (p) => p.mastered >= 10 },
   { id: 'xp-1000', icon: '⭐', name: '1000 XP', description: '1000 XP gesammelt', earned: (p) => p.xp >= 1000 },
-  { id: 'network-complete', icon: '🌐', name: 'Netzwerk-Techniker', description: 'Alle 14 Netzwerk-Level bestanden', earned: (p, ls) => passedCount(p, ls, 'network') >= 14 },
-  { id: 'cloud-complete', icon: '🚀', name: 'Cloud-Engineer', description: 'Alle 11 Cloud-Level bestanden', earned: (p, ls) => passedCount(p, ls, 'cloud') >= 11 },
+  { id: 'desk-1', icon: '🎧', name: 'Erstes Ticket', description: 'Erstes Service-Desk-Ticket gelöst', earned: (p) => Object.keys(p.desk).length >= 1 },
+  { id: 'desk-10', icon: '🛠️', name: 'Service-Desk-Profi', description: '10 Service-Desk-Tickets gelöst', earned: (p) => Object.keys(p.desk).length >= 10 },
+  { id: 'network-complete', icon: '🌐', name: 'Netzwerk-Techniker', description: `Alle ${tracks.network.planned.length} Netzwerk-Level bestanden`, earned: (p, ls) => passedCount(p, ls, 'network') >= tracks.network.planned.length },
+  { id: 'cloud-complete', icon: '🚀', name: 'Cloud-Engineer', description: `Alle ${tracks.cloud.planned.length} Cloud-Level bestanden`, earned: (p, ls) => passedCount(p, ls, 'cloud') >= tracks.cloud.planned.length },
 ];

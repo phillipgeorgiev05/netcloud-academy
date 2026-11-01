@@ -10,6 +10,7 @@ import { HomePage } from './pages/HomePage';
 import { LevelPage } from './pages/LevelPage';
 import { ProfilePage } from './pages/ProfilePage';
 import { DecidePage } from './pages/DecidePage';
+import { DeskPage } from './pages/DeskPage';
 import { ExamPage } from './pages/ExamPage';
 import { GlossaryPage } from './pages/GlossaryPage';
 import { ReviewPage } from './pages/ReviewPage';
@@ -33,6 +34,7 @@ export function App() {
             <Route path="/exam" element={<ExamPage />} />
             <Route path="/glossary" element={<GlossaryPage />} />
             <Route path="/decide" element={<DecidePage />} />
+            <Route path="/desk" element={<DeskPage />} />
             <Route path="/sheet/:id" element={<SheetPage />} />
             <Route path="*" element={<HomePage />} />
           </Routes>

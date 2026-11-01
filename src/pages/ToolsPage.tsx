@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 
 const tools = [
+  { to: '/desk', icon: '🎧', title: 'Service Desk', text: 'Echte Support-Tickets lösen: Netzwerk, Cloud, allgemeine IT. Jeden Tag ein Ticket des Tages mit Bonus-XP.' },
   { to: '/trainer', icon: '🧮', title: 'Trainer', text: 'Endlos-Übung mit Zufallsaufgaben: Subnetting, VLSM, IPv6, STP, NSG, IAM, RBAC, Kosten. Mit Bestzeit.' },
   { to: '/exam', icon: '🎓', title: 'Prüfungssimulation', text: 'Gemischte Fragen pro Zertifikat mit Zeitlimit und Auswertung nach Prüfungsbereichen.' },
   { to: '/glossary', icon: '📚', title: 'Glossar', text: 'Alle Fachbegriffe Deutsch ↔ Englisch, mit Link zum Level.' },

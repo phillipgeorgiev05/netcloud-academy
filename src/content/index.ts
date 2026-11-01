@@ -16,15 +16,15 @@ export const tracks: Record<Track, { title: string; planned: string[] }> = {
     planned: [
       'Grundlagen', 'OSI- & TCP/IP-Modell', 'Ethernet, MAC & Kabel', 'IPv4 & Subnetting', 'IPv6',
       'Switching', 'Routing', 'Netzwerkdienste', 'TCP/UDP & Protokolle', 'WLAN',
-      'Netzwerksicherheit', 'WAN, SD-WAN & QoS', 'Automatisierung', 'Troubleshooting',
+      'Netzwerksicherheit', 'WAN, SD-WAN & QoS', 'Betrieb & Monitoring', 'Automatisierung', 'Troubleshooting',
     ],
   },
   cloud: {
     title: 'Teil B – Cloud',
     planned: [
       'Cloud-Grundlagen', 'Virtualisierung', 'Microsoft Azure', 'AWS', 'Cloud-Networking',
-      'Identität & Sicherheit', 'Container & Kubernetes', 'Infrastructure as Code',
-      'Monitoring, Backup & HA', 'Kosten & Governance', 'DevOps & CI/CD',
+      'Identität & Sicherheit', 'Speicher & Datenbanken', 'Container & Kubernetes', 'Serverless & Integration',
+      'Infrastructure as Code', 'Monitoring, Backup & HA', 'Kosten & Governance', 'DevOps & CI/CD',
     ],
   },
 };

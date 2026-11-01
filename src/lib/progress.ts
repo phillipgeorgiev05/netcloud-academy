@@ -3,7 +3,7 @@ import type { CertId, Level } from '../types/content';
 import { DEV_UNLOCK } from './dev';
 
 export const PASS_THRESHOLD = 0.8;
-export const XP = { correct: 10, repeat: 2, practice: 2, bossWin: 50, perfect: 25, lesson: 5, lab: 20 } as const;
+export const XP = { correct: 10, repeat: 2, practice: 2, bossWin: 50, perfect: 25, lesson: 5, lab: 20, ticket: 15, dailyTicket: 30 } as const;
 /** Leitner-Abstände in Tagen für Box 1–5. */
 export const BOX_DAYS = [1, 3, 7, 14, 30] as const;
 
@@ -39,6 +39,8 @@ export interface Progress {
   exams: Partial<Record<CertId, { best: number; last: number; date: string }>>;
   settings: { focusCert?: CertId; reminder?: boolean; dailyGoal?: number };
   daily: { day: string; xp: number }; // heute verdiente XP für das Tagesziel
+  desk: Record<string, 1>; // Service-Desk-Ticket einmal gelöst -> danach nur noch XP.repeat
+  deskDaily: string; // Tag, an dem der Bonus für das Ticket des Tages vergeben wurde
 }
 
 export const emptyProgress = (): Progress => ({
@@ -58,6 +60,8 @@ export const emptyProgress = (): Progress => ({
   exams: {},
   settings: {},
   daily: { day: '', xp: 0 },
+  desk: {},
+  deskDaily: '',
 });
 
 export const emptyLevel = (): LevelProgress => ({
@@ -151,6 +155,26 @@ export function recordAnswer(p: Progress, key: string, correct: boolean, mode: A
 /** Übungsaufgaben (Trainer): wenig XP, zählt für die Streak, landet nicht im Wiederholen-Stapel. */
 export function recordPractice(p: Progress, correct: boolean, now = today()): Progress {
   return { ...p, xp: p.xp + (correct ? XP.practice : 0), answered: p.answered + 1, streak: touchStreak(p, now) };
+}
+
+/** Service-Desk-Ticket abgeschlossen. Das Ticket des Tages bringt einmal pro Tag zusätzlich XP.dailyTicket. */
+export function recordTicket(p: Progress, ticketId: string, correct: boolean, isDaily: boolean, now = today()): Progress {
+  const gain = !correct ? 0 : p.desk[ticketId] ? XP.repeat : XP.ticket;
+  const bonus = correct && isDaily && p.deskDaily !== now;
+  return {
+    ...p,
+    xp: p.xp + gain + (bonus ? XP.dailyTicket : 0),
+    answered: p.answered + 1,
+    desk: correct ? { ...p.desk, [ticketId]: 1 } : p.desk,
+    deskDaily: bonus ? now : p.deskDaily,
+    streak: touchStreak(p, now),
+  };
+}
+
+/** Wechselt täglich, für alle Nutzer gleich. */
+export function ticketOfDay<T>(tickets: T[], now = today()): T {
+  const [y, m, d] = now.split('-').map(Number);
+  return tickets[Math.floor(Date.UTC(y, m - 1, d) / 86_400_000) % tickets.length];
 }
 
 export function recordTrainerTime(p: Progress, generator: string, ms: number): Progress {

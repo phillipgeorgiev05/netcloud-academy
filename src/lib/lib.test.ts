@@ -1,7 +1,7 @@
 import { tablesOf } from './sheet';
 import { describe, expect, it } from 'vitest';
 import { broadcastOf, generateSubnetProblem, networkOf, prefixForHosts, prefixToMask, subnetAnswerMatches, usableHosts } from './subnet';
-import { addDays, emptyProgress, finishBoss, finishQuiz, isPassed, levelProgress, parseImport, playerLevel, recordAnswer, dailyXp, trackDaily } from './progress';
+import { addDays, emptyProgress, finishBoss, finishQuiz, isPassed, levelProgress, parseImport, playerLevel, recordAnswer, dailyXp, trackDaily, recordTicket, ticketOfDay } from './progress';
 import type { SubnetTask } from '../types/content';
 
 describe('subnet', () => {
@@ -102,5 +102,23 @@ describe('progress', () => {
 
   it('Spickzettel findet nur Tabellen', () => {
     expect(tablesOf('Text\n| a | b |\n|---|---|\n| 1 | 2 |\nmehr\n\n| x |')).toEqual(['| a | b |\n|---|---|\n| 1 | 2 |', '| x |']);
+  });
+});
+
+describe('Service Desk', () => {
+  it('Ticket: 15 XP erstmals, danach 2, Tagesbonus nur einmal pro Tag', () => {
+    let p = recordTicket(emptyProgress(), 'n01', true, true, '2026-11-01');
+    expect(p.xp).toBe(15 + 30);
+    expect(p.deskDaily).toBe('2026-11-01');
+    p = recordTicket(p, 'n01', true, true, '2026-11-01');
+    expect(p.xp).toBe(45 + 2);
+    p = recordTicket(p, 'n02', false, false, '2026-11-01');
+    expect(p.xp).toBe(47);
+    expect(p.desk).toEqual({ n01: 1 });
+  });
+  it('Ticket des Tages wechselt täglich und ist deterministisch', () => {
+    const list = ['a', 'b', 'c'];
+    expect(ticketOfDay(list, '2026-11-01')).toBe(ticketOfDay(list, '2026-11-01'));
+    expect(ticketOfDay(list, '2026-11-01')).not.toBe(ticketOfDay(list, '2026-11-02'));
   });
 });

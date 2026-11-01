@@ -1,12 +1,14 @@
 import { useState } from 'react';
 import type { ChainQuestion } from '../../types/content';
-import { RichText, type QProps } from './shared';
+import { RichText, shuffle, type QProps } from './shared';
 
 /** Fehlersuche Schritt für Schritt. Jede Wahl zeigt sofort Feedback, `next` bestimmt den nächsten Schritt. */
 export function ChainQuestionView({ q, onResult, locked }: QProps<ChainQuestion>) {
   const [path, setPath] = useState<{ stepId: string; optionId: string }[]>([]);
   const [current, setCurrent] = useState<string | null>(q.steps[0].id);
   const step = (id: string) => q.steps.find((s) => s.id === id)!;
+  // Optionen pro Schritt einmal mischen, sonst stünde die richtige Antwort immer an derselben Stelle
+  const [order] = useState(() => Object.fromEntries(q.steps.map((s) => [s.id, shuffle(s.options)])));
 
   const choose = (optId: string) => {
     if (!current || locked) return;
@@ -48,7 +50,7 @@ export function ChainQuestionView({ q, onResult, locked }: QProps<ChainQuestion>
           <div className="mb-2 text-sm text-slate-400">Schritt {path.length + 1}</div>
           <RichText text={step(current).text} className="mb-3" />
           <div className="space-y-2">
-            {step(current).options.map((o) => (
+            {order[current].map((o) => (
               <button key={o.id} type="button" onClick={() => choose(o.id)} className="w-full rounded-xl border-2 border-slate-700 p-3 text-left hover:border-cyan-400">
                 {o.text}
               </button>

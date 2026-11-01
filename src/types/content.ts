@@ -189,6 +189,18 @@ export interface ConfigQuestion extends QBase {
   requirements: { text: string; needs: string[] }[];
 }
 
+/** Service-Desk-Ticket: Kundentext als `prompt`, Bearbeitung als Fehlersuche-Kette (Diagnose → Ursache → Lösung). */
+export interface Ticket extends ChainQuestion {
+  title: string;
+  category: 'network' | 'cloud' | 'it';
+  /** 1 = kritisch … 4 = niedrig (Auswirkung × Dringlichkeit) */
+  priority: 1 | 2 | 3 | 4;
+  /** Meldende Person mit Abteilung (fiktiv) */
+  reporter: string;
+  /** Level zum Nachlernen */
+  learn?: string;
+}
+
 export type Question =
   | SingleQuestion
   | MultiQuestion

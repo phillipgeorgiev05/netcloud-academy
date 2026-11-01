@@ -2,7 +2,8 @@ import { Link } from 'react-router-dom';
 import { levels, tracks } from '../content';
 import { certs } from '../content/certs';
 import type { Level, Track } from '../types/content';
-import { dueReviews, isPassed, isUnlocked, levelProgress, playerLevel, PASS_THRESHOLD } from '../lib/progress';
+import { tickets } from '../content/tickets';
+import { dueReviews, ticketOfDay, today, XP, isPassed, isUnlocked, levelProgress, playerLevel, PASS_THRESHOLD } from '../lib/progress';
 import { useProgress } from '../lib/ProgressContext';
 
 export function HomePage() {
@@ -26,6 +27,11 @@ export function HomePage() {
         {due > 0 && (
           <Link to="/review" className="mt-3 block rounded-xl bg-rose-500/20 p-3 text-sm font-semibold text-rose-200 hover:bg-rose-500/30">
             🧠 {due} {due === 1 ? 'Frage ist' : 'Fragen sind'} zum Wiederholen fällig →
+          </Link>
+        )}
+        {progress.deskDaily !== today() && (
+          <Link to="/desk" className="mt-3 block rounded-xl bg-yellow-400/15 p-3 text-sm font-semibold text-yellow-300 hover:bg-yellow-400/25">
+            🎧 Ticket des Tages: „{ticketOfDay(tickets).title}“ · +{XP.dailyTicket} XP Bonus →
           </Link>
         )}
       </section>

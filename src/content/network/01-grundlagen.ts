@@ -51,6 +51,42 @@ Im Rechenzentrum verbreitet: **Spine-Leaf** – jeder Leaf-Switch ist mit jedem 
       analogy: 'Stern-Topologie = Flughafen-Drehkreuz: Alle Flüge gehen über den Hub. Fällt der Hub aus, steht alles.',
     },
     {
+      heading: 'Netzwerkarchitekturen: 2-Tier, 3-Tier, Spine-Leaf, SOHO',
+      body: `Firmennetze sind in **Schichten (tiers)** aufgebaut. Jede Schicht hat eine klare Aufgabe:
+
+| Schicht | Englisch | Aufgabe |
+|---|---|---|
+| Zugang | **Access** | Endgeräte anschließen (PCs, Telefone, APs), PoE, Port Security |
+| Verteilung | **Distribution** | Access-Switches bündeln, Routing zwischen VLANs, Richtlinien (ACLs) |
+| Kern | **Core** | nur schnelles Weiterleiten zwischen Gebäuden/Bereichen, hochverfügbar, keine Filter |
+
+- **3-Tier (Three-Tier):** Access, Distribution und Core getrennt. Für große Campus-Netze mit mehreren Gebäuden.
+- **2-Tier / Collapsed Core:** Distribution und Core sind **zusammengelegt**. Spart Geräte, typisch für mittlere Firmen oder ein einzelnes Gebäude.
+- **Spine-Leaf:** im Rechenzentrum. Server hängen an **Leaf**-Switches, jeder Leaf ist mit **jedem Spine** verbunden. Leafs sind nie direkt verbunden, Spines auch nicht. Jeder Weg Server → Server ist gleich lang (Leaf → Spine → Leaf). Gut für viel **Ost-West-Verkehr** (Server zu Server). **Nord-Süd-Verkehr** geht dagegen in das Rechenzentrum hinein oder heraus.
+- **SOHO (Small Office/Home Office):** ein Kombigerät (Router, Switch, WLAN, Firewall) für wenige Nutzer.
+- **On-Premises vs. Cloud:** On-Premises steht die Technik im eigenen Gebäude. In der Cloud mietest du sie beim Anbieter (Teil B). Viele Firmen mischen beides (**hybrid**).
+- **WAN:** verbindet Standorte über Provider-Leitungen, VPN oder SD-WAN (siehe A12).`,
+      analogy: 'Das 3-Tier-Modell ist wie ein Straßennetz: Access = Wohnstraßen zu jedem Haus, Distribution = Hauptstraßen eines Stadtteils (mit Ampeln = Regeln), Core = Autobahn ohne Ampeln, nur schnell.',
+      terms: [
+        { de: 'Zugangsschicht', en: 'access layer' },
+        { de: 'Verteilungsschicht', en: 'distribution layer' },
+        { de: 'Kernschicht', en: 'core layer' },
+        { de: 'zusammengelegter Kern', en: 'collapsed core' },
+        { de: 'Ost-West-Verkehr', en: 'east-west traffic' },
+      ],
+      check: {
+        id: 'c2', type: 'single', difficulty: 1,
+        prompt: 'Ein mittelgroßes Unternehmen in einem Gebäude legt Core- und Distribution-Schicht auf dieselben Switches. Wie heißt das?',
+        options: [
+          { id: 'a', text: 'Collapsed Core (2-Tier)' },
+          { id: 'b', text: 'Spine-Leaf', whyWrong: 'Spine-Leaf ist ein Rechenzentrumsdesign mit Leaf- und Spine-Switches.' },
+          { id: 'c', text: '3-Tier', whyWrong: 'Beim 3-Tier-Modell sind Core und Distribution getrennte Geräte.' },
+        ],
+        correct: 'a',
+        explanation: 'Beim Collapsed Core (2-Tier) übernimmt eine Geräteschicht Core- und Distribution-Aufgaben.',
+      },
+    },
+    {
       heading: 'Die wichtigsten Geräte',
       check: {
         id: 'c1', type: 'single', difficulty: 1,
@@ -69,6 +105,10 @@ Im Rechenzentrum verbreitet: **Spine-Leaf** – jeder Leaf-Switch ist mit jedem 
 - **Firewall:** filtert Verkehr nach Regeln (erlauben/verbieten). Moderne **Next-Generation Firewalls (NGFW)** erkennen auch Anwendungen.
 - **Hub (veraltet):** sendet alles an alle Ports, eine Kollisionsdomäne – heute durch Switches ersetzt.
 - **Modem/ONT:** wandelt Signale für die Provider-Leitung (DSL, Kabel, Glasfaser).
+- **Layer-3-Switch:** Switch, der zusätzlich routen kann. Verbindet im Firmennetz die VLANs untereinander, schneller als ein Router.
+- **WLAN-Controller (WLC):** verwaltet viele Access Points zentral (Kanäle, Sendeleistung, SSIDs).
+- **IDS/IPS:** erkennt Angriffe im Verkehr. Ein **IDS** meldet nur, ein **IPS** blockiert auch.
+- **Endgeräte (endpoints):** PCs, Handys, Drucker, IoT-Geräte. **Server** stellen Dienste bereit (Web, Datei, E-Mail).
 
 Der „WLAN-Router“ zuhause ist ein Kombigerät: Router + Switch + AP + Firewall + Modem in einem.`,
       analogy: 'Switch = Hausmeister, der jede Wohnung im Haus kennt. Router = Postverteilzentrum, das entscheidet, in welche Stadt ein Brief muss.',
@@ -90,6 +130,35 @@ Achtung Einheiten: **Bit** (b) vs. **Byte** (B). 1 Byte = 8 Bit. 100 Mbit/s ≈ 
     },
   ],
   quiz: [
+    {
+      id: 'q17', type: 'single', difficulty: 2,
+      prompt: 'In welcher Schicht des 3-Tier-Modells werden Endgeräte angeschlossen und Funktionen wie PoE und Port Security bereitgestellt?',
+      options: [
+        { id: 'a', text: 'Access' },
+        { id: 'b', text: 'Distribution', whyWrong: 'Die Distribution bündelt Access-Switches und setzt Richtlinien um, Endgeräte hängen dort nicht.' },
+        { id: 'c', text: 'Core', whyWrong: 'Der Core leitet nur schnell weiter, dort hängen keine Endgeräte.' },
+      ],
+      correct: 'a',
+      explanation: 'Die Access-Schicht ist der Anschlusspunkt für Endgeräte. Dort sitzen PoE für Telefone und APs sowie Port Security.',
+    },
+    {
+      id: 'q18', type: 'dragdrop', difficulty: 2,
+      prompt: 'Ordne die Geräte ihrer Aufgabe zu.',
+      items: [
+        { id: 'i1', text: 'verwaltet 50 Access Points zentral' },
+        { id: 'i2', text: 'blockiert erkannte Angriffe im Datenstrom' },
+        { id: 'i3', text: 'routet zwischen VLANs im Firmennetz' },
+        { id: 'i4', text: 'meldet verdächtigen Verkehr nur' },
+      ],
+      buckets: [
+        { id: 'wlc', label: 'WLC' },
+        { id: 'ips', label: 'IPS' },
+        { id: 'l3', label: 'Layer-3-Switch' },
+        { id: 'ids', label: 'IDS' },
+      ],
+      solution: { i1: 'wlc', i2: 'ips', i3: 'l3', i4: 'ids' },
+      explanation: 'WLC = zentrale AP-Verwaltung. IPS blockiert, IDS meldet nur. Ein Layer-3-Switch routet zwischen VLANs.',
+    },
     {
       id: 'q1', type: 'single', difficulty: 1,
       prompt: 'Welches Gerät verbindet **verschiedene Netzwerke** miteinander und trifft Weiterleitungsentscheidungen anhand von IP-Adressen?',

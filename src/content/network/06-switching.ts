@@ -180,8 +180,65 @@ passive–passive und auto–auto bilden **keinen** Channel, weil keiner die Aus
         { de: 'Lastverteilung', en: 'load balancing' },
       ],
     },
+    {
+      heading: 'CDP und LLDP – Nachbarn erkennen',
+      body: `Switches, Router, IP-Telefone und APs können sich gegenseitig vorstellen: „Ich bin SW2, Modell C9200, mein Port Gi1/0/24, meine IP 10.0.0.2“. Das hilft beim **Dokumentieren** und bei der **Fehlersuche** („An welchem Switchport hängt dieses Kabel?“).
+
+| | **CDP** | **LLDP** |
+|---|---|---|
+| Name | Cisco Discovery Protocol | Link Layer Discovery Protocol |
+| Standard | Cisco-proprietär | herstellerneutral, **IEEE 802.1AB** |
+| Auf Cisco-Geräten | standardmäßig **an** | standardmäßig meist **aus** |
+| Senden alle | 60 s | 30 s |
+| Haltezeit (holdtime) | 180 s | 120 s |
+
+Beide arbeiten auf **Schicht 2** und gehen **nur bis zum direkten Nachbarn** (sie werden nicht weitergeleitet). Daher funktionieren sie auch ohne IP-Konfiguration.
+
+**Wichtige Befehle (Cisco IOS):**
+- \`show cdp neighbors\` – Kurzliste: Nachbar, eigener Port, Modell (Platform), Port des Nachbarn
+- \`show cdp neighbors detail\` – zusätzlich **IP-Adresse** und IOS-Version
+- \`lldp run\` (global) schaltet LLDP ein, \`show lldp neighbors\` zeigt die Nachbarn
+- \`no cdp run\` (global) bzw. \`no cdp enable\` (pro Port) schaltet CDP ab
+
+**Sicherheit:** CDP/LLDP verraten Modell, Softwareversion und IP-Adressen. Auf Ports zu fremden Geräten (Internet-Router des Providers, Gäste) sollte man sie **abschalten**. Zu IP-Telefonen braucht man sie oft, weil das Telefon darüber sein **Voice-VLAN** lernt (LLDP-MED).`,
+      analogy: 'CDP/LLDP sind wie Namensschilder bei einem Treffen: Jeder zeigt sein Schild nur den direkten Tischnachbarn. Praktisch, aber in fremder Gesellschaft verrät man lieber nicht zu viel.',
+      terms: [
+        { de: 'Nachbarerkennung', en: 'neighbor discovery' },
+        { de: 'Haltezeit', en: 'holdtime' },
+      ],
+      check: {
+        id: 'c2', type: 'single', difficulty: 1,
+        prompt: 'Im Netz gibt es Switches von Cisco und HP. Welches Protokoll zeigt Nachbarn über Herstellergrenzen hinweg?',
+        options: [
+          { id: 'a', text: 'LLDP' },
+          { id: 'b', text: 'CDP', whyWrong: 'CDP ist Cisco-proprietär, HP-Switches sprechen es in der Regel nicht.' },
+          { id: 'c', text: 'STP', whyWrong: 'STP verhindert Schleifen, es zeigt keine Geräteinformationen der Nachbarn.' },
+        ],
+        correct: 'a',
+        explanation: 'LLDP (IEEE 802.1AB) ist herstellerneutral.',
+      },
+    },
   ],
   quiz: [
+    {
+      id: 'q18', type: 'cli', shell: 'ios', difficulty: 1,
+      prompt: 'Du willst sehen, an welchem Port des Nachbar-Switches dein Uplink endet **und welche IP-Adresse** der Nachbar hat. Welcher Befehl zeigt beides?',
+      template: 'SW1# {{0}}',
+      blanks: [{ accept: ['show cdp neighbors detail', 'sh cdp nei det', 'show cdp neighbor detail', 'sh cdp neighbors detail'] }],
+      explanation: '`show cdp neighbors` zeigt Nachbar, Modell und Ports, aber keine IP-Adresse. Die steht erst in `show cdp neighbors detail` (alternativ `show cdp entry *`).',
+    },
+    {
+      id: 'q19', type: 'multi', difficulty: 2,
+      prompt: 'Welche Aussagen zu CDP und LLDP stimmen?',
+      options: [
+        { id: 'a', text: 'Beide arbeiten auf Schicht 2 und erreichen nur direkt verbundene Nachbarn.' },
+        { id: 'b', text: 'LLDP ist ein IEEE-Standard (802.1AB).' },
+        { id: 'c', text: 'CDP-Meldungen werden von Switches an alle Ports weitergeflutet.', whyWrong: 'CDP-Frames werden vom Nachbarn verarbeitet und nicht weitergeleitet.' },
+        { id: 'd', text: 'Ohne IP-Adresse auf dem Port funktioniert CDP nicht.', whyWrong: 'CDP ist ein Layer-2-Protokoll und braucht keine IP-Konfiguration.' },
+      ],
+      correct: ['a', 'b'],
+      explanation: 'CDP und LLDP sind Layer-2-Protokolle zwischen direkten Nachbarn. LLDP ist herstellerneutral (IEEE 802.1AB), CDP Cisco-proprietär.',
+    },
     {
       id: 'q1', type: 'single', difficulty: 1,
       prompt: 'Was ist ein VLAN aus Sicht von Broadcasts?',

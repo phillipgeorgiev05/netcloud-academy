@@ -1,9 +1,10 @@
 // Prüft alle Inhalte auf Konsistenz. Läuft mit `npm test`.
 import { describe, expect, it } from 'vitest';
-import { levels } from './index';
+import { levels, tracks } from './index';
 import { certs } from './certs';
 import { glossary } from './glossary';
 import { decisionTree } from './decisions';
+import { tickets } from './tickets';
 import type { Question } from '../types/content';
 
 const MIN_QUIZ = 15;
@@ -79,6 +80,27 @@ describe('Zusatzinhalte', () => {
     expect(errs).toEqual([]);
     expect(ids).toContain('start');
   });
+});
+
+describe('Service-Desk-Tickets', () => {
+  it('mind. 20 Tickets, eindeutige IDs, alle Kategorien', () => {
+    expect(tickets.length).toBeGreaterThanOrEqual(20);
+    expect(new Set(tickets.map((t) => t.id)).size).toBe(tickets.length);
+    expect(new Set(tickets.map((t) => t.category))).toEqual(new Set(['network', 'cloud', 'it']));
+  });
+  for (const t of tickets) {
+    it(`Ticket ${t.id} gültig`, () => {
+      expect(problems(t)).toEqual([]);
+      expect(t.title && t.reporter && t.prompt && t.explanation).toBeTruthy();
+      // learn darf auf ein geplantes, noch nicht geschriebenes Level zeigen
+      if (t.learn) {
+        const [track, n] = t.learn.split('-');
+        const planned = tracks[track === 'net' ? 'network' : 'cloud']?.planned.length ?? 0;
+        expect(Number(n)).toBeGreaterThan(0);
+        expect(Number(n)).toBeLessThanOrEqual(planned);
+      }
+    });
+  }
 });
 
 describe('Inhalte', () => {
