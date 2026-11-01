@@ -16,7 +16,7 @@ function Stepper({ steps, render }: { steps: string[]; render: (i: number) => Re
   }, [play, i, steps.length]);
   const btn = 'rounded-lg bg-slate-800 px-3 py-1 text-sm hover:bg-slate-700 disabled:opacity-30';
   return (
-    <figure className="mt-3 rounded-xl border border-slate-700 bg-slate-950 p-3">
+    <figure className="mt-3 rounded-xl bg-slate-950 p-3">
       <div className="min-h-40">{render(i)}</div>
       <figcaption className="mt-2 text-sm text-slate-300" aria-live="polite">
         <span className="text-slate-500">Schritt {i + 1}/{steps.length}: </span>
@@ -54,7 +54,7 @@ function OsiEncapsulation() {
       steps={steps}
       render={(i) => (
         <div className="flex flex-col items-center gap-3">
-          <div className="flex w-full flex-row-reverse flex-wrap justify-center gap-1 text-[11px] font-semibold text-slate-950 sm:text-xs">
+          <div className="flex w-full flex-row-reverse flex-wrap justify-center gap-1 text-[11px] font-semibold text-ink sm:text-xs">
             {i >= 3 && <span className={`rounded px-2 py-3 ${layerColors[3]}`}>FCS</span>}
             {parts.slice(0, Math.min(i + 1, 4)).map((p) => (
               <span key={p.label} className={`rounded px-2 py-3 transition-all ${p.color}`}>{p.label}</span>
@@ -114,10 +114,10 @@ function EthernetFrame() {
     { name: 'FCS', size: '4', w: 'flex-[4]' },
   ];
   return (
-    <figure className="mt-3 overflow-x-auto rounded-xl border border-slate-700 bg-slate-950 p-3">
+    <figure className="mt-3 overflow-x-auto rounded-xl bg-slate-950 p-3">
       <div className="flex min-w-[32rem] gap-0.5 text-center text-[11px]">
         {fields.map((f, i) => (
-          <div key={f.name} className={`${f.w} rounded py-2 text-slate-950 ${layerColors[i % 4]}`}>
+          <div key={f.name} className={`${f.w} rounded py-2 text-ink ${layerColors[i % 4]}`}>
             <div className="font-semibold">{f.name}</div>
             <div>{f.size} B</div>
           </div>
@@ -136,7 +136,7 @@ function AzureHierarchy() {
     { icon: '🖥️', name: 'Ressource', ex: 'vm-web01' },
   ];
   return (
-    <figure className="mt-3 rounded-xl border border-slate-700 bg-slate-950 p-3 text-sm">
+    <figure className="mt-3 rounded-xl bg-slate-950 p-3 text-sm">
       {rows.map((r, i) => (
         <div key={r.name} className="flex items-center gap-2 py-1" style={{ paddingLeft: `${i * 1.25}rem` }}>
           <span>{i > 0 ? '└' : ''}</span>

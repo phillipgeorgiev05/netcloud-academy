@@ -18,7 +18,7 @@ export function LessonView({ level }: { level: Level }) {
 
 function Section({ s, link }: { s: LessonSection; link: (t: string) => string | undefined }) {
   return (
-    <section className="rounded-2xl border border-slate-800 bg-slate-900 p-4">
+    <section className="rounded-2xl bg-slate-900 p-4">
       <h2 className="mb-2 text-lg font-semibold text-cyan-300">{s.heading}</h2>
       <RichText text={s.body} link={link} />
       {s.diagram && <Diagram id={s.diagram} />}

@@ -6,6 +6,7 @@ import { certs } from '../content/certs';
 import type { CertId } from '../types/content';
 import { DEFAULT_DAILY_GOAL, emptyProgress, isPassed, levelProgress, parseImport, playerLevel, reviewKey } from '../lib/progress';
 import { useProgress } from '../lib/ProgressContext';
+import { readTheme, setTheme, type ThemePref } from '../lib/theme';
 
 export function ProfilePage() {
   const { progress, replace } = useProgress();
@@ -128,9 +129,28 @@ function Settings() {
     const perm = Notification.permission === 'granted' ? 'granted' : await Notification.requestPermission();
     if (perm === 'granted') setSetting({ reminder: true });
   };
+  const [theme, setThemeState] = useState(readTheme);
+  const themes: [ThemePref, string][] = [['system', 'System'], ['light', 'Hell'], ['dark', 'Dunkel']];
   return (
     <section className="space-y-3">
       <h2 className="text-lg font-bold">⚙️ Einstellungen</h2>
+      <div className="text-sm">
+        <span className="mb-1 block text-slate-300">Darstellung (gilt nur auf diesem Gerät)</span>
+        <div role="radiogroup" aria-label="Darstellung" className="grid grid-cols-3 gap-1 rounded-xl bg-slate-800 p-1">
+          {themes.map(([id, label]) => (
+            <button
+              key={id}
+              type="button"
+              role="radio"
+              aria-checked={theme === id}
+              onClick={() => { setTheme(id); setThemeState(id); }}
+              className={`rounded-lg py-1.5 font-medium transition ${theme === id ? 'bg-cyan-500 text-snow' : 'text-slate-300 hover:text-white'}`}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
+      </div>
       <label className="block text-sm">
         <span className="mb-1 block text-slate-300">Zertifikats-Fokus (blendet Detailfragen anderer Zertifikate aus, z. B. AZ-104-Tiefe im AZ-900-Modus)</span>
         <select

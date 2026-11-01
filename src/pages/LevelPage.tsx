@@ -85,7 +85,7 @@ function LevelFlow({ level }: { level: Level }) {
             update((p) => completeLesson(p, level.id));
             start('quiz');
           }}
-          className="mt-6 w-full rounded-xl bg-cyan-500 px-4 py-3 font-semibold text-white hover:bg-cyan-400"
+          className="mt-6 w-full rounded-xl bg-cyan-500 px-4 py-3 font-semibold text-snow hover:bg-cyan-400"
         >
           Lektion abgeschlossen – zum Quiz →
         </button>
@@ -166,7 +166,7 @@ function LevelFlow({ level }: { level: Level }) {
             </button>
           )}
           {!ok && (
-            <button type="button" onClick={() => start(last.kind)} className="rounded-xl bg-cyan-500 px-4 py-3 font-semibold text-white hover:bg-cyan-400">
+            <button type="button" onClick={() => start(last.kind)} className="rounded-xl bg-cyan-500 px-4 py-3 font-semibold text-snow hover:bg-cyan-400">
               Nochmal versuchen
             </button>
           )}
@@ -192,12 +192,12 @@ function LevelFlow({ level }: { level: Level }) {
         ))}
       </div>
       <div className="mt-6 space-y-3">
-        <button type="button" onClick={() => start('lesson')} className={`${stepCls} border-slate-700 bg-slate-900 hover:border-cyan-400`}>
+        <button type="button" onClick={() => start('lesson')} className={`${stepCls} border-transparent bg-slate-900 hover:border-cyan-400`}>
           <span className="text-2xl">📖</span>
           <span className="flex-1"><b>1. Lektion</b><br /><span className="text-sm text-slate-400">{level.lesson.length} Abschnitte</span></span>
           {lp.lessonDone && <span className="text-emerald-400">✓</span>}
         </button>
-        <button type="button" onClick={() => start('quiz')} className={`${stepCls} border-slate-700 bg-slate-900 hover:border-cyan-400`}>
+        <button type="button" onClick={() => start('quiz')} className={`${stepCls} border-transparent bg-slate-900 hover:border-cyan-400`}>
           <span className="text-2xl">📝</span>
           <span className="flex-1"><b>2. Quiz</b><br /><span className="text-sm text-slate-400">{quizQs.length} Fragen{quizQs.length < level.quiz.length ? ` (Fokus ${focus?.toUpperCase()})` : ''} · Bestwert {Math.round(lp.quizBest * 100)} % · mind. 80 %</span></span>
           {quizOk && <span className="text-emerald-400">✓</span>}
@@ -206,7 +206,7 @@ function LevelFlow({ level }: { level: Level }) {
           type="button"
           disabled={!quizOk}
           onClick={() => start('boss')}
-          className={`${stepCls} ${quizOk ? 'border-rose-500/50 bg-slate-900 hover:border-rose-400' : 'cursor-not-allowed border-slate-800 bg-slate-900/50 opacity-50'}`}
+          className={`${stepCls} ${quizOk ? 'border-rose-500/50 bg-slate-900 hover:border-rose-400' : 'cursor-not-allowed border-transparent bg-slate-900/50 opacity-50'}`}
         >
           <span className="text-2xl">{quizOk ? '👾' : '🔒'}</span>
           <span className="flex-1">
@@ -218,7 +218,7 @@ function LevelFlow({ level }: { level: Level }) {
           {lp.bossPassed && <span className="text-emerald-400">✓</span>}
         </button>
         {level.lab && (
-          <button type="button" onClick={() => start('lab')} className={`${stepCls} border-slate-700 bg-slate-900 hover:border-emerald-400`}>
+          <button type="button" onClick={() => start('lab')} className={`${stepCls} border-transparent bg-slate-900 hover:border-emerald-400`}>
             <span className="text-2xl">🧪</span>
             <span className="flex-1">
               <b>Bonus: Praxis-Lab</b><br />

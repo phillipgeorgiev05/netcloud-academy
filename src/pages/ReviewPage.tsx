@@ -62,7 +62,7 @@ export function ReviewPage() {
       </div>
       <p className="text-sm text-slate-400">{total} im Stapel · {progress.mastered} gemeistert</p>
       {dueNow.length ? (
-        <button type="button" onClick={() => setItems(dueNow)} className="w-full rounded-xl bg-cyan-500 px-4 py-3 font-semibold text-white hover:bg-cyan-400">
+        <button type="button" onClick={() => setItems(dueNow)} className="w-full rounded-xl bg-cyan-500 px-4 py-3 font-semibold text-snow hover:bg-cyan-400">
           {dueNow.length} fällige Fragen wiederholen
         </button>
       ) : (

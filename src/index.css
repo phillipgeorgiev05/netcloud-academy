@@ -55,7 +55,64 @@
 
   --color-brand: #0a84ff;
   --color-xp: #ffd60a;
+
+  /* in beiden Schemata gleich: Schrift auf farbigen Flächen, Terminal-Grün */
+  --color-snow: #ffffff;
+  --color-ink: #000000;
+  --color-term: #6ee58a;
 }
+
+/* Helles Schema (Apple Light Mode): Grautöne umgedreht, Akzente dunkler für Kontrast auf Weiß.
+   white = Haupttext, 950 = Seitenhintergrund, 900 = Karten, 800 = Füllflächen, 700 = Linien. */
+:root { color-scheme: dark; }
+:root[data-theme="light"] {
+  color-scheme: light;
+  --color-white: #1d1d1f;
+  --color-slate-50: #000000;
+  --color-slate-100: #1d1d1f;
+  --color-slate-200: #2c2c2e;
+  --color-slate-300: #3a3a3c;
+  --color-slate-400: #6e6e73;
+  --color-slate-500: #86868b;
+  --color-slate-600: #aeaeb2;
+  --color-slate-700: #e0e0e5;
+  --color-slate-800: #ebebf0;
+  --color-slate-900: #ffffff;
+  --color-slate-950: #f2f2f7;
+
+  --color-cyan-200: #003f80;
+  --color-cyan-300: #0058b8;
+  --color-cyan-400: #007aff;
+  --color-cyan-500: #0071e3;
+  --color-cyan-600: #0058b8;
+
+  --color-sky-300: #00668f;
+  --color-sky-400: #0083b0;
+  --color-sky-500: #32ade6;
+
+  --color-emerald-200: #145226;
+  --color-emerald-300: #1e7a35;
+  --color-emerald-400: #28a745;
+  --color-emerald-500: #34c759;
+
+  --color-rose-200: #8a0d0d;
+  --color-rose-300: #c4001a;
+  --color-rose-400: #ff3b30;
+  --color-rose-500: #ff3b30;
+  --color-rose-900: #ffe5e3;
+
+  --color-amber-300: #b84a00;
+  --color-amber-400: #ff9500;
+  --color-amber-500: #ff9500;
+
+  --color-yellow-300: #9a6400;
+  --color-yellow-400: #ffcc00;
+
+  --color-violet-500: #5856d6;
+  --color-brand: #007aff;
+}
+/* Karten heben sich im hellen Schema per weichem Schatten statt Rahmen ab */
+:root[data-theme="light"] .bg-slate-900 { box-shadow: 0 1px 2px rgb(0 0 0 / 0.04), 0 2px 12px rgb(0 0 0 / 0.04); }
 
 html, body, #root { min-height: 100%; }
 body {

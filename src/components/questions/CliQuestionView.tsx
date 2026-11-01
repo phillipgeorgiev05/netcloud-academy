@@ -33,7 +33,7 @@ export function CliQuestionView({ q, onResult, locked }: QProps<CliQuestion>) {
   return (
     <div>
       <div className="mb-1 text-xs uppercase tracking-wide text-slate-400">{shellNames[q.shell]}</div>
-      <div className="overflow-x-auto rounded-xl border border-slate-700 bg-black p-3 font-mono text-sm leading-9 text-emerald-300">
+      <div className="overflow-x-auto rounded-xl border border-slate-700 bg-black p-3 font-mono text-sm leading-9 text-term">
         {parts.map((p, k) => {
           const idx = blankIndex(p);
           if (idx === undefined) return <span key={k} className="whitespace-pre-wrap">{p}</span>;

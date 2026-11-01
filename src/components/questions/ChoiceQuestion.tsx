@@ -63,7 +63,7 @@ export function ChoiceQuestion({ q, onResult, locked }: QProps<SingleQuestion | 
                   chosen ? 'border-cyan-400 bg-cyan-400' : 'border-slate-500'
                 }`}
               >
-                {chosen && <span className="text-xs text-slate-950">✓</span>}
+                {chosen && <span className="text-xs text-ink">✓</span>}
               </span>
               <RichText text={o.text} />
             </button>

@@ -34,7 +34,7 @@ export function CheckButton({ disabled, onClick, children = 'Prüfen' }: { disab
       type="button"
       disabled={disabled}
       onClick={onClick}
-      className="mt-4 w-full rounded-xl bg-cyan-500 px-4 py-3 font-semibold text-white transition hover:bg-cyan-400 disabled:cursor-not-allowed disabled:opacity-40 sm:w-auto"
+      className="mt-4 w-full rounded-xl bg-cyan-500 px-4 py-3 font-semibold text-snow transition hover:bg-cyan-400 disabled:cursor-not-allowed disabled:opacity-40 sm:w-auto"
     >
       {children}
     </button>
@@ -52,7 +52,7 @@ export function RichText({ text, className = '', link }: { text: string; classNa
     <div className={`space-y-3 leading-relaxed ${className}`}>
       {segments.map((seg, si) =>
         si % 2 === 1 ? (
-          <pre key={si} className="overflow-x-auto rounded-lg border border-slate-700 bg-black p-3 font-mono text-xs leading-relaxed text-emerald-300 sm:text-sm">
+          <pre key={si} className="overflow-x-auto rounded-lg border border-slate-700 bg-black p-3 font-mono text-xs leading-relaxed text-term sm:text-sm">
             {seg.replace(/\n$/, '')}
           </pre>
         ) : (

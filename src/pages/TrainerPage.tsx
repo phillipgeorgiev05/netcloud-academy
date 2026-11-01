@@ -81,7 +81,7 @@ export function TrainerPage() {
         <p className="text-sm text-slate-400">Runden à {ROUND} Zufallsaufgaben. Fehlerfreie Runden zählen für die Bestzeit. Jede richtige Antwort bringt etwas XP und hält die Streak am Leben.</p>
         <div className="grid gap-2 sm:grid-cols-2">
           {allTasks.map((t) => (
-            <button key={t.id} type="button" onClick={() => begin(t.id)} className="flex items-center justify-between rounded-xl border border-slate-700 bg-slate-900 p-3 text-left hover:border-cyan-400">
+            <button key={t.id} type="button" onClick={() => begin(t.id)} className="flex items-center justify-between rounded-xl border border-transparent bg-slate-900 p-3 text-left hover:border-cyan-400">
               <span>{t.name}</span>
               {progress.trainerBest[t.id] !== undefined && <span className="text-xs text-yellow-300">🏅 {fmt(progress.trainerBest[t.id])}</span>}
             </button>
@@ -99,7 +99,7 @@ export function TrainerPage() {
         <p>{right}/{ROUND} richtig in {fmt(finished)}.</p>
         {right === ROUND && <p className="text-yellow-300">Bestzeit: {fmt(Math.min(finished, progress.trainerBest[task] ?? finished))}</p>}
         <div className="flex justify-center gap-2">
-          <button type="button" onClick={() => begin(task)} className="rounded-xl bg-cyan-500 px-4 py-3 font-semibold text-white">Neue Runde</button>
+          <button type="button" onClick={() => begin(task)} className="rounded-xl bg-cyan-500 px-4 py-3 font-semibold text-snow">Neue Runde</button>
           <button type="button" onClick={() => setTask(null)} className="rounded-xl bg-slate-800 px-4 py-3">Andere Aufgabe</button>
         </div>
       </div>

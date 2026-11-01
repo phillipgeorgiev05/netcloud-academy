@@ -114,10 +114,10 @@ Id in `GeneratorId` (types) und `generatorNames` ergänzen, Funktion in `lib/gen
 ## Coding-Konventionen
 
 - Inhalte strikt in `src/content/`, Logik in `src/lib/` (rein, testbar), UI in `components/`/`pages/`.
-- Fortschritt nur über reine Funktionen in `lib/progress.ts` ändern: `update((p) => fn(p))`. Kein direkter `localStorage`-Zugriff für Fortschritt außerhalb von `ProgressContext.tsx` (Ausnahme: der gerätebezogene Erinnerungs-Merker in `reminder.ts`).
+- Fortschritt nur über reine Funktionen in `lib/progress.ts` ändern: `update((p) => fn(p))`. Kein direkter `localStorage`-Zugriff für Fortschritt außerhalb von `ProgressContext.tsx` (Ausnahmen: gerätebezogene Merker wie die Erinnerung in `reminder.ts` und Hell/Dunkel in `theme.ts`).
 - Neue **optionale** Felder in `Progress` bekommen einen Standardwert in `emptyProgress()`. Das reicht für alte Exporte. Bei inkompatiblen Änderungen `version` erhöhen und in `parseImport` migrieren.
 - Neuer Fragetyp: Typ in `types/content.ts`, Component in `components/questions/`, Case + Label in `QuestionRenderer.tsx`, Validierung in `content.test.ts`.
-- Tailwind-Utility-Klassen direkt im JSX, dunkles Theme (slate/cyan). Mobile first, keine horizontale Scrollbar bei 375 px.
+- Tailwind-Utility-Klassen direkt im JSX (slate/cyan). Hell/Dunkel per CSS-Variablen in `index.css` (`data-theme`), darum im JSX keine festen Farben: `text-white`/`slate-*` passen sich an, auf farbigen Flächen `text-snow` (immer weiß) bzw. `text-ink` (immer schwarz). Mobile first, keine horizontale Scrollbar bei 375 px.
 - Keine neuen Dependencies ohne Grund.
 
 ## Spielregeln (Kurzreferenz)

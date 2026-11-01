@@ -13,7 +13,7 @@ export function ToolsPage() {
       <h1 className="text-2xl font-bold">🧰 Werkzeuge</h1>
       <div className="grid gap-3 sm:grid-cols-2">
         {tools.map((t) => (
-          <Link key={t.to} to={t.to} className="rounded-2xl border border-slate-700 bg-slate-900 p-4 hover:border-cyan-400">
+          <Link key={t.to} to={t.to} className="rounded-2xl border border-transparent bg-slate-900 p-4 hover:border-cyan-400">
             <div className="text-3xl">{t.icon}</div>
             <div className="mt-1 font-semibold">{t.title}</div>
             <div className="text-sm text-slate-400">{t.text}</div>

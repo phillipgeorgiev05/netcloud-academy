@@ -36,7 +36,7 @@ export function TopologyCanvas({
   onNodeClick,
   kindOf = (n) => n.kind,
   extra,
-  linkColor = () => '#64748b',
+  linkColor = () => 'var(--color-slate-500)',
   onLinkClick,
 }: {
   nodes: TopoNode[];
@@ -55,7 +55,7 @@ export function TopologyCanvas({
     <div className="relative w-full overflow-hidden rounded-xl border border-slate-700 bg-slate-900" style={{ aspectRatio: '16 / 11' }}>
       <svg className="absolute inset-0 h-full w-full" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden>
         {links.map(([a, b], i) => (
-          <line key={`${a}-${b}`} x1={pos(a).x} y1={pos(a).y} x2={pos(b).x} y2={pos(b).y} stroke={linkColor(i)} strokeWidth={onLinkClick ? 3 : 2} vectorEffect="non-scaling-stroke" />
+          <line key={`${a}-${b}`} x1={pos(a).x} y1={pos(a).y} x2={pos(b).x} y2={pos(b).y} style={{ stroke: linkColor(i) }} strokeWidth={onLinkClick ? 3 : 2} vectorEffect="non-scaling-stroke" />
         ))}
       </svg>
       {links.map(([a, b, label], i) => {

@@ -12,12 +12,12 @@ export function HomePage() {
 
   return (
     <div className="space-y-8">
-      <section className="rounded-2xl border border-slate-800 bg-gradient-to-br from-slate-900 to-slate-800 p-4">
+      <section className="rounded-2xl bg-slate-900 p-5">
         <div className="flex items-baseline justify-between">
           <h1 className="text-xl font-bold">Spielerlevel {pl.level}</h1>
           <span className="text-sm text-yellow-300">{progress.xp} XP</span>
         </div>
-        <div className="mt-2 h-3 overflow-hidden rounded-full bg-slate-950">
+        <div className="mt-3 h-2 overflow-hidden rounded-full bg-slate-800">
           <div className="h-full bg-yellow-400" style={{ width: `${(pl.into / pl.needed) * 100}%` }} />
         </div>
         <div className="mt-1 text-xs text-slate-400">
@@ -72,9 +72,9 @@ function LevelCard({ level }: { level: Level }) {
 
   const body = (
     <div className={`flex items-center gap-3 rounded-xl border p-3 transition ${
-      done ? 'border-emerald-500/50 bg-emerald-500/5' : open ? 'border-slate-700 bg-slate-900 hover:border-cyan-400' : 'border-slate-800 bg-slate-900/50 opacity-60'
+      done ? 'border-emerald-500/50 bg-emerald-500/5' : open ? 'border-transparent bg-slate-900 hover:border-cyan-400' : 'border-transparent bg-slate-900/50 opacity-60'
     }`}>
-      <span className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full font-bold ${done ? 'bg-emerald-500 text-white' : open ? 'bg-cyan-500 text-white' : 'bg-slate-800'}`}>
+      <span className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full font-bold ${done ? 'bg-emerald-500 text-snow' : open ? 'bg-cyan-500 text-snow' : 'bg-slate-800'}`}>
         {done ? '✓' : open ? level.order : '🔒'}
       </span>
       <div className="min-w-0 flex-1">

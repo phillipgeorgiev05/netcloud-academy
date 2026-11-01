@@ -99,7 +99,7 @@ export function ExamPage() {
                 type="button"
                 disabled={n === 0}
                 onClick={() => begin(c)}
-                className="flex w-full items-center justify-between rounded-xl border border-slate-700 bg-slate-900 p-3 text-left hover:border-cyan-400 disabled:opacity-40"
+                className="flex w-full items-center justify-between rounded-xl border border-transparent bg-slate-900 p-3 text-left hover:border-cyan-400 disabled:opacity-40"
               >
                 <span>
                   <b>{certs[c].name}</b> <span className="text-slate-500">({certs[c].exam})</span>
@@ -191,7 +191,7 @@ export function ExamPage() {
             onClick={() => go(i)}
             aria-current={i === idx}
             aria-label={`Frage ${i + 1}${answers[i] ? ', beantwortet' : ''}${marked[i] ? ', markiert' : ''}`}
-            className={`relative h-8 w-8 rounded-lg text-xs font-semibold ${i === idx ? 'ring-2 ring-white' : ''} ${answers[i] ? 'bg-cyan-500 text-white' : 'bg-slate-800 text-slate-300'}`}
+            className={`relative h-8 w-8 rounded-lg text-xs font-semibold ${i === idx ? 'ring-2 ring-white' : ''} ${answers[i] ? 'bg-cyan-500 text-snow' : 'bg-slate-800 text-slate-300'}`}
           >
             {i + 1}
             {marked[i] && <span className="absolute -right-1 -top-1 text-[10px]">🚩</span>}
@@ -216,7 +216,7 @@ export function ExamPage() {
           type="button"
           onClick={() => setMarked((m) => m.map((x, j) => (j === idx ? !x : x)))}
           aria-pressed={marked[idx]}
-          className={`rounded-xl px-4 py-3 ${marked[idx] ? 'bg-amber-400 text-slate-950' : 'bg-slate-800'}`}
+          className={`rounded-xl px-4 py-3 ${marked[idx] ? 'bg-amber-400 text-ink' : 'bg-slate-800'}`}
         >
           🚩 {marked[idx] ? 'Markiert' : 'Markieren'}
         </button>

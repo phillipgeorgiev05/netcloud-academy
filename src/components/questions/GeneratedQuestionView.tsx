@@ -35,7 +35,7 @@ export function GenProblemForm({ problem, locked, onResult }: { problem: GenProb
     set(li, (picked.includes(name(i)) ? picked.filter((n) => n !== name(i)) : [...picked, name(i)]).sort().join(', '));
   const solution = li < 0 ? [] : problem.fields[li].answer.split(', ');
   const linkColor = (i: number) =>
-    locked ? (solution.includes(name(i)) ? '#34d399' : picked.includes(name(i)) ? '#fb7185' : '#64748b') : picked.includes(name(i)) ? '#22d3ee' : '#64748b';
+    locked ? (solution.includes(name(i)) ? 'var(--color-emerald-400)' : picked.includes(name(i)) ? 'var(--color-rose-400)' : 'var(--color-slate-500)') : picked.includes(name(i)) ? 'var(--color-cyan-400)' : 'var(--color-slate-500)';
 
   const border = (i: number) =>
     locked ? (fieldMatches(problem.fields[i], vals[i]) ? 'border-emerald-500' : 'border-rose-500') : 'border-slate-700';
