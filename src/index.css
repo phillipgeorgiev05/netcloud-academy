@@ -1,0 +1,10 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand: #22d3ee;
+  --color-xp: #facc15;
+}
+
+html, body, #root { min-height: 100%; }
+body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; -webkit-tap-highlight-color: transparent; }
+code, .mono { font-family: ui-monospace, "Cascadia Code", Consolas, monospace; }
