@@ -17,21 +17,21 @@ Stand: 2026-11-01. Exam Guides der Hersteller bei neuen Prüfungsversionen erneu
 | | IPv6 (Adresstypen, EUI-64, SLAAC) | A5 | ✓ |
 | | IP-Parameter am Client prüfen (Windows, macOS, Linux) | A4, A5 | ✓ |
 | | WLAN-Grundlagen (Kanäle, SSID, RF, Verschlüsselung) | A10 | ✗ |
-| | Virtualisierung (VMs, Container, VRF) | B2, A7 | ◐ (VRF in A7) |
+| | Virtualisierung (VMs, Container, VRF) | B2, A14 | ◐ (VRF in A14) |
 | | Switching (MAC-Lernen, Aging, Flooding) | A3 | ✓ |
-| 2 Network Access | VLANs, Voice-VLAN, Inter-VLAN-Routing | A6, A7 | ◐ |
+| 2 Network Access | VLANs, Voice-VLAN, Inter-VLAN-Routing | A6, A7 | ✓ |
 | | Trunks, 802.1Q, Native VLAN | A6 | ✓ |
 | | CDP und LLDP | A6 | ✓ |
 | | EtherChannel (LACP) | A6 | ✓ |
 | | RSTP, PortFast, BPDU Guard | A6 | ✓ |
 | | WLAN-Architekturen, AP-Modi, WLC, Management-Zugänge | A10 | ✗ |
-| 3 IP Connectivity | Routingtabelle, Longest Match, AD, Metrik | A7 | ✗ |
-| | Statische Routen (Default, Netz, Host, Floating) IPv4/IPv6 | A7 | ✗ |
-| | OSPFv2 Single Area | A7 | ✗ |
-| | First Hop Redundancy (HSRP, VRRP) | A7 | ✗ |
-| 4 IP Services | NAT/PAT, NTP, DHCP (inkl. Relay), DNS, SNMP, Syslog | A8 | ✗ |
+| 3 IP Connectivity | Routingtabelle, Longest Match, AD, Metrik | A7 | ✓ |
+| | Statische Routen (Default, Netz, Host, Floating) IPv4/IPv6 | A7 | ✓ |
+| | OSPFv2 Single Area | A7 | ✓ |
+| | First Hop Redundancy (HSRP, VRRP) | A7 | ✓ |
+| 4 IP Services | NAT/PAT, NTP, DHCP (inkl. Relay), DNS, SNMP, Syslog | A8 | ✓ |
 | | QoS (Klassifizierung, Markierung, Queuing, Policing/Shaping) | A12 | ✗ |
-| | SSH, TFTP/FTP | A8 | ✗ |
+| | SSH, TFTP/FTP | A8 | ✓ |
 | 5 Security Fundamentals | Bedrohungen, Schwachstellen, Gegenmaßnahmen | A11 | ✗ |
 | | Passwörter, MFA, Zertifikate, AAA (RADIUS/TACACS+) | A11 | ✗ |
 | | VPN (Site-to-Site, Remote Access, IPsec) | A11, B5 | ◐ |
@@ -54,15 +54,15 @@ Stand: 2026-11-01. Exam Guides der Hersteller bei neuen Prüfungsversionen erneu
 | | Topologien und Architekturen | A1 | ✓ |
 | | IPv4-Adressierung | A4 | ✓ |
 | | Moderne Netze (SDN, SD-WAN, VXLAN, Zero Trust, SASE, IaC) | A12, A14, B6 | ✗ |
-| 2 Implementation | Routing (statisch, dynamisch, FHRP, Subinterfaces) | A7 | ✗ |
+| 2 Implementation | Routing (statisch, dynamisch, FHRP, Subinterfaces) | A7 | ✓ |
 | | Switching (VLANs, Trunks, STP, MTU) | A6, A3 | ✓ |
 | | WLAN | A10 | ✗ |
 | | Physische Installation (Racks, Strom, Klima) | A13 | ✗ |
 | 3 Operations | Dokumentation, Lebenszyklus, Change Management | A13 | ✗ |
 | | Monitoring (SNMP, Syslog, NetFlow, Baselines) | A13 | ✗ |
 | | Disaster Recovery (RPO, RTO, MTTR, MTBF, Standorte) | A13, B11 | ✗ |
-| | Dienste (DHCP, DNS, NTP, IPAM) | A8 | ✗ |
-| | Zugriff und Management (VPN, SSH, Jump Box, Out-of-Band) | A11, A13 | ✗ |
+| | Dienste (DHCP, DNS, NTP, IPAM) | A8, A13 | ◐ (IPAM in A13) |
+| | Zugriff und Management (VPN, SSH, Jump Box, Out-of-Band) | A8, A11, A13 | ◐ (SSH, Out-of-Band in A8) |
 | 4 Security | Konzepte (CIA, Verschlüsselung, PKI, IAM) | A11 | ✗ |
 | | Angriffe (DoS, ARP-Spoofing, Phishing, Rogue AP …) | A11 | ✗ |
 | | Schutzmaßnahmen (ACLs, NAC, Segmentierung, Härtung) | A11 | ✗ |

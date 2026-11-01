@@ -117,3 +117,11 @@ Alle 35 Ideen aus den Schritten 1–9 sind eingebaut: Mechanik plus Beispielinha
 3. **Merksätze als eigenes Feld:** `LessonSection.remember?: string[]` für 1–3 Kernaussagen pro Abschnitt. Sie erscheinen am Abschnittsende hervorgehoben und füllen den Spickzettel gezielter als nur Tabellen.
 4. **Prüfung: Zeit pro Frage auswerten:** Im Prüfungsmodus die Verweildauer pro Frage messen und in der Auswertung zeigen, welche Fragetypen am meisten Zeit fressen. Das hilft beim Zeitmanagement.
 5. **Streak an Tagesziel koppeln (Einstellung):** Wahlweise zählt die Streak erst, wenn das Tagesziel erreicht ist. Als Option, damit bestehende Streaks nicht plötzlich anders zählen.
+
+## Schritt 14: Service Desk, Lernplan, A7 Routing, A8 Netzwerkdienste (2026-11-01)
+
+1. **SLA-Timer im Service Desk:** Jedes Ticket bekommt je nach Priorität eine Zielzeit (P1 wenige Minuten). Wer schneller löst, bekommt einen kleinen Bonus. Das übt das Gefühl für Dringlichkeit, ohne die Erklärungen zu kürzen.
+2. **Ticket-Notiz schreiben:** Nach der Lösung wählt man aus Textbausteinen die passende Ticket-Dokumentation (Ursache, Lösung, Prävention). Dokumentieren ist im echten Support Pflicht und wird in Bewerbungsgesprächen oft abgefragt.
+3. **Eskalations-Entscheidung als Schritt:** Manche Tickets haben einen Schritt „selbst lösen oder an 2nd Level/Security eskalieren?“. Richtig eskalieren ist genauso wichtig wie richtig lösen.
+4. **Routing-Simulator:** Eine kleine Routingtabelle zum Bearbeiten und ein Paket mit Ziel-IP. Die App zeigt Schritt für Schritt Longest Match, AD und Metrik und welcher Eintrag gewinnt. Gut als neuer Generator für den Trainer.
+5. **Port-Quiz im Trainer:** Endlos-Drill „Protokoll ↔ Port ↔ TCP/UDP“ als Generator. Ports sind bei Network+ und CCNA reines Auswendiglernen und eignen sich ideal für kurze Wiederholungen.
