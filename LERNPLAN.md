@@ -12,7 +12,7 @@ Stand: 2026-11-01. Exam Guides der Hersteller bei neuen Prüfungsversionen erneu
 | 1 Network Fundamentals | Geräterollen (Router, L2/L3-Switch, Firewall/IPS, AP, WLC, Endgeräte, Server, PoE) | A1, A3 | ✓ |
 | | Architekturen (2-Tier/Collapsed Core, 3-Tier, Spine-Leaf, WAN, SOHO, On-Prem vs. Cloud) | A1 | ✓ |
 | | Kabel, Glasfaser, Schnittstellenfehler (Duplex, Speed, CRC, Kollisionen) | A3 | ✓ |
-| | TCP vs. UDP | A9 | ✗ |
+| | TCP vs. UDP | A9 | ✓ |
 | | IPv4, Subnetting, private Adressen | A4 | ✓ |
 | | IPv6 (Adresstypen, EUI-64, SLAAC) | A5 | ✓ |
 | | IP-Parameter am Client prüfen (Windows, macOS, Linux) | A4, A5 | ✓ |
@@ -48,7 +48,7 @@ Stand: 2026-11-01. Exam Guides der Hersteller bei neuen Prüfungsversionen erneu
 | 1 Concepts | OSI-Modell | A2 | ✓ |
 | | Geräte und Appliances (inkl. NFV) | A1, B2 | ✓ |
 | | Cloud-Konzepte (VPC, NSG, Gateways, Elastizität, Mandanten) | B1, B5 | ✓ |
-| | Ports und Protokolle | A9 | ✗ |
+| | Ports und Protokolle | A9 | ✓ |
 | | Verkehrsarten (Unicast, Multicast, Anycast, Broadcast) | A4, A5 | ✓ |
 | | Übertragungsmedien und Transceiver | A3 | ✓ |
 | | Topologien und Architekturen | A1 | ✓ |
