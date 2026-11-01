@@ -1,12 +1,11 @@
 // Erzeugt die PWA-Icons (PNG) ohne Zusatzpakete: `node scripts/make-icons.mjs`.
-// Motiv wie src/components/Icons.tsx (Logo): weiße Wolke mit drei verbundenen Netzwerkknoten auf blauem Verlauf.
+// Motiv wie src/components/Icons.tsx (Logo): Monogramm „NC“ – N als Netzwerkpfad aus vier Knoten, offener C-Bogen mit Satellitenknoten.
 import { writeFileSync, mkdirSync } from 'node:fs';
 import { deflateSync } from 'node:zlib';
 
-const TOP = [62, 166, 255];
-const BOTTOM = [61, 59, 243];
+const TOP = [0, 194, 255];
+const BOTTOM = [91, 61, 245];
 const WHITE = [255, 255, 255];
-const NODE = [42, 108, 255];
 const SS = 4; // Unterabtastung pro Achse für glatte Kanten
 
 function crc32(buf) {
@@ -35,11 +34,17 @@ function distToSegment(px, py, [ax, ay], [bx, by]) {
 }
 
 // Logo-Koordinaten 0–64 wie im SVG
-const cloud = [[22.5, 36, 9], [32.5, 29, 12], [42.5, 37, 8]];
-const nodes = [[25, 38.5], [32.5, 30.5], [40, 38.5]];
-const inCloud = (x, y) => cloud.some(([cx, cy, r]) => Math.hypot(x - cx, y - cy) <= r) || (x >= 22.5 && x <= 42.5 && y >= 36 && y <= 45);
-const onNet = (x, y) =>
-  nodes.some(([nx, ny]) => Math.hypot(x - nx, y - ny) <= 2.6) || [[0, 1], [1, 2], [2, 0]].some(([a, b]) => distToSegment(x, y, nodes[a], nodes[b]) <= 1);
+const nNodes = [[21, 43], [21, 21], [41, 43], [41, 21]];
+const arcEnd = 50 * (Math.PI / 180);
+const arcTop = [32 + 24 * Math.cos(arcEnd), 32 - 24 * Math.sin(arcEnd)];
+const arcBottom = [32 + 24 * Math.cos(arcEnd), 32 + 24 * Math.sin(arcEnd)];
+const onN = (x, y) =>
+  nNodes.some(([nx, ny]) => Math.hypot(x - nx, y - ny) <= 4.4) || [0, 1, 2].some((i) => distToSegment(x, y, nNodes[i], nNodes[i + 1]) <= 2.25);
+const onDot = (x, y) => Math.hypot(x - arcTop[0], y - arcTop[1]) <= 3.2;
+// Bogen um (32,32), Radius 24, rechts offen (±50°), mit runden Enden
+const onArc = (x, y) =>
+  (Math.abs(Math.hypot(x - 32, y - 32) - 24) <= 1.75 && Math.abs(Math.atan2(y - 32, x - 32)) >= arcEnd) ||
+  [arcTop, arcBottom].some(([ex, ey]) => Math.hypot(x - ex, y - ey) <= 1.75);
 
 /** Abstand-Test für ein abgerundetes Quadrat 0–64 mit Radius r. */
 function inRounded(x, y, r) {
@@ -48,7 +53,7 @@ function inRounded(x, y, r) {
   return Math.hypot(qx, qy) <= r;
 }
 
-/** rounded: transparente Ecken (Android/Desktop). Sonst randlos (iOS maskiert selbst, maskable). glyph: Skalierung der Wolke. */
+/** rounded: transparente Ecken (Android/Desktop). Sonst randlos (iOS maskiert selbst, maskable). glyph: Skalierung des Monogramms. */
 function icon(size, { rounded, glyph = 1 }) {
   const rows = [];
   for (let py = 0; py < size; py++) {
@@ -63,7 +68,9 @@ function icon(size, { rounded, glyph = 1 }) {
           const gx = 32 + (x - 32) / glyph;
           const gy = 32 + (y - 32) / glyph;
           const t = (x + y) / 128;
-          const c = inCloud(gx, gy) ? (onNet(gx, gy) ? NODE : WHITE) : TOP.map((v, i) => v + (BOTTOM[i] - v) * t);
+          const bg = TOP.map((v, i) => v + (BOTTOM[i] - v) * t);
+          // Bogen mit 50 % Deckkraft über dem Verlauf, N und Satellit voll weiß
+          const c = onN(gx, gy) || onDot(gx, gy) ? WHITE : onArc(gx, gy) ? bg.map((v) => (v + 255) / 2) : bg;
           r += c[0]; g += c[1]; b += c[2]; a += 255;
         }
       }
