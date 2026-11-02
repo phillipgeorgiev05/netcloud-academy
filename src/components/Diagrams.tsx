@@ -1,5 +1,6 @@
 import { useEffect, useState, type ReactNode } from 'react';
 import type { DiagramId } from '../types/content';
+import { CloudSymbol, ConnectorGallery, DeviceGallery, NetworkSymbols, PcSymbol, RouterSymbol, ServerSymbol, SwitchSymbol } from './Illustrations';
 
 /** Schrittweise Animation: ◀ ▶ zum Blättern, ▶︎ Abspielen läuft automatisch durch. */
 function Stepper({ steps, render }: { steps: string[]; render: (i: number) => ReactNode }) {
@@ -150,6 +151,52 @@ function AzureHierarchy() {
   );
 }
 
+function WebRequest() {
+  const nodes = [
+    { x: 25, label: 'Dein PC', Sym: PcSymbol },
+    { x: 85, label: 'Switch', Sym: SwitchSymbol },
+    { x: 145, label: 'Router', Sym: RouterSymbol },
+    { x: 205, label: 'Internet', Sym: CloudSymbol },
+    { x: 265, label: 'Webserver', Sym: ServerSymbol },
+  ];
+  // Station des Pakets pro Schritt
+  const at = [0, 0, 1, 2, 3, 4, 0];
+  const steps = [
+    'Du tippst www.beispiel.de in den Browser und drückst Enter.',
+    'Computer verstehen keine Namen, nur Zahlen. Dein PC fragt darum einen DNS-Server: „Welche IP-Adresse hat www.beispiel.de?“ Antwort: 93.184.215.14.',
+    'Dein PC packt die Anfrage in ein Paket mit Absender (deine IP) und Ziel (93.184.215.14) und schickt es übers Kabel oder WLAN zum Switch. Der Switch leitet es anhand der MAC-Adresse an den Router weiter.',
+    'Der Router (dein Default Gateway) sieht: Das Ziel liegt nicht im eigenen Netz. Er schickt das Paket ins Internet, zu deinem Provider.',
+    'Im Internet reichen viele Router das Paket von Netz zu Netz weiter, jeder einen Schritt näher ans Ziel.',
+    'Der Webserver bekommt die Anfrage und schickt die Webseite in vielen Paketen zurück, auf dem Weg über die Router bis zu dir.',
+    'Dein Browser setzt die Pakete in der richtigen Reihenfolge zusammen und zeigt die Seite an. Das alles dauert meist weniger als eine Sekunde.',
+  ];
+  return (
+    <Stepper
+      steps={steps}
+      render={(i) => {
+        const n = nodes[at[i]];
+        const back = i >= 5;
+        return (
+          <svg viewBox="0 0 290 80" className="w-full" role="img" aria-label="Weg einer Webseiten-Anfrage">
+            <line x1="25" y1="34" x2="265" y2="34" stroke="currentColor" strokeOpacity="0.25" strokeWidth="2" />
+            {nodes.map((m, k) => (
+              <g key={m.label} opacity={k === at[i] ? 1 : 0.55}>
+                {k === at[i] && <circle cx={m.x} cy="32" r="24" fill="#0a84ff" fillOpacity="0.15" />}
+                {m.Sym({ x: m.x, y: 32 })}
+                <text x={m.x} y="70" fontSize="9" textAnchor="middle" fill="currentColor">{m.label}</text>
+              </g>
+            ))}
+            <g key={i} style={{ transition: 'transform 0.6s' }} transform={`translate(${n.x} 8)`}>
+              <rect x="-17" y="-7" width="34" height="13" rx="6.5" fill={back ? '#30d158' : '#ff9f0a'} />
+              <text y="2.5" fontSize="7" textAnchor="middle" fill="#000" fontWeight="600">{i === 1 ? 'DNS?' : back ? 'Seite' : 'Paket'}</text>
+            </g>
+          </svg>
+        );
+      }}
+    />
+  );
+}
+
 export function Diagram({ id }: { id: DiagramId }) {
   switch (id) {
     case 'osi-encapsulation':
@@ -160,5 +207,13 @@ export function Diagram({ id }: { id: DiagramId }) {
       return <EthernetFrame />;
     case 'azure-hierarchy':
       return <AzureHierarchy />;
+    case 'devices':
+      return <DeviceGallery />;
+    case 'connectors':
+      return <ConnectorGallery />;
+    case 'network-symbols':
+      return <NetworkSymbols />;
+    case 'web-request':
+      return <WebRequest />;
   }
 }

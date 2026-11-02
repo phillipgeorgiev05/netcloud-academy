@@ -125,3 +125,11 @@ Alle 35 Ideen aus den Schritten 1–9 sind eingebaut: Mechanik plus Beispielinha
 3. **Eskalations-Entscheidung als Schritt:** Manche Tickets haben einen Schritt „selbst lösen oder an 2nd Level/Security eskalieren?“. Richtig eskalieren ist genauso wichtig wie richtig lösen.
 4. **Routing-Simulator:** Eine kleine Routingtabelle zum Bearbeiten und ein Paket mit Ziel-IP. Die App zeigt Schritt für Schritt Longest Match, AD und Metrik und welcher Eintrag gewinnt. Gut als neuer Generator für den Trainer.
 5. **Port-Quiz im Trainer:** Endlos-Drill „Protokoll ↔ Port ↔ TCP/UDP“ als Generator. Ports sind bei Network+ und CCNA reines Auswendiglernen und eignen sich ideal für kurze Wiederholungen.
+
+## Schritt 13: A9 TCP/UDP, Apple-Design, Logo, Einsteiger-Grundlagen (2026-11-02)
+
+1. **Wireshark-Mitschnitte zum Durchklicken:** Echte, kleine Mitschnitte (3-Way-Handshake, DNS, DHCP-DORA) als Tabelle mit aufklappbaren Headerfeldern. Anfänger sehen, wie die Schichten aus A2 und die Ports aus A9 in einem echten Paket aussehen.
+2. **Geräte-Fotos mit Hotspots:** Die gezeichneten Geräte (Switch, Router, Patchfeld) bekommen anklickbare Stellen: Konsolenport, SFP-Schacht, Status-LEDs, Uplink. Ein Klick erklärt das Bauteil und wofür man es in der Praxis braucht.
+3. **Einstiegstest „Wo stehe ich?“:** Zehn Fragen beim ersten Start. Wer sie besteht, bekommt die Grundlagen-Level als „übersprungen“ freigeschaltet, alle anderen starten bei A1. Das spart Wiederholung für Umsteiger.
+4. **Dunkelmodus-Varianten des App-Icons:** iOS 18 und Android unterstützen getönte und dunkle Icons. Eigene Varianten der Wolke mit RJ45-Buchse halten das Logo auf jedem Homescreen sauber.
+5. **Kapselungs-Spiel:** Drag-and-drop, bei dem man Daten nacheinander in TCP-Header, IP-Header und Ethernet-Rahmen packt und beim Empfänger wieder auspackt. Das macht das OSI-Modell aus A2 begreifbar, statt nur die Schichten auswendig zu lernen.

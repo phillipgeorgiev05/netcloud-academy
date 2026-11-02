@@ -36,6 +36,43 @@ Eselsbrücke von unten (1→7): **„Please Do Not Throw Sausage Pizza Away“**
       ],
     },
     {
+      heading: 'Jede Schicht einfach erklärt',
+      body: `Du schickst eine Nachricht über eine Webseite an eine Freundin. So teilen sich die Schichten die Arbeit (Sender von 7 nach 1, Empfänger von 1 nach 7):
+
+- **7 Anwendung (Application):** die Sprache, die dein Programm mit dem Server spricht, z. B. **HTTP** fürs Web, **SMTP** für E-Mail, **DNS** für Namen. Gemeint ist das Protokoll, nicht der Browser selbst.
+- **6 Darstellung (Presentation):** sorgt dafür, dass beide Seiten die Daten gleich verstehen: Zeichensatz (z. B. UTF-8), Bildformat (JPEG), Kompression, Verschlüsselung.
+- **5 Sitzung (Session):** verwaltet den Dialog zwischen zwei Programmen: Aufbau, wer wann spricht, Abbau. In der Praxis erledigen das meist die Anwendungen selbst. Darum fasst das TCP/IP-Modell die Schichten 5 bis 7 zusammen.
+- **4 Transport:** zerlegt große Daten in Stücke (Segmente), nummeriert sie und sorgt bei **TCP** dafür, dass alles vollständig ankommt. **Ports** bestimmen, welches Programm die Daten bekommt.
+- **3 Vermittlung (Network):** findet den Weg durch viele Netze bis zum Ziel. Dafür gibt es **IP-Adressen**. **Router** arbeiten hier.
+- **2 Sicherung (Data Link):** bringt die Daten zum nächsten Gerät im selben Netz, mit **MAC-Adressen**, und erkennt Übertragungsfehler. **Switches** arbeiten hier.
+- **1 Bitübertragung (Physical):** macht aus Bits echte Signale: Strom im Kupferkabel, Licht in der Glasfaser, Funkwellen im WLAN. Dazu gehören Kabel, Stecker und Hubs.
+
+Jede Schicht „spricht“ nur mit derselben Schicht auf der Gegenseite: TCP beim Sender mit TCP beim Empfänger, IP mit IP.
+
+Deutsche Eselsbrücke von oben (7 → 1): **„Alle Deutschen Studenten Trinken Verschiedene Sorten Bier“** – Anwendung, Darstellung, Sitzung, Transport, Vermittlung, Sicherung, Bitübertragung.
+
+**Typische Fehler pro Schicht** (hilft bei der Fehlersuche):
+| Schicht | typischer Fehler |
+|---|---|
+| 1 | Kabel locker oder defekt, Port-LED aus, WLAN zu schwach |
+| 2 | Switch-Port im falschen VLAN oder gesperrt |
+| 3 | falsche IP-Adresse oder falsches Default Gateway |
+| 4 | Firewall blockiert den Port |
+| 7 | DNS-Name falsch, Dienst auf dem Server gestoppt |`,
+      analogy: 'Ein Umzug mit Spedition: Du sagst, was transportiert wird (7), alles wird in Kartons verpackt und beschriftet (6), ein Termin wird vereinbart (5), die Kartons werden nummeriert, damit keiner fehlt (4), die Route durch die Städte wird geplant (3), von Kreuzung zu Kreuzung gefahren (2) – und die Straße selbst ist der Asphalt (1).',
+      check: {
+        id: 'c1', type: 'single', difficulty: 1,
+        prompt: 'Das Netzwerkkabel deines PCs ist abgezogen. Auf welcher Schicht liegt das Problem?',
+        options: [
+          { id: 'a', text: 'Schicht 1 – Bitübertragung' },
+          { id: 'b', text: 'Schicht 3 – Vermittlung', whyWrong: 'Schicht 3 betrifft IP-Adressen und Wege. Ohne Kabel kommt man gar nicht so weit.' },
+          { id: 'c', text: 'Schicht 7 – Anwendung', whyWrong: 'Die Anwendung merkt den Fehler, die Ursache liegt aber ganz unten.' },
+        ],
+        correct: 'a',
+        explanation: 'Kabel, Stecker und Signale sind Schicht 1. Bei der Fehlersuche fängt man oft genau dort an (bottom-up).',
+      },
+    },
+    {
       heading: 'Das TCP/IP-Modell',
       body: `| TCP/IP-Schicht | entspricht OSI |
 |---|---|
@@ -77,6 +114,26 @@ Troubleshooting nach Schichten: **Bottom-up** (erst Kabel, dann Link, dann IP �
     },
   ],
   quiz: [
+    {
+      id: 'q17', type: 'dragdrop', difficulty: 1,
+      prompt: 'Auf welcher Schicht liegt der Fehler?',
+      items: [
+        { id: 'cable', text: 'Netzwerkkabel ist gebrochen' },
+        { id: 'vlan', text: 'Switch-Port steht im falschen VLAN' },
+        { id: 'gw', text: 'Falsches Default Gateway eingetragen' },
+        { id: 'fw', text: 'Firewall blockiert TCP-Port 443' },
+        { id: 'svc', text: 'Webserver-Dienst ist gestoppt' },
+      ],
+      buckets: [
+        { id: 'l1', label: '1 Bitübertragung' },
+        { id: 'l2', label: '2 Sicherung' },
+        { id: 'l3', label: '3 Vermittlung' },
+        { id: 'l4', label: '4 Transport' },
+        { id: 'l7', label: '7 Anwendung' },
+      ],
+      solution: { cable: 'l1', vlan: 'l2', gw: 'l3', fw: 'l4', svc: 'l7' },
+      explanation: 'Kabel = Signal (1), VLAN = Switch (2), Gateway = IP-Weg (3), Port = Transport (4), Dienst = Anwendung (7).',
+    },
     {
       id: 'q1', type: 'dragdrop', difficulty: 2,
       prompt: 'Ordne die Protokolle/Begriffe der richtigen **OSI-Schicht** zu.',

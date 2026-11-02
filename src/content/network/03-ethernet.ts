@@ -80,6 +80,7 @@ Cisco-Befehl: \`show mac address-table\`
     },
     {
       heading: 'Kupferkabel (Twisted Pair)',
+      diagram: 'connectors',
       body: `| Kategorie | typisch | max. Länge |
 |---|---|---|
 | Cat 5e | 1 Gbit/s | 100 m |

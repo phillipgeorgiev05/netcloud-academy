@@ -23,6 +23,87 @@ const level: Level = {
       ],
     },
     {
+      heading: 'Bits und Bytes: die Sprache der Computer',
+      body: `Computer kennen nur zwei Zustände: Strom an oder aus, Licht an oder aus. Das schreibt man als **1** und **0**. Eine solche Stelle heißt **Bit** (binary digit, Binärziffer). Alles, was durchs Netz geht – Text, Bilder, Videos, Sprache – ist am Ende eine lange Kette aus Nullen und Einsen.
+
+- **8 Bit = 1 Byte.** Ein Byte reicht für einen einfachen Buchstaben, z. B. „A“ = \`01000001\`.
+- Größere Mengen: Kilobyte (kB), Megabyte (MB), Gigabyte (GB), Terabyte (TB). Jede Stufe ist rund 1000-mal größer als die vorige.
+
+**Wichtig:** Geschwindigkeiten im Netz werden in **Bit pro Sekunde** angegeben (Mbit/s, Gbit/s), Dateigrößen in **Byte** (MB, GB). Eine 100-Mbit/s-Leitung lädt darum höchstens etwa **12,5 MB pro Sekunde** (100 ÷ 8).
+
+| Schreibweise | Bedeutung |
+|---|---|
+| b (klein) | Bit |
+| B (groß) | Byte |
+| Mbit/s oder Mbps | Megabit pro Sekunde |
+| MB/s | Megabyte pro Sekunde |
+
+Kleines Detail: Genau genommen ist 1 kB = 1000 Byte, aber 1 KiB (Kibibyte) = 1024 Byte. Darum zeigt Windows bei einer „1-TB-Festplatte“ nur etwa 931 „GB“ an: Es rechnet in Gibibyte.`,
+      analogy: 'Wie Morsezeichen: Aus nur „kurz“ und „lang“ lassen sich alle Buchstaben bilden. Computer machen dasselbe mit 0 und 1.',
+      terms: [
+        { de: 'Bit (Binärziffer)', en: 'bit (binary digit)' },
+        { de: 'Byte (8 Bit)', en: 'byte' },
+      ],
+      check: {
+        id: 'c3', type: 'single', difficulty: 1,
+        prompt: 'Deine Internetleitung hat 400 Mbit/s. Wie viele Megabyte pro Sekunde kannst du höchstens herunterladen?',
+        options: [
+          { id: 'a', text: '50 MB/s' },
+          { id: 'b', text: '400 MB/s', whyWrong: 'Die Leitung wird in Bit angegeben, Dateien in Byte. Du musst durch 8 teilen.' },
+          { id: 'c', text: '3200 MB/s', whyWrong: 'Hier wurde mit 8 multipliziert statt geteilt.' },
+        ],
+        correct: 'a',
+        explanation: '400 Mbit/s ÷ 8 = 50 MB/s. In der Praxis etwas weniger, weil auch Header und Protokolle Platz brauchen.',
+      },
+    },
+    {
+      heading: 'Adressen: Wie findet eine Nachricht ihr Ziel?',
+      body: `Damit Daten beim richtigen Gerät und im richtigen Programm ankommen, braucht es Adressen – wie bei der Post.
+
+| Adresse | Beispiel | wie bei der Post |
+|---|---|---|
+| **IP-Adresse** | 192.168.1.20 | Postanschrift: findet das Gerät, auch über das Internet |
+| **MAC-Adresse** | 3C:22:FB:1A:9E:07 | Name am Briefkasten: nur im eigenen lokalen Netz |
+| **Port** | 443 | Wohnungsnummer: findet das richtige Programm |
+| **DNS-Name** | www.beispiel.de | Telefonbuch-Eintrag: wird in eine IP übersetzt |
+
+- Die **IP-Adresse** hängt davon ab, in welchem Netz du gerade bist. Im WLAN zuhause hat dein Handy eine andere IP als im Büro. Meist vergibt sie der Router automatisch (**DHCP**).
+- Die **MAC-Adresse** ist fest in der Netzwerkkarte gespeichert. Handys nutzen aus Datenschutzgründen oft pro WLAN eine zufällige MAC.
+- Ein Gerät kann viele Programme gleichzeitig im Netz haben. Die **Ports** halten sie auseinander.
+
+Alle vier lernst du in eigenen Leveln genau kennen: MAC in A3, IP in A4 und A5, DNS und DHCP in A8, Ports in A9.`,
+      analogy: 'Ein Paket an „Max Muster, Hauptstraße 5, Wohnung 3“: Die Straße und Hausnummer sind die IP-Adresse, die Wohnung ist der Port. Der Postbote im Haus kennt die Briefkästen – das ist die MAC-Adresse.',
+      terms: [
+        { de: 'IP-Adresse', en: 'IP address' },
+        { de: 'Hardware-Adresse', en: 'MAC address' },
+      ],
+      check: {
+        id: 'c4', type: 'single', difficulty: 1,
+        prompt: 'Welche Adresse braucht dein PC, um einen Server in einem anderen Netz (z. B. im Internet) zu erreichen?',
+        options: [
+          { id: 'a', text: 'Die IP-Adresse des Servers' },
+          { id: 'b', text: 'Die MAC-Adresse des Servers', whyWrong: 'MAC-Adressen gelten nur im eigenen lokalen Netz. Router tauschen sie unterwegs aus.' },
+          { id: 'c', text: 'Nur den Port 443', whyWrong: 'Der Port bestimmt das Programm auf dem Ziel, nicht das Gerät selbst.' },
+        ],
+        correct: 'a',
+        explanation: 'Über Netzgrenzen hinweg zählt die IP-Adresse. Die MAC-Adresse braucht es nur für den nächsten Schritt im lokalen Netz.',
+      },
+    },
+    {
+      heading: 'Was passiert, wenn du eine Webseite öffnest?',
+      diagram: 'web-request',
+      body: `Klicke dich mit ▶ durch die Animation oder drücke „Abspielen“. Das ist der Weg, den jede Webseite nimmt.
+
+Was du dabei schon kennenlernst:
+- **DNS** übersetzt den Namen in eine IP-Adresse (A8).
+- Der **Switch** verbindet die Geräte in deinem Netz (A3, A6).
+- Der **Router** verbindet dein Netz mit anderen Netzen, hier dem Internet (A7).
+- **TCP** sorgt dafür, dass alle Pakete vollständig und in der richtigen Reihenfolge ankommen (A9).
+
+Große Daten werden nie am Stück geschickt, sondern in viele kleine **Pakete** zerlegt. Jedes Paket trägt Absender und Ziel und kann einzeln weitergeleitet werden.`,
+      terms: [{ de: 'Datenpaket', en: 'packet' }],
+    },
+    {
       heading: 'Netzwerkarten nach Ausdehnung',
       body: `| Typ | Bedeutung | Beispiel |
 |---|---|---|
@@ -88,6 +169,7 @@ Im Rechenzentrum verbreitet: **Spine-Leaf** – jeder Leaf-Switch ist mit jedem 
     },
     {
       heading: 'Die wichtigsten Geräte',
+      diagram: 'devices',
       check: {
         id: 'c1', type: 'single', difficulty: 1,
         prompt: 'Welches Gerät verbindet dein Heimnetz mit dem Internet (einem anderen Netz)?',
@@ -119,6 +201,27 @@ Der „WLAN-Router“ zuhause ist ein Kombigerät: Router + Switch + AP + Firewa
       ],
     },
     {
+      heading: 'Netzwerkpläne lesen: die Symbole',
+      diagram: 'network-symbols',
+      body: `Admins zeichnen Netzwerke als **Plan** (Topologie-Diagramm). Statt Fotos nutzen sie einfache Symbole. Diese Symbole siehst du in Prüfungen, Dokumentationen und in den Fragen dieser App.
+
+- Ein **physischer Plan** zeigt echte Kabel und Ports: Welcher PC hängt an welchem Switch-Port, wo steht welcher Schrank?
+- Ein **logischer Plan** zeigt Netze und Adressen: Welche Geräte sind im selben Netz, welche IP-Bereiche gibt es?
+
+Ein ganz einfacher Plan eines kleinen Büros:
+\`\`\`
+[PC]    [PC]    [Drucker]
+   \\     |      /
+    [  Switch  ]
+         |
+     [ Router ]
+         |
+    ( Internet )
+\`\`\`
+Die Linien sind Kabel. Alle Geräte am Switch bilden zusammen ein **LAN**. Der Router verbindet es mit dem Internet.`,
+      terms: [{ de: 'Netzwerkplan', en: 'network diagram' }],
+    },
+    {
       heading: 'Bandbreite, Durchsatz, Latenz',
       body: `- **Bandbreite (bandwidth):** theoretische Maximalrate, z. B. 1 Gbit/s.
 - **Durchsatz (throughput):** tatsächlich erreichte Rate.
@@ -130,6 +233,50 @@ Achtung Einheiten: **Bit** (b) vs. **Byte** (B). 1 Byte = 8 Bit. 100 Mbit/s ≈ 
     },
   ],
   quiz: [
+    {
+      id: 'q19', type: 'single', difficulty: 1,
+      prompt: 'Wie viele Bit hat ein Byte?',
+      options: [
+        { id: 'a', text: '8' },
+        { id: 'b', text: '4', whyWrong: '4 Bit sind ein halbes Byte (Nibble).' },
+        { id: 'c', text: '10', whyWrong: 'Computer zählen in Zweierpotenzen. Ein Byte hat 8 Bit.' },
+        { id: 'd', text: '1024', whyWrong: '1024 Byte sind ein Kibibyte (KiB).' },
+      ],
+      correct: 'a',
+      explanation: '1 Byte = 8 Bit. Darum teilt man Mbit/s durch 8, um MB/s zu erhalten.',
+    },
+    {
+      id: 'q20', type: 'dragdrop', difficulty: 1,
+      prompt: 'Was für eine Adresse ist das?',
+      items: [
+        { id: 'ip4', text: '192.168.0.15' },
+        { id: 'mac1', text: '00:1A:2B:3C:4D:5E' },
+        { id: 'port', text: '443' },
+        { id: 'name', text: 'www.beispiel.de' },
+        { id: 'ip6', text: '2001:db8::1' },
+        { id: 'mac2', text: 'a4-83-e7-12-0f-9b' },
+      ],
+      buckets: [
+        { id: 'ip', label: 'IP-Adresse' },
+        { id: 'mac', label: 'MAC-Adresse' },
+        { id: 'port', label: 'Port' },
+        { id: 'dns', label: 'DNS-Name' },
+      ],
+      solution: { ip4: 'ip', ip6: 'ip', mac1: 'mac', mac2: 'mac', port: 'port', name: 'dns' },
+      explanation: 'IPv4: vier Zahlen mit Punkten. IPv6: Hexadezimal-Blöcke mit Doppelpunkten. MAC: sechs Hex-Paare (mit : oder -). Port: eine Zahl von 0 bis 65535. DNS-Name: lesbarer Name.',
+    },
+    {
+      id: 'q21', type: 'ordering', difficulty: 1,
+      prompt: 'Bringe in die richtige Reihenfolge: Du öffnest eine Webseite.',
+      items: [
+        { id: 'type', text: 'Du gibst www.beispiel.de im Browser ein.' },
+        { id: 'dns', text: 'Ein DNS-Server liefert die IP-Adresse des Webservers.' },
+        { id: 'gw', text: 'Dein PC schickt das Paket zu seinem Router (Default Gateway).' },
+        { id: 'net', text: 'Router im Internet leiten das Paket bis zum Webserver weiter.' },
+        { id: 'reply', text: 'Der Webserver schickt die Seite zurück, der Browser zeigt sie an.' },
+      ],
+      explanation: 'Name → IP (DNS) → zum eigenen Router → durchs Internet → Antwort zurück.',
+    },
     {
       id: 'q17', type: 'single', difficulty: 2,
       prompt: 'In welcher Schicht des 3-Tier-Modells werden Endgeräte angeschlossen und Funktionen wie PoE und Port Security bereitgestellt?',

@@ -30,7 +30,7 @@ export interface Compare {
 }
 
 /** Registrierte SVG-Diagramme/Animationen, siehe components/diagrams. */
-export type DiagramId = 'osi-encapsulation' | 'ndp-slaac' | 'ethernet-frame' | 'azure-hierarchy';
+export type DiagramId = 'osi-encapsulation' | 'ndp-slaac' | 'ethernet-frame' | 'azure-hierarchy' | 'devices' | 'connectors' | 'network-symbols' | 'web-request';
 
 export interface LessonSection {
   heading: string;
