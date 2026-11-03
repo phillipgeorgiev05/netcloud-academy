@@ -80,6 +80,13 @@ describe('Zusatzinhalte', () => {
     expect(errs).toEqual([]);
     expect(ids).toContain('start');
   });
+
+  it('Grundlagen-Verweise der Tracks zeigen auf vorhandene Teil-0-Level', () => {
+    const basicsIds = levels.filter((l) => l.track === 'basics').map((l) => l.id);
+    expect(basicsIds.length).toBe(tracks.basics.planned.length);
+    const errs = Object.values(tracks).flatMap((t) => (t.basics ?? []).filter((id) => !basicsIds.includes(id)));
+    expect(errs).toEqual([]);
+  });
 });
 
 describe('Service-Desk-Tickets', () => {
@@ -106,7 +113,7 @@ describe('Service-Desk-Tickets', () => {
 describe('Inhalte', () => {
   it('Level-IDs eindeutig, Reihenfolge pro Track lückenlos', () => {
     expect(new Set(levels.map((l) => l.id)).size).toBe(levels.length);
-    for (const track of ['network', 'cloud', 'fisi'] as const) {
+    for (const track of ['basics', 'network', 'cloud', 'fisi'] as const) {
       const orders = levels.filter((l) => l.track === track).map((l) => l.order);
       expect(orders).toEqual(orders.map((_, i) => i + 1));
     }

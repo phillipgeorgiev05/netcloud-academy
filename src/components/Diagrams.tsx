@@ -1,5 +1,6 @@
 import { useEffect, useState, type ReactNode } from 'react';
 import type { DiagramId } from '../types/content';
+import { BinaryGame, ChmodGame, EncapsulationGame, LsdouGame } from './MiniGames';
 import { CloudSymbol, ConnectorGallery, DeviceGallery, NetworkSymbols, PcSymbol, RouterSymbol, ServerSymbol, SwitchSymbol } from './Illustrations';
 
 /** Schrittweise Animation: ◀ ▶ zum Blättern, ▶︎ Abspielen läuft automatisch durch. */
@@ -199,6 +200,14 @@ function WebRequest() {
 
 export function Diagram({ id }: { id: DiagramId }) {
   switch (id) {
+    case 'game-binary':
+      return <BinaryGame />;
+    case 'game-encapsulation':
+      return <EncapsulationGame />;
+    case 'game-chmod':
+      return <ChmodGame />;
+    case 'game-lsdou':
+      return <LsdouGame />;
     case 'osi-encapsulation':
       return <OsiEncapsulation />;
     case 'ndp-slaac':

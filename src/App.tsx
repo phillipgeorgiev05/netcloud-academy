@@ -1,7 +1,8 @@
-import { useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { HashRouter, NavLink, Route, Routes } from 'react-router-dom';
 import { badges } from './content/badges';
 import { Flame, Icon, Logo, Star } from './components/Icons';
+import { Confetti } from './components/Celebrate';
 import { DEV_UNLOCK } from './lib/dev';
 import { useStreakReminder } from './lib/reminder';
 import { useThemeSync } from './lib/theme';
@@ -41,6 +42,7 @@ export function App() {
           </Routes>
         </main>
         <BadgeToast />
+        <GoalCelebration />
         <Reminder />
       </HashRouter>
     </ProgressProvider>
@@ -147,6 +149,39 @@ function BadgeToast() {
         </span>
       </button>
     </div>
+  );
+}
+
+/** Feiert einmal, wenn das Tagesziel während der Sitzung erreicht wird. */
+function GoalCelebration() {
+  const { progress } = useProgress();
+  const goal = progress.settings.dailyGoal ?? DEFAULT_DAILY_GOAL;
+  const xp = dailyXp(progress);
+  const prev = useRef(xp);
+  const [show, setShow] = useState(false);
+  useEffect(() => {
+    if (prev.current < goal && xp >= goal) setShow(true);
+    prev.current = xp;
+  }, [xp, goal]);
+  useEffect(() => {
+    if (!show) return;
+    const t = setTimeout(() => setShow(false), 3500);
+    return () => clearTimeout(t);
+  }, [show]);
+  if (!show) return null;
+  return (
+    <>
+      <Confetti />
+      <div className="pointer-events-none fixed inset-x-0 top-20 z-50 flex justify-center px-4">
+        <div className="anim-pop flex items-center gap-3 rounded-2xl border border-white/10 bg-slate-900/90 px-5 py-3 shadow-2xl backdrop-blur-xl">
+          <span className="text-3xl">🎯</span>
+          <span>
+            <span className="block font-semibold">Tagesziel erreicht!</span>
+            <span className="block text-xs text-slate-400">{goal} XP heute · Serie: {progress.streak.current} {progress.streak.current === 1 ? 'Tag' : 'Tage'}</span>
+          </span>
+        </div>
+      </div>
+    </>
   );
 }
 

@@ -28,6 +28,7 @@ Vor jedem Commit: `npm test` und `npm run build` müssen grün sein. Nach Layout
 ```
 src/
   content/                 NUR Daten – kein UI-Code
+    basics/NN-*.ts         Teil 0 Grundkurs (immer offen), Tracks verweisen per `basics` darauf
     network/NN-*.ts        Teil A, ein Level pro Datei
     cloud/NN-*.ts          Teil B, ein Level pro Datei
     fisi/NN-*.ts           Teil C (Fachinformatiker SI, IHK), ein Level pro Datei
@@ -47,10 +48,13 @@ src/
     generators.ts          Zufallsaufgaben für Fragetyp `generated` und Trainer (VLSM, IPv6, Kosten, NSG, IAM, RBAC, STP)
     dev.ts                 Testmodus-Schalter
     reminder.ts            Streak-Erinnerung (Notification API)
+    games.ts               reine Logik der Mini-Spiele (chmod, LSDOU)
   components/
     QuestionSession.tsx    spielt eine Fragenliste ab (Quiz/Boss/Review/Prüfung, Herzen)
-    LessonView.tsx         Lektion inkl. Diagrammen, Flip-Karten, Verständnisfragen, Quellen, Glossar-Links
+    LessonView.tsx         Lektion als Karten-Folge (ein Abschnitt pro Karte) inkl. Diagrammen, Flip-Karten, Verständnisfragen, Quellen, Glossar-Links
     Diagrams.tsx           registrierte Diagramme/Animationen (DiagramId)
+    MiniGames.tsx          Mini-Spiele als DiagramId `game-*` (Binär, Kapselung, chmod, LSDOU)
+    Celebrate.tsx          Konfetti, Sterne, Aktivitätsringe
     questions/             ein Component pro Fragetyp + QuestionRenderer + shared (RichText, Result)
   pages/                   Home, Level (Lektion→Quiz→Boss→Lab), Review, Profile, Tools, Trainer, Exam, Glossary, Decide
 e2e/mobile.e2e.ts          Playwright-Test (Endung .e2e.ts, damit Vitest ihn nicht einsammelt)
@@ -69,7 +73,7 @@ scripts/make-icons.mjs     erzeugt PNG-Icons ohne Zusatzpakete
 ## Lektionsabschnitte
 
 `LessonSection` kann neben `body`, `analogy` und `terms` enthalten:
-- `diagram`: Id aus `DiagramId`. Neue Diagramme in `components/Diagrams.tsx` ergänzen.
+- `diagram`: Id aus `DiagramId`. Neue Diagramme in `components/Diagrams.tsx` ergänzen. Mini-Spiele (`game-*`) laufen genauso, Logik in `lib/games.ts` mit Test.
 - `compare`: Flip-Karten-Gegenüberstellung `{ left, right, rows: [links, rechts][] }`
 - `check`: eine Verständnisfrage (beliebiger Fragetyp), zählt nicht für XP oder Wiederholen
 - `sources`: offizielle Doku/RFCs (`https://`). Nur Links eintragen, die sicher existieren.
@@ -124,5 +128,7 @@ Id in `GeneratorId` (types) und `generatorNames` ergänzen, Funktion in `lib/gen
 ## Spielregeln (Kurzreferenz)
 
 - Bestanden = Quiz ≥ 80 % **und** Boss bestanden (≥ 80 % und mindestens 1 Herz übrig). Erst dann ist das nächste Level im selben Track offen. Level 1 jedes Tracks ist immer offen.
+- Sterne je Level: 1 = bestanden, +1 Quiz ≥ 95 %, +1 Boss ohne Herzverlust (`levelStars`).
+- Tagesziel und Wochenansicht: `history[Tag]` speichert die XP pro Tag (`trackDaily`).
 - XP: 10 pro erstmals richtige Antwort, danach 2 (gegen XP-Farming, im Wiederholen-Stapel weiter 10), 5 pro Lektion, 50 pro Boss-Sieg, +25 ohne Herzverlust, 20 pro abgeschlossenem Lab, 2 pro Trainer-Aufgabe. Spielerlevel L ab 50·L·(L−1) XP.
 - Leitner: Eine falsche Antwort kommt in Box 1 (fällig morgen). Eine richtige Antwort im Review rückt eine Box weiter (1/3/7/14/30 Tage). Nach Box 5 gilt die Frage als gemeistert.

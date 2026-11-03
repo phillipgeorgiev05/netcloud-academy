@@ -1,7 +1,7 @@
 // Datenmodell für alle Inhalte unter src/content/. Neue Fragen = nur Daten, kein UI-Code.
 
 export type CertId = 'ccna' | 'netplus' | 'az900' | 'az104' | 'aws-saa' | 'fisi';
-export type Track = 'network' | 'cloud' | 'fisi';
+export type Track = 'basics' | 'network' | 'cloud' | 'fisi';
 
 export interface Cert {
   id: CertId;
@@ -30,7 +30,8 @@ export interface Compare {
 }
 
 /** Registrierte SVG-Diagramme/Animationen, siehe components/diagrams. */
-export type DiagramId = 'osi-encapsulation' | 'ndp-slaac' | 'ethernet-frame' | 'azure-hierarchy' | 'devices' | 'connectors' | 'network-symbols' | 'web-request';
+export type DiagramId = 'osi-encapsulation' | 'ndp-slaac' | 'ethernet-frame' | 'azure-hierarchy' | 'devices' | 'connectors' | 'network-symbols' | 'web-request'
+  | 'game-binary' | 'game-encapsulation' | 'game-chmod' | 'game-lsdou';
 
 export interface LessonSection {
   heading: string;

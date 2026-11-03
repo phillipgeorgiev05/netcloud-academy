@@ -23,8 +23,9 @@ test('Werkzeug-Seiten passen auf 375 px', async ({ page }) => {
 });
 
 test('alle Lektionen passen auf 375 px', async ({ page }) => {
+  test.setTimeout(600_000);
   await page.goto(DEV + '/');
-  const hrefs = await page.locator('a[href^="#/level/"]').evaluateAll((as) => as.map((a) => a.getAttribute('href')!));
+  const hrefs = [...new Set(await page.locator('a[href^="#/level/"]').evaluateAll((as) => as.map((a) => a.getAttribute('href')!)))];
   expect(hrefs.length).toBeGreaterThan(5);
   for (const href of hrefs) {
     await page.goto('/?dev=unlock-all' + href);

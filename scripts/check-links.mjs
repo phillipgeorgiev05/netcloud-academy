@@ -1,4 +1,5 @@
-// Prüft alle https-Links in src/content (Quellen, Doku): `npm run check:links`.
+// Prüft alle Quellen-Links (`url: 'https://…'`) in src/content: `npm run check:links`.
+// Beispiel-URLs im Lehrtext (z. B. Phishing-Adressen) sind absichtlich erfunden und werden nicht geprüft.
 // Exit-Code 1, wenn ein Link nicht erreichbar ist (4xx/5xx/Netzwerkfehler).
 import { readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
@@ -12,7 +13,7 @@ function files(dir) {
 const urls = new Map(); // url -> erste Fundstelle
 for (const f of files('src/content')) {
   // Platzhalter wie https://<name>.blob… sind keine echten Links.
-  for (const m of readFileSync(f, 'utf8').matchAll(/https:\/\/[^\s'"`)\]\\]+/g)) if (!m[0].includes('<') && !urls.has(m[0])) urls.set(m[0], f);
+  for (const m of readFileSync(f, 'utf8').matchAll(/url: '(https:\/\/[^']+)'/g)) if (!m[1].includes('<') && !urls.has(m[1])) urls.set(m[1], f);
 }
 
 async function check(url) {

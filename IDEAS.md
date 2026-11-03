@@ -157,3 +157,11 @@ Alle 35 Ideen aus den Schritten 1–9 sind eingebaut: Mechanik plus Beispielinha
 3. **Log-Detektiv:** Gekürzte, echte Ausschnitte aus `journalctl` und `auth.log` (z. B. Brute-Force-Versuche, abgestürzter Dienst), in denen man die entscheidende Zeile anklickt.
 4. **Windows-Linux-Übersetzer:** Eine Tabelle zum Nachschlagen, die Gegenstücke zeigt: `ipconfig` und `ip a`, `tasklist` und `ps`, Dienste-Konsole und `systemctl`, NTFS-Rechte und `chmod`. Hilft Umsteigern aus C1 und C2.
 5. **Generator für Rechte-Aufgaben:** Zufällige `ls -l`-Zeilen plus `id`-Ausgabe, und man beantwortet, ob ein Benutzer lesen, schreiben oder hineinwechseln darf. Der Test prüft die Logik wie bei den anderen Generatoren.
+
+## Schritt 17: Grundkurs Teil 0, Lernpfad-Karte, Apple-Design (2026-11-03)
+
+1. **Einstufungstest:** 15 Fragen quer durch Teil 0. Wer sie besteht, bekommt die Grundkurs-Level als erledigt markiert und startet direkt in Teil A, B oder C.
+2. **Subnetz-Mini-Spiel:** Ein Schieberegler für das Präfix (/24 bis /30), der live Netz, Broadcast und Hostanzahl zeigt, und Zielaufgaben wie beim Binär-Schalter.
+3. **Wochen-Rückblick:** Am Montag eine Karte mit der Vorwoche: XP, neue Sterne, häufigste Fehlerthemen und ein Vorschlag, welches Level man wiederholen sollte.
+4. **Haptik auf dem Handy:** Kurzes Vibrieren (Vibration API) bei richtigen Antworten und beim Tagesziel. Abschaltbar im Profil, respektiert „weniger Bewegung“.
+5. **Port-Memory:** Ein Memory-Spiel, bei dem man Dienste (SSH, DNS, HTTPS, RDP …) mit ihren Portnummern paart. Zeit und Fehler ergeben Sterne wie bei den Leveln.

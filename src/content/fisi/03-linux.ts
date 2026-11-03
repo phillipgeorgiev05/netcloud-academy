@@ -120,6 +120,7 @@ Beispiel: \`ps aux | grep nginx\` zeigt nur die Prozesse, in denen „nginx“ v
     },
     {
       heading: 'Rechte: rwx und Oktalzahlen',
+      diagram: 'game-chmod',
       body: `Jede Datei hat einen **Besitzer** (user), eine **Gruppe** (group) und Rechte für **alle anderen** (others). Für jede dieser drei gibt es drei Rechte:
 | Recht | bei Dateien | bei Ordnern | Wert |
 |---|---|---|---|

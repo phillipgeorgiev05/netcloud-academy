@@ -41,6 +41,7 @@ export interface Progress {
   daily: { day: string; xp: number }; // heute verdiente XP für das Tagesziel
   desk: Record<string, 1>; // Service-Desk-Ticket einmal gelöst -> danach nur noch XP.repeat
   deskDaily: string; // Tag, an dem der Bonus für das Ticket des Tages vergeben wurde
+  history: Record<string, number>; // YYYY-MM-DD -> an dem Tag verdiente XP (Wochenrückblick)
 }
 
 export const emptyProgress = (): Progress => ({
@@ -62,6 +63,7 @@ export const emptyProgress = (): Progress => ({
   daily: { day: '', xp: 0 },
   desk: {},
   deskDaily: '',
+  history: {},
 });
 
 export const emptyLevel = (): LevelProgress => ({
@@ -86,6 +88,10 @@ export const reviewKey = (levelId: string, questionId: string) => `${levelId}/${
 export const levelProgress = (p: Progress, id: string): LevelProgress => p.levels[id] ?? emptyLevel();
 
 export const isPassed = (lp: LevelProgress) => lp.quizBest >= PASS_THRESHOLD && lp.bossPassed;
+
+/** 0 = nicht bestanden, 1 = bestanden, +1 Quiz ≥ 95 %, +1 Boss ohne Herzverlust. */
+export const levelStars = (lp: LevelProgress) =>
+  isPassed(lp) ? 1 + Number(lp.quizBest >= 0.95) + Number(lp.bossPerfect) : 0;
 
 /** Level 1 jedes Tracks ist offen, sonst muss das vorherige Level im selben Track bestanden sein. */
 export function isUnlocked(level: Level, all: Level[], p: Progress, unlockAll = DEV_UNLOCK): boolean {
@@ -118,8 +124,17 @@ export const dailyXp = (p: Progress, now = today()) => (p.daily.day === now ? p.
 /** Rechnet den XP-Zuwachs einer Änderung dem heutigen Tagesziel zu. */
 export function trackDaily(before: Progress, after: Progress, now = today()): Progress {
   const gain = after.xp - before.xp;
-  return gain > 0 ? { ...after, daily: { day: now, xp: dailyXp(after, now) + gain } } : after;
+  if (gain <= 0) return after;
+  const history = after.history ?? {};
+  return { ...after, daily: { day: now, xp: dailyXp(after, now) + gain }, history: { ...history, [now]: (history[now] ?? 0) + gain } };
 }
+
+/** XP der letzten 7 Tage, ältester zuerst. */
+export const lastWeek = (p: Progress, now = today()) =>
+  [6, 5, 4, 3, 2, 1, 0].map((n) => {
+    const day = addDays(now, -n);
+    return { day, xp: p.history?.[day] ?? 0 };
+  });
 
 export type AnswerMode = 'quiz' | 'boss' | 'review';
 

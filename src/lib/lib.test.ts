@@ -1,7 +1,8 @@
 import { tablesOf } from './sheet';
+import { chmodOf, lsdouWinner } from './games';
 import { describe, expect, it } from 'vitest';
 import { broadcastOf, generateSubnetProblem, networkOf, prefixForHosts, prefixToMask, subnetAnswerMatches, usableHosts } from './subnet';
-import { addDays, emptyProgress, finishBoss, finishQuiz, isPassed, levelProgress, parseImport, playerLevel, recordAnswer, dailyXp, trackDaily, recordTicket, ticketOfDay } from './progress';
+import { addDays, emptyProgress, finishBoss, finishQuiz, isPassed, levelProgress, parseImport, playerLevel, recordAnswer, dailyXp, trackDaily, lastWeek, levelStars, emptyLevel, recordTicket, ticketOfDay } from './progress';
 import type { SubnetTask } from '../types/content';
 
 describe('subnet', () => {
@@ -100,6 +101,25 @@ describe('progress', () => {
     expect(parseImport(JSON.stringify(old)).daily).toEqual({ day: '', xp: 0 });
   });
 
+  it('Wochenrückblick: XP pro Tag, 7 Tage, ältester zuerst', () => {
+    const p0 = emptyProgress();
+    const p1 = trackDaily(p0, recordAnswer(p0, 'a/q1', true, 'quiz', '2026-05-01'), '2026-05-01');
+    const p2 = trackDaily(p1, recordAnswer(p1, 'a/q2', true, 'quiz', '2026-05-03'), '2026-05-03');
+    const w = lastWeek(p2, '2026-05-03');
+    expect(w).toHaveLength(7);
+    expect(w[6]).toEqual({ day: '2026-05-03', xp: 10 });
+    expect(w[4]).toEqual({ day: '2026-05-01', xp: 10 });
+    expect(w[5].xp).toBe(0);
+  });
+
+  it('Sterne: 0 offen, 1 bestanden, bis 3 mit Bestwerten', () => {
+    const lp = { ...emptyLevel(), quizBest: 0.8, bossPassed: true };
+    expect(levelStars(emptyLevel())).toBe(0);
+    expect(levelStars(lp)).toBe(1);
+    expect(levelStars({ ...lp, quizBest: 1 })).toBe(2);
+    expect(levelStars({ ...lp, quizBest: 1, bossPerfect: true })).toBe(3);
+  });
+
   it('Spickzettel findet nur Tabellen', () => {
     expect(tablesOf('Text\n| a | b |\n|---|---|\n| 1 | 2 |\nmehr\n\n| x |')).toEqual(['| a | b |\n|---|---|\n| 1 | 2 |', '| x |']);
   });
@@ -120,5 +140,22 @@ describe('Service Desk', () => {
     const list = ['a', 'b', 'c'];
     expect(ticketOfDay(list, '2026-11-01')).toBe(ticketOfDay(list, '2026-11-01'));
     expect(ticketOfDay(list, '2026-11-01')).not.toBe(ticketOfDay(list, '2026-11-02'));
+  });
+});
+
+describe('Mini-Spiele', () => {
+  it('chmod: Bits → Oktal und Symbolik', () => {
+    const bits = (s: string) => s.split('').map((c) => c !== '-');
+    expect(chmodOf(bits('rwxr-x---'))).toEqual({ octal: '750', symbolic: 'rwxr-x---' });
+    expect(chmodOf(bits('rw-r--r--')).octal).toBe('644');
+    expect(chmodOf(bits('---------')).octal).toBe('000');
+  });
+
+  it('LSDOU: letzte gewinnt, erzwungen ganz oben schlägt alles', () => {
+    const none = { value: null };
+    expect(lsdouWinner({ L: { value: 'blau' }, S: none, D: { value: 'rot' }, OU: { value: 'grün' } })).toEqual({ value: 'grün', from: 'OU' });
+    expect(lsdouWinner({ L: { value: 'blau' }, S: none, D: none, OU: none })).toEqual({ value: 'blau', from: 'L' });
+    expect(lsdouWinner({ L: none, S: { value: 'gelb', enforced: true }, D: { value: 'rot', enforced: true }, OU: { value: 'grün' } })).toEqual({ value: 'gelb', from: 'S' });
+    expect(lsdouWinner({ L: none, S: none, D: none, OU: none })).toEqual({ value: null, from: null });
   });
 });

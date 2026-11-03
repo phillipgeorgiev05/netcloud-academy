@@ -69,6 +69,7 @@ Danach aktualisieren PCs ihre Richtlinien im Hintergrund **alle 90 Minuten** (pl
     },
     {
       heading: 'Reihenfolge: LSDOU',
+      diagram: 'game-lsdou',
       body: `Gelten mehrere GPOs, werden sie in fester Reihenfolge angewendet. Merkwort **LSDOU**:
 1. **L**okal: die lokale Richtlinie des PCs (\`gpedit.msc\`)
 2. **S**tandort (site)

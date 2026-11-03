@@ -124,6 +124,8 @@ Stand: 2026-11-01. Exam Guides der Hersteller bei neuen Prüfungsversionen erneu
 
 ## Geplante Level (Reihenfolge im Lernpfad)
 
+Teil 0 (Grundkurs, immer offen): 01 Computer & Daten ✓ · 02 Netzwerke verstehen ✓ · 03 Das OSI-Modell ✓ · 04 Internet & Web ✓ · 05 Server, Virtualisierung & Cloud ✓ · 06 IT-Sicherheit Grundwissen ✓
+
 Teil A: A7 Routing · A8 Netzwerkdienste · A9 TCP/UDP & Ports · A10 WLAN · A11 Netzwerksicherheit · A12 WAN, SD-WAN & QoS · A13 Betrieb & Monitoring · A14 Automatisierung · A15 Troubleshooting
 
 Teil B: B6 Identität & Sicherheit · B7 Speicher & Datenbanken · B8 Container & Kubernetes · B9 Serverless & Integration · B10 Infrastructure as Code · B11 Monitoring, Backup & HA · B12 Kosten & Governance · B13 DevOps & CI/CD

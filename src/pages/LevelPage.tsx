@@ -4,11 +4,12 @@ import { getLevel, levels } from '../content';
 import { certs } from '../content/certs';
 import { QuestionSession, type SessionSummary } from '../components/QuestionSession';
 import { LessonView } from '../components/LessonView';
+import { Confetti, Stars } from '../components/Celebrate';
 import { Icon, type IconName } from '../components/Icons';
 import { generatorNames } from '../lib/generators';
 import { RichText, shuffle } from '../components/questions/shared';
 import type { CertId, Level, Question } from '../types/content';
-import { completeLesson, finishBoss, finishQuiz, isPassed, isUnlocked, levelProgress, PASS_THRESHOLD, reviewKey, toggleLabStep, XP } from '../lib/progress';
+import { completeLesson, finishBoss, finishQuiz, isPassed, isUnlocked, levelProgress, levelStars, PASS_THRESHOLD, reviewKey, toggleLabStep, XP } from '../lib/progress';
 import { useProgress } from '../lib/ProgressContext';
 
 type Stage = 'overview' | 'lesson' | 'quiz' | 'boss' | 'result' | 'lab';
@@ -79,17 +80,13 @@ function LevelFlow({ level }: { level: Level }) {
       <div>
         {back}
         <h1 className="mb-4 text-[28px] font-bold leading-tight tracking-tight">{level.title}</h1>
-        <LessonView level={level} />
-        <button
-          type="button"
-          onClick={() => {
+        <LessonView
+          level={level}
+          onDone={() => {
             update((p) => completeLesson(p, level.id));
             start('quiz');
           }}
-          className="mt-6 w-full rounded-full bg-cyan-500 px-5 py-3 font-semibold text-snow hover:bg-cyan-400"
-        >
-          Lektion abgeschlossen – zum Quiz →
-        </button>
+        />
       </div>
     );
 
@@ -151,18 +148,25 @@ function LevelFlow({ level }: { level: Level }) {
     const pct = Math.round((last.s.correct / last.s.total) * 100);
     const ok = pct >= PASS_THRESHOLD * 100 && (last.kind === 'quiz' || last.s.heartsLeft > 0);
     return (
-      <div className="space-y-4 text-center">
-        <div className="text-6xl">{ok ? (last.kind === 'boss' ? '🏆' : '🎉') : '💪'}</div>
+      <div className="anim-rise space-y-4 pt-6 text-center">
+        {ok && <Confetti />}
+        <div className="anim-pop text-6xl">{ok ? (last.kind === 'boss' ? '🏆' : '🎉') : '💪'}</div>
+        {ok && last.kind === 'boss' && isPassed(lp) && <Stars n={levelStars(lp)} size="h-10 w-10" animate />}
         <h1 className="text-[28px] font-bold leading-tight tracking-tight">{ok ? (last.kind === 'boss' ? 'Boss besiegt!' : 'Quiz bestanden!') : 'Noch nicht ganz'}</h1>
         <p className="text-slate-300">
           {last.s.correct} von {last.s.total} richtig ({pct} %).
           {last.kind === 'boss' && last.s.heartsLeft <= 0 && ' Alle Herzen verloren.'}
         </p>
         {!ok && <p className="text-sm text-slate-400">Zum Bestehen brauchst du mindestens 80 %. Falsche Fragen liegen jetzt im Wiederholen-Stapel.</p>}
-        {ok && isPassed(lp) && <p className="text-emerald-300">Level abgeschlossen – das nächste Level ist freigeschaltet.</p>}
+        {ok && isPassed(lp) && (
+          <p className="text-emerald-300">
+            Level abgeschlossen – das nächste Level ist freigeschaltet.
+            {levelStars(lp) < 3 && <span className="block text-sm text-slate-400">Mehr Sterne: Quiz mit mind. 95 % und Boss ohne Herzverlust.</span>}
+          </p>
+        )}
         <div className="flex flex-col gap-2 sm:flex-row sm:justify-center">
           {ok && last.kind === 'quiz' && (
-            <button type="button" onClick={() => start('boss')} className="rounded-xl bg-rose-500 px-4 py-3 font-semibold hover:bg-rose-400">
+            <button type="button" onClick={() => start('boss')} className="rounded-full bg-rose-500 px-5 py-3 font-semibold text-snow hover:bg-rose-400">
               👾 Zur Boss-Challenge
             </button>
           )}

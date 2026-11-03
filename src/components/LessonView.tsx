@@ -5,21 +5,59 @@ import { Diagram } from './Diagrams';
 import { QuestionRenderer } from './questions/QuestionRenderer';
 import { RichText, type Result } from './questions/shared';
 
-export function LessonView({ level }: { level: Level }) {
+/** Lektion in Häppchen: eine Karte pro Abschnitt, weiter erst nach der Kurzfrage. */
+export function LessonView({ level, onDone }: { level: Level; onDone: () => void }) {
   const link = glossaryLinkFor(level.id);
+  const [i, setI] = useState(0);
+  const [seen, setSeen] = useState(0); // weiteste erreichte Karte, dorthin darf man zurückspringen
+  const [answered, setAnswered] = useState<number[]>([]);
+  const s = level.lesson[i];
+  const last = i === level.lesson.length - 1;
+  const canGo = !s.check || answered.includes(i);
+  const go = (n: number) => {
+    setI(n);
+    setSeen((m) => Math.max(m, n));
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   return (
-    <div className="space-y-6">
-      {level.lesson.map((s) => (
-        <Section key={s.heading} s={s} link={link} />
-      ))}
+    <div>
+      <div className="mb-4 flex gap-1.5" role="progressbar" aria-valuemin={1} aria-valuemax={level.lesson.length} aria-valuenow={i + 1} aria-label="Karten der Lektion">
+        {level.lesson.map((x, n) => (
+          <button
+            key={x.heading}
+            type="button"
+            onClick={() => n <= seen && go(n)}
+            aria-label={`Karte ${n + 1}: ${x.heading}`}
+            className={`h-1.5 flex-1 rounded-full transition-colors ${n < i ? 'bg-cyan-400' : n === i ? 'bg-cyan-400/60' : 'bg-slate-800'}`}
+          />
+        ))}
+      </div>
+      <div className="mb-2 text-[13px] font-semibold uppercase tracking-wide text-slate-500">Karte {i + 1} von {level.lesson.length}</div>
+      <Section key={i} s={s} link={link} onAnswered={() => setAnswered((a) => (a.includes(i) ? a : [...a, i]))} />
+      <div className="mt-5 flex gap-3">
+        {i > 0 && (
+          <button type="button" onClick={() => go(i - 1)} className="rounded-full bg-slate-800 px-5 py-3 font-semibold hover:bg-slate-700">
+            Zurück
+          </button>
+        )}
+        <button
+          type="button"
+          disabled={!canGo}
+          onClick={() => (last ? onDone() : go(i + 1))}
+          className="flex-1 rounded-full bg-cyan-500 px-5 py-3 font-semibold text-snow hover:bg-cyan-400 disabled:cursor-not-allowed disabled:opacity-40"
+        >
+          {!canGo ? 'Erst die Kurzfrage beantworten' : last ? 'Lektion abschließen – zum Quiz' : 'Weiter'}
+        </button>
+      </div>
     </div>
   );
 }
 
-function Section({ s, link }: { s: LessonSection; link: (t: string) => string | undefined }) {
+function Section({ s, link, onAnswered }: { s: LessonSection; link: (t: string) => string | undefined; onAnswered: () => void }) {
   return (
-    <section className="rounded-2xl bg-slate-900 p-4">
-      <h2 className="mb-2 text-lg font-semibold text-cyan-300">{s.heading}</h2>
+    <section className="anim-slide rounded-[22px] bg-slate-900 p-5">
+      <h2 className="mb-3 text-[22px] font-bold leading-tight tracking-tight">{s.heading}</h2>
       <RichText text={s.body} link={link} />
       {s.diagram && <Diagram id={s.diagram} />}
       {s.compare && <FlipCards c={s.compare} />}
@@ -39,7 +77,7 @@ function Section({ s, link }: { s: LessonSection; link: (t: string) => string | 
           ))}
         </dl>
       )}
-      {s.check && <CheckQuestion s={s} />}
+      {s.check && <CheckQuestion s={s} onAnswered={onAnswered} />}
       {s.sources && (
         <div className="mt-3 text-xs text-slate-400">
           📚 Zum Nachlesen:{' '}
@@ -55,13 +93,13 @@ function Section({ s, link }: { s: LessonSection; link: (t: string) => string | 
   );
 }
 
-function CheckQuestion({ s }: { s: LessonSection }) {
+function CheckQuestion({ s, onAnswered }: { s: LessonSection; onAnswered: () => void }) {
   const [result, setResult] = useState<Result | null>(null);
   const [round, setRound] = useState(0);
   return (
-    <div className="mt-4 rounded-xl border border-cyan-500/30 bg-cyan-500/5 p-3">
-      <div className="mb-2 text-xs font-semibold uppercase tracking-wide text-cyan-300">🤔 Kurz prüfen (zählt nicht)</div>
-      <QuestionRenderer key={round} q={s.check!} result={result} onResult={setResult} />
+    <div className="mt-5 rounded-2xl bg-cyan-500/[0.07] p-4">
+      <div className="mb-2 text-xs font-semibold uppercase tracking-wide text-cyan-300">Kurz prüfen · zählt nicht</div>
+      <QuestionRenderer key={round} q={s.check!} result={result} onResult={(r) => { setResult(r); onAnswered(); }} />
       {result && !result.correct && (
         <button type="button" onClick={() => { setResult(null); setRound(round + 1); }} className="mt-3 text-sm text-cyan-400 underline">
           Nochmal versuchen
