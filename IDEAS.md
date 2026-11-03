@@ -149,3 +149,11 @@ Alle 35 Ideen aus den Schritten 1–9 sind eingebaut: Mechanik plus Beispielinha
 3. **gpresult-Leseübung:** Echte, gekürzte `gpresult /r`-Ausgaben, in denen man anklickt, warum ein GPO gefiltert wurde. Das übt das Lesen von Ausgaben wie im Support-Alltag.
 4. **icacls-Generator:** Zufallsaufgaben „Gib Gruppe X Ändern auf Ordner Y, nur für Unterordner“, die man als `icacls`-Befehl tippt. Die Vererbungsflags (OI)(CI)(IO) sind ein typischer Stolperstein.
 5. **Service-Desk-Tickets zu Rechten:** Neue Tickets wie „Kollegin sieht den Ordner Personal“ oder „Laufwerk H: fehlt seit gestern“, die man mit dem Wissen aus C1 und C2 löst.
+
+## Schritt 16: C3 Linux-Administration (2026-11-03)
+
+1. **Mini-Terminal im Browser:** Ein simuliertes Dateisystem mit `ls`, `cd`, `cat`, `chmod`, `chown` und `id`, in dem man kleine Aufgaben löst („Gib der Gruppe vertrieb Schreibrecht“). Keine VM nötig, funktioniert offline auf dem Handy.
+2. **chmod-Rechner:** Drei Reihen mit Häkchen für r, w und x, die live die Oktalzahl und die `ls -l`-Darstellung zeigen, und umgekehrt. Ideal zum Üben der Umrechnung.
+3. **Log-Detektiv:** Gekürzte, echte Ausschnitte aus `journalctl` und `auth.log` (z. B. Brute-Force-Versuche, abgestürzter Dienst), in denen man die entscheidende Zeile anklickt.
+4. **Windows-Linux-Übersetzer:** Eine Tabelle zum Nachschlagen, die Gegenstücke zeigt: `ipconfig` und `ip a`, `tasklist` und `ps`, Dienste-Konsole und `systemctl`, NTFS-Rechte und `chmod`. Hilft Umsteigern aus C1 und C2.
+5. **Generator für Rechte-Aufgaben:** Zufällige `ls -l`-Zeilen plus `id`-Ausgabe, und man beantwortet, ob ein Benutzer lesen, schreiben oder hineinwechseln darf. Der Test prüft die Logik wie bei den anderen Generatoren.

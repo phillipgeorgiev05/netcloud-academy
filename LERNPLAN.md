@@ -128,6 +128,6 @@ Teil A: A7 Routing · A8 Netzwerkdienste · A9 TCP/UDP & Ports · A10 WLAN · A1
 
 Teil B: B6 Identität & Sicherheit · B7 Speicher & Datenbanken · B8 Container & Kubernetes · B9 Serverless & Integration · B10 Infrastructure as Code · B11 Monitoring, Backup & HA · B12 Kosten & Governance · B13 DevOps & CI/CD
 
-Teil C (Fachinformatiker/in Systemintegration, IHK AP1/AP2): C1 Windows Server & Active Directory ✓ · C2 Gruppenrichtlinien & Berechtigungen ✓ · C3 Linux-Administration · C4 Datensicherung & RAID · C5 IT-Sicherheit & Datenschutz · C6 Server-Hardware & USV · C7 Skripte: PowerShell & Bash · C8 Projektmanagement & Kalkulation · C9 Wirtschafts- und Sozialkunde · C10 Arbeitsplatz einrichten (AP1). Passende Level aus Teil A und B (A1–A9, B1–B2) sind zusätzlich für den Zertifikats-Fokus „FISI“ markiert.
+Teil C (Fachinformatiker/in Systemintegration, IHK AP1/AP2): C1 Windows Server & Active Directory ✓ · C2 Gruppenrichtlinien & Berechtigungen ✓ · C3 Linux-Administration ✓ · C4 Datensicherung & RAID · C5 IT-Sicherheit & Datenschutz · C6 Server-Hardware & USV · C7 Skripte: PowerShell & Bash · C8 Projektmanagement & Kalkulation · C9 Wirtschafts- und Sozialkunde · C10 Arbeitsplatz einrichten (AP1). Passende Level aus Teil A und B (A1–A9, B1–B2) sind zusätzlich für den Zertifikats-Fokus „FISI“ markiert.
 
 Ergänzend: der **Service Desk** (Seite `/desk`) übt das Gelernte an echten Support-Tickets.
