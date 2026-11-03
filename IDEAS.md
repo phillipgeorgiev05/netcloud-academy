@@ -141,3 +141,11 @@ Alle 35 Ideen aus den Schritten 1–9 sind eingebaut: Mechanik plus Beispielinha
 3. **Rechenaufgaben-Generator für AP1/AP2:** Zufallsaufgaben zu Übertragungsdauer, Speicherbedarf, USV-Laufzeit, Amortisation und Stundensatz-Kalkulation. Das sind feste Klassiker der IHK-Prüfungen.
 4. **AD-Baukasten:** Ein Fragetyp `config`, in dem man OUs, Gruppen und Rechte zieht und die App prüft, ob AGDLP eingehalten ist. So übt man die Struktur, statt sie nur zu lesen.
 5. **Fachgespräch-Trainer:** Eine Karteikarten-Runde mit typischen Fragen aus dem mündlichen Fachgespräch („Warum haben Sie sich für X entschieden?“). Man spricht die Antwort laut und deckt danach Stichworte für eine gute Antwort auf.
+
+## Schritt 15: C2 Gruppenrichtlinien & Berechtigungen (2026-11-03)
+
+1. **GPO-Simulator:** Eine kleine OU-Baumansicht, in der man GPOs verknüpft, „Erzwungen“ und „Vererbung deaktivieren“ umschaltet und sofort sieht, welcher Wert bei einem Benutzer ankommt. LSDOU wird so sichtbar statt auswendig gelernt.
+2. **Rechte-Rechner:** Freigabe- und NTFS-Rechte mehrerer Gruppen eintragen, die App zeigt das effektive Recht und erklärt jeden Schritt (addieren, strengeres gewinnt, Verweigern).
+3. **gpresult-Leseübung:** Echte, gekürzte `gpresult /r`-Ausgaben, in denen man anklickt, warum ein GPO gefiltert wurde. Das übt das Lesen von Ausgaben wie im Support-Alltag.
+4. **icacls-Generator:** Zufallsaufgaben „Gib Gruppe X Ändern auf Ordner Y, nur für Unterordner“, die man als `icacls`-Befehl tippt. Die Vererbungsflags (OI)(CI)(IO) sind ein typischer Stolperstein.
+5. **Service-Desk-Tickets zu Rechten:** Neue Tickets wie „Kollegin sieht den Ordner Personal“ oder „Laufwerk H: fehlt seit gestern“, die man mit dem Wissen aus C1 und C2 löst.
