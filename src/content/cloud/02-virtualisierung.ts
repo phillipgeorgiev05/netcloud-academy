@@ -7,8 +7,8 @@ const level: Level = {
   title: 'Virtualisierung & Hypervisor',
   titleEn: 'Virtualization & Hypervisors',
   summary: 'Hypervisor Typ 1 und Typ 2, Bausteine einer VM, virtuelle Netzwerke, Snapshots, Live-Migration, VMs vs. Container und wie Azure und AWS virtualisieren.',
-  certs: ['az900', 'az104', 'aws-saa', 'netplus'],
-  domains: { az900: 'architecture', az104: 'compute', netplus: '1' },
+  certs: ['az900', 'az104', 'aws-saa', 'netplus', 'fisi'],
+  domains: { az900: 'architecture', az104: 'compute', netplus: '1', fisi: 'ap2-admin' },
   lab: {
     title: 'Erste VM mit VirtualBox',
     needs: 'Oracle VirtualBox (kostenlos) und ein Linux-ISO, z. B. Ubuntu Server',

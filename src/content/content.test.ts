@@ -95,7 +95,7 @@ describe('Service-Desk-Tickets', () => {
       // learn darf auf ein geplantes, noch nicht geschriebenes Level zeigen
       if (t.learn) {
         const [track, n] = t.learn.split('-');
-        const planned = tracks[track === 'net' ? 'network' : 'cloud']?.planned.length ?? 0;
+        const planned = tracks[({ net: 'network', cloud: 'cloud', fisi: 'fisi' } as const)[track as 'net']]?.planned.length ?? 0;
         expect(Number(n)).toBeGreaterThan(0);
         expect(Number(n)).toBeLessThanOrEqual(planned);
       }
@@ -106,7 +106,7 @@ describe('Service-Desk-Tickets', () => {
 describe('Inhalte', () => {
   it('Level-IDs eindeutig, Reihenfolge pro Track lückenlos', () => {
     expect(new Set(levels.map((l) => l.id)).size).toBe(levels.length);
-    for (const track of ['network', 'cloud'] as const) {
+    for (const track of ['network', 'cloud', 'fisi'] as const) {
       const orders = levels.filter((l) => l.track === track).map((l) => l.order);
       expect(orders).toEqual(orders.map((_, i) => i + 1));
     }

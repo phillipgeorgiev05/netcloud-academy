@@ -26,4 +26,5 @@ export const badges: BadgeDef[] = [
   { id: 'desk-10', icon: '🛠️', name: 'Service-Desk-Profi', description: '10 Service-Desk-Tickets gelöst', earned: (p) => Object.keys(p.desk).length >= 10 },
   { id: 'network-complete', icon: '🌐', name: 'Netzwerk-Techniker', description: `Alle ${tracks.network.planned.length} Netzwerk-Level bestanden`, earned: (p, ls) => passedCount(p, ls, 'network') >= tracks.network.planned.length },
   { id: 'cloud-complete', icon: '🚀', name: 'Cloud-Engineer', description: `Alle ${tracks.cloud.planned.length} Cloud-Level bestanden`, earned: (p, ls) => passedCount(p, ls, 'cloud') >= tracks.cloud.planned.length },
+  { id: 'fisi-complete', icon: '🖥️', name: 'Systemintegrator', description: `Alle ${tracks.fisi.planned.length} Level von Teil C bestanden`, earned: (p, ls) => passedCount(p, ls, 'fisi') >= tracks.fisi.planned.length },
 ];

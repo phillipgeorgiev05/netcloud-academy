@@ -7,8 +7,8 @@ const level: Level = {
   title: 'Netzwerkdienste',
   titleEn: 'DHCP, DNS, NAT/PAT, NTP, SNMP, Syslog, SSH',
   summary: 'Die Dienste, ohne die kein Netz läuft: DHCP mit Relay, DNS mit allen wichtigen Eintragstypen, NAT und PAT, Zeit mit NTP, Überwachung mit SNMP und Syslog, sicherer Fernzugriff mit SSH sowie FTP/TFTP.',
-  certs: ['ccna', 'netplus'],
-  domains: { ccna: '4', netplus: '3' },
+  certs: ['ccna', 'netplus', 'fisi'],
+  domains: { ccna: '4', netplus: '3', fisi: 'ap2-admin' },
   lab: {
     title: 'DHCP, NAT und SSH auf einem Router',
     needs: 'Cisco Packet Tracer (kostenlos über die Cisco Networking Academy)',

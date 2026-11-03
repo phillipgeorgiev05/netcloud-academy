@@ -1,6 +1,6 @@
 # NetCloud Academy – Projektleitfaden
 
-Lern-Web-App für Netzwerktechnik und Cloud (Ziel: CCNA, Network+, AZ-900/AZ-104, AWS SAA).
+Lern-Web-App für Netzwerktechnik und Cloud (Ziel: CCNA, Network+, AZ-900/AZ-104, AWS SAA, Fachinformatiker/in Systemintegration IHK).
 React 19 + Vite + TypeScript + Tailwind v4, PWA (vite-plugin-pwa). Kein Backend, Fortschritt in `localStorage`.
 
 ## Befehle
@@ -30,6 +30,7 @@ src/
   content/                 NUR Daten – kein UI-Code
     network/NN-*.ts        Teil A, ein Level pro Datei
     cloud/NN-*.ts          Teil B, ein Level pro Datei
+    fisi/NN-*.ts           Teil C (Fachinformatiker SI, IHK), ein Level pro Datei
     index.ts               lädt Level automatisch (import.meta.glob), geplanter Lernpfad (`tracks`)
     certs.ts               Zertifikate, Prüfungsnummern, Prüfungsbereiche (domains)
     badges.ts              Abzeichen inkl. Bedingung
@@ -58,8 +59,8 @@ scripts/make-icons.mjs     erzeugt PNG-Icons ohne Zusatzpakete
 
 ## Neues Level hinzufügen
 
-1. Datei anlegen, z. B. `src/content/network/07-routing.ts` (Vorlage: eine bestehende Level-Datei kopieren).
-2. `id` eindeutig (`net-07`, `cloud-06`), `track` und `order` setzen. `order` muss lückenlos an das vorige Level anschließen.
+1. Datei anlegen, z. B. `src/content/network/07-routing.ts` oder `src/content/fisi/02-gpo.ts` (Vorlage: eine bestehende Level-Datei kopieren).
+2. `id` eindeutig (`net-07`, `cloud-06`, `fisi-02`), `track` und `order` setzen. `order` muss lückenlos an das vorige Level anschließen.
 3. `domains` setzen: Prüfungsbereich je Zertifikat (Ids aus `certs.ts`). Einzelne Fragen können per `domain` abweichen.
 4. Optional `lab` (Praxis-Lab mit mind. 3 Schritten). Bei Cloud-Labs immer einen Aufräum-Schritt einbauen, damit keine Kosten entstehen.
 5. `export default level;` – mehr nicht. Die Datei wird automatisch gefunden. Der Platzhaltertitel in `tracks` wird automatisch ersetzt.

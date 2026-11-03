@@ -7,8 +7,8 @@ const level: Level = {
   title: 'IPv4 & Subnetting',
   titleEn: 'IPv4 Addressing, Subnetting, CIDR & VLSM',
   summary: 'IPv4-Adressaufbau, private und spezielle Bereiche, Subnetzmasken, CIDR und VLSM, mit Subnetting-Trainer (Zufallsaufgaben).',
-  certs: ['ccna', 'netplus', 'az104', 'aws-saa'],
-  domains: { ccna: '1', netplus: '1', az104: 'network' },
+  certs: ['ccna', 'netplus', 'az104', 'aws-saa', 'fisi'],
+  domains: { ccna: '1', netplus: '1', az104: 'network', fisi: 'ap2-admin' },
   lab: {
     title: 'Subnetting am eigenen Netz',
     needs: 'einen PC in deinem Heimnetz, Papier und Stift',

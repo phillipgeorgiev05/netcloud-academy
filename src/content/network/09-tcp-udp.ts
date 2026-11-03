@@ -7,8 +7,8 @@ const level: Level = {
   title: 'TCP/UDP & Protokolle',
   titleEn: 'TCP, UDP, Ports, ICMP, Application Protocols',
   summary: 'Wie TCP zuverlässig überträgt (Handshake, Sequenznummern, Fenster), wann UDP besser ist, Ports und Sockets, ICMP mit ping und traceroute und alle wichtigen Anwendungsprotokolle mit ihren Ports.',
-  certs: ['ccna', 'netplus'],
-  domains: { ccna: '1', netplus: '1' },
+  certs: ['ccna', 'netplus', 'fisi'],
+  domains: { ccna: '1', netplus: '1', fisi: 'ap2-admin' },
   lab: {
     title: 'TCP-Handshake mit Wireshark ansehen',
     needs: 'Wireshark (kostenlos, wireshark.org) auf dem eigenen PC',

@@ -1,7 +1,7 @@
 // Datenmodell für alle Inhalte unter src/content/. Neue Fragen = nur Daten, kein UI-Code.
 
-export type CertId = 'ccna' | 'netplus' | 'az900' | 'az104' | 'aws-saa';
-export type Track = 'network' | 'cloud';
+export type CertId = 'ccna' | 'netplus' | 'az900' | 'az104' | 'aws-saa' | 'fisi';
+export type Track = 'network' | 'cloud' | 'fisi';
 
 export interface Cert {
   id: CertId;

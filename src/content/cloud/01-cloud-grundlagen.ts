@@ -7,8 +7,8 @@ const level: Level = {
   title: 'Cloud-Grundlagen',
   titleEn: 'Cloud Concepts',
   summary: 'Was Cloud Computing ausmacht, IaaS/PaaS/SaaS, Bereitstellungsmodelle, Shared Responsibility, CapEx vs. OpEx, Skalierung, Hochverfügbarkeit und Regionen.',
-  certs: ['az900', 'aws-saa'],
-  domains: { az900: 'concepts' },
+  certs: ['az900', 'aws-saa', 'fisi'],
+  domains: { az900: 'concepts', fisi: 'ap2-admin' },
   lesson: [
     {
       heading: 'Was ist Cloud Computing?',

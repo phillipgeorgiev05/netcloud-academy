@@ -7,8 +7,8 @@ const level: Level = {
   title: 'Ethernet, MAC & Kabel',
   titleEn: 'Ethernet, MAC Addresses, Copper & Fiber',
   summary: 'Aufbau von MAC-Adressen und Ethernet-Frames, wie ein Switch lernt, Kupferkabel-Kategorien, Glasfaser und PoE.',
-  certs: ['ccna', 'netplus'],
-  domains: { ccna: '1', netplus: '1' },
+  certs: ['ccna', 'netplus', 'fisi'],
+  domains: { ccna: '1', netplus: '1', fisi: 'ap1' },
   lab: {
     title: 'Eigene MAC-Adressen und Link-Infos untersuchen',
     needs: 'einen Windows- oder Linux-PC',

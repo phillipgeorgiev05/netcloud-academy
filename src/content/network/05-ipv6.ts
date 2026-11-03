@@ -7,8 +7,8 @@ const level: Level = {
   title: 'IPv6',
   titleEn: 'IPv6 Addressing, NDP, SLAAC & Transition',
   summary: 'Aufbau und Kurzschreibweise von IPv6-Adressen, Adresstypen, Präfixe, NDP statt ARP, SLAAC/DHCPv6, EUI-64, der IPv6-Header und Übergangstechniken.',
-  certs: ['ccna', 'netplus'],
-  domains: { ccna: '1', netplus: '1' },
+  certs: ['ccna', 'netplus', 'fisi'],
+  domains: { ccna: '1', netplus: '1', fisi: 'ap2-admin' },
   lab: {
     title: 'IPv6 am eigenen Rechner',
     needs: 'einen Windows- oder Linux-PC',

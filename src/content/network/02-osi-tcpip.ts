@@ -7,8 +7,8 @@ const level: Level = {
   title: 'OSI- & TCP/IP-Modell',
   titleEn: 'OSI & TCP/IP Model, Encapsulation',
   summary: 'Die 7 OSI-Schichten, das 4-Schichten-TCP/IP-Modell, PDUs und wie Daten beim Senden eingepackt (Kapselung) werden.',
-  certs: ['ccna', 'netplus'],
-  domains: { ccna: '1', netplus: '1' },
+  certs: ['ccna', 'netplus', 'fisi'],
+  domains: { ccna: '1', netplus: '1', fisi: 'ap1' },
   lesson: [
     {
       heading: 'Warum Schichtenmodelle?',

@@ -50,4 +50,13 @@ export const certs: Record<CertId, Cert> = {
       { id: 'cost', name: 'Design Cost-Optimized Architectures' },
     ],
   },
+  fisi: {
+    id: 'fisi', name: 'Fachinformatiker/in Systemintegration', exam: 'IHK AP1/AP2', vendor: 'IHK',
+    domains: [
+      { id: 'ap1', name: 'AP1 – Einrichten eines IT-gestützten Arbeitsplatzes' },
+      { id: 'ap2-projekt', name: 'AP2 – Planen und Umsetzen eines Projektes der Systemintegration' },
+      { id: 'ap2-admin', name: 'AP2 – Konzeption und Administration von IT-Systemen' },
+      { id: 'ap2-wiso', name: 'AP2 – Wirtschafts- und Sozialkunde' },
+    ],
+  },
 };

@@ -7,8 +7,8 @@ const level: Level = {
   title: 'Netzwerk-Grundlagen',
   titleEn: 'Networking Fundamentals',
   summary: 'Was ein Netzwerk ist, wie man es aufbaut (Topologien), LAN vs. WAN und welche Geräte welche Aufgabe haben.',
-  certs: ['ccna', 'netplus'],
-  domains: { ccna: '1', netplus: '1' },
+  certs: ['ccna', 'netplus', 'fisi'],
+  domains: { ccna: '1', netplus: '1', fisi: 'ap1' },
   lesson: [
     {
       heading: 'Was ist ein Netzwerk?',

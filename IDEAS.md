@@ -133,3 +133,11 @@ Alle 35 Ideen aus den Schritten 1–9 sind eingebaut: Mechanik plus Beispielinha
 3. **Einstiegstest „Wo stehe ich?“:** Zehn Fragen beim ersten Start. Wer sie besteht, bekommt die Grundlagen-Level als „übersprungen“ freigeschaltet, alle anderen starten bei A1. Das spart Wiederholung für Umsteiger.
 4. **Dunkelmodus-Varianten des App-Icons:** iOS 18 und Android unterstützen getönte und dunkle Icons. Eigene Varianten der Wolke mit RJ45-Buchse halten das Logo auf jedem Homescreen sauber.
 5. **Kapselungs-Spiel:** Drag-and-drop, bei dem man Daten nacheinander in TCP-Header, IP-Header und Ethernet-Rahmen packt und beim Empfänger wieder auspackt. Das macht das OSI-Modell aus A2 begreifbar, statt nur die Schichten auswendig zu lernen.
+
+## Schritt 14: Ablenker-Erklärungen, Schrift, Teil C FISI (2026-11-03)
+
+1. **IHK-Prüfungssimulation:** Eine Prüfung im Stil der AP2 mit gebundenen und ungebundenen Aufgaben und 90 Minuten Zeit. Freitextantworten vergleicht die App mit Stichworten einer Musterlösung und zeigt beides nebeneinander.
+2. **Projektdokumentation-Vorlage:** Eine Seite, die durch die Gliederung der betrieblichen Projektarbeit führt (Ist-Analyse, Soll-Konzept, Kosten-Nutzen, Zeitplan, Fazit) und zu jedem Abschnitt Beispiele und typische Fehler zeigt.
+3. **Rechenaufgaben-Generator für AP1/AP2:** Zufallsaufgaben zu Übertragungsdauer, Speicherbedarf, USV-Laufzeit, Amortisation und Stundensatz-Kalkulation. Das sind feste Klassiker der IHK-Prüfungen.
+4. **AD-Baukasten:** Ein Fragetyp `config`, in dem man OUs, Gruppen und Rechte zieht und die App prüft, ob AGDLP eingehalten ist. So übt man die Struktur, statt sie nur zu lesen.
+5. **Fachgespräch-Trainer:** Eine Karteikarten-Runde mit typischen Fragen aus dem mündlichen Fachgespräch („Warum haben Sie sich für X entschieden?“). Man spricht die Antwort laut und deckt danach Stichworte für eine gute Antwort auf.

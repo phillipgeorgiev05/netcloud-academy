@@ -7,8 +7,8 @@ const level: Level = {
   title: 'Switching',
   titleEn: 'VLANs, 802.1Q Trunking, STP/RSTP, EtherChannel',
   summary: 'VLANs und Access-Ports, Trunks mit 802.1Q und Native VLAN, DTP, Spanning Tree (Root Bridge, Port-Rollen, RSTP, PortFast, BPDU Guard) und EtherChannel mit LACP.',
-  certs: ['ccna', 'netplus'],
-  domains: { ccna: '2', netplus: '2' },
+  certs: ['ccna', 'netplus', 'fisi'],
+  domains: { ccna: '2', netplus: '2', fisi: 'ap2-admin' },
   lab: {
     title: 'VLANs, Trunk und STP in Packet Tracer',
     needs: 'Cisco Packet Tracer (kostenlos über die Cisco Networking Academy)',

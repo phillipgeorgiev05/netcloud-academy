@@ -7,8 +7,8 @@ const level: Level = {
   title: 'Routing',
   titleEn: 'Routing Table, Static Routes, Inter-VLAN, OSPF, FHRP',
   summary: 'Wie ein Router entscheidet: Routingtabelle, Longest Match, administrative Distanz und Metrik. Statische Routen (Default, Host, Floating) für IPv4 und IPv6, Inter-VLAN-Routing, OSPFv2 in einer Area und Gateway-Redundanz mit HSRP/VRRP.',
-  certs: ['ccna', 'netplus'],
-  domains: { ccna: '3', netplus: '2' },
+  certs: ['ccna', 'netplus', 'fisi'],
+  domains: { ccna: '3', netplus: '2', fisi: 'ap2-admin' },
   lab: {
     title: 'Statisch, OSPF und Backup-Route in Packet Tracer',
     needs: 'Cisco Packet Tracer (kostenlos über die Cisco Networking Academy)',
