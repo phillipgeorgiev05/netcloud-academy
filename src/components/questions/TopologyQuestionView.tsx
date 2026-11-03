@@ -66,13 +66,13 @@ export function TopologyCanvas({
             type="button"
             onClick={() => onLinkClick(i)}
             aria-label={`Verbindung ${a}–${b}${label ? ` (${label})` : ''}`}
-            className="absolute min-h-8 min-w-8 -translate-x-1/2 -translate-y-1/2 rounded-lg border-2 bg-slate-950 px-1.5 text-[10px] text-amber-300 sm:text-xs"
+            className="absolute min-h-8 min-w-8 -translate-x-1/2 -translate-y-1/2 rounded-lg border-2 bg-slate-950 px-1.5 text-[11px] text-amber-300 sm:text-xs"
             style={{ ...style, borderColor: linkColor(i) }}
           >
             {label ?? '⋯'}
           </button>
         ) : label ? (
-          <span key={`l-${a}-${b}`} className="absolute -translate-x-1/2 -translate-y-1/2 rounded bg-slate-950 px-1 text-[10px] text-amber-300 sm:text-xs" style={style}>
+          <span key={`l-${a}-${b}`} className="absolute -translate-x-1/2 -translate-y-1/2 rounded bg-slate-950 px-1 text-[11px] text-amber-300 sm:text-xs" style={style}>
             {label}
           </span>
         ) : null;
@@ -88,7 +88,7 @@ export function TopologyCanvas({
           >
             {kindIcons[kindOf(n)]}
           </button>
-          <span className="mt-0.5 max-w-24 truncate rounded bg-slate-950/80 px-1 text-[10px] sm:text-xs">{n.label}</span>
+          <span className="mt-0.5 max-w-24 truncate rounded bg-slate-950/80 px-1 text-[11px] sm:text-xs">{n.label}</span>
           {extra?.(n)}
         </div>
       ))}
@@ -153,7 +153,7 @@ export function TopologyQuestionView({ q, onResult, locked }: QProps<TopologyQue
               disabled={locked}
               value={filled[n.id] ?? ''}
               onChange={(e) => setFilled((f) => ({ ...f, [n.id]: e.target.value as NodeKind }))}
-              className="mt-0.5 rounded bg-slate-800 text-[11px] sm:text-xs"
+              className="mt-0.5 rounded bg-slate-800 text-[12px] sm:text-xs"
               aria-label={`Gerät für ${n.label}`}
             >
               <option value="" disabled>wählen…</option>

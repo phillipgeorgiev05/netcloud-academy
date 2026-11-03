@@ -87,6 +87,14 @@ export function Feedback({ q, r }: { q: Question; r: Result }) {
           )}
         </>
       )}
+      {r.others && r.others.length > 0 && (
+        <details open={!r.correct}>
+          <summary className="cursor-pointer text-sm font-semibold text-slate-300">Warum die anderen Antworten falsch sind</summary>
+          <ul className="mt-1 list-disc space-y-1 pl-5 text-sm">
+            {r.others.map((w, i) => <li key={i}>{w}</li>)}
+          </ul>
+        </details>
+      )}
       {explanation && (
         <div>
           <div className="text-sm font-semibold text-cyan-300">Erklärung</div>

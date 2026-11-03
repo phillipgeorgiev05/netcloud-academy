@@ -55,7 +55,7 @@ function OsiEncapsulation() {
       steps={steps}
       render={(i) => (
         <div className="flex flex-col items-center gap-3">
-          <div className="flex w-full flex-row-reverse flex-wrap justify-center gap-1 text-[11px] font-semibold text-ink sm:text-xs">
+          <div className="flex w-full flex-row-reverse flex-wrap justify-center gap-1 text-[12px] font-semibold text-ink sm:text-xs">
             {i >= 3 && <span className={`rounded px-2 py-3 ${layerColors[3]}`}>FCS</span>}
             {parts.slice(0, Math.min(i + 1, 4)).map((p) => (
               <span key={p.label} className={`rounded px-2 py-3 transition-all ${p.color}`}>{p.label}</span>
@@ -116,7 +116,7 @@ function EthernetFrame() {
   ];
   return (
     <figure className="mt-3 overflow-x-auto rounded-xl bg-slate-950 p-3">
-      <div className="flex min-w-[32rem] gap-0.5 text-center text-[11px]">
+      <div className="flex min-w-[32rem] gap-0.5 text-center text-[12px]">
         {fields.map((f, i) => (
           <div key={f.name} className={`${f.w} rounded py-2 text-ink ${layerColors[i % 4]}`}>
             <div className="font-semibold">{f.name}</div>

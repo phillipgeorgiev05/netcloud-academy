@@ -58,7 +58,7 @@ function Header() {
   const { progress } = useProgress();
   const pl = playerLevel(progress.xp);
   const due = dueReviews(progress).length;
-  const badge = (cls: string) => due > 0 && <span className={`absolute rounded-full bg-rose-500 px-1.5 text-[10px] font-bold leading-4 text-snow ${cls}`}>{due}</span>;
+  const badge = (cls: string) => due > 0 && <span className={`absolute rounded-full bg-rose-500 px-1.5 text-[11px] font-bold leading-4 text-snow ${cls}`}>{due}</span>;
   return (
     <>
       <header className="print:hidden sticky top-0 z-40 border-b border-white/10 bg-slate-950/75 backdrop-blur-xl backdrop-saturate-150">
@@ -97,7 +97,7 @@ function Header() {
             key={t.to}
             to={t.to}
             end={t.to === '/'}
-            className={({ isActive }) => `relative flex flex-1 flex-col items-center gap-0.5 pb-1 pt-1.5 text-[10px] font-medium ${isActive ? 'text-cyan-400' : 'text-slate-500'}`}
+            className={({ isActive }) => `relative flex flex-1 flex-col items-center gap-0.5 pb-1 pt-1.5 text-[11px] font-medium ${isActive ? 'text-cyan-400' : 'text-slate-500'}`}
           >
             <Icon name={t.icon} className="h-6 w-6" />
             {t.label}

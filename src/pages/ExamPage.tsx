@@ -194,7 +194,7 @@ export function ExamPage() {
             className={`relative h-8 w-8 rounded-lg text-xs font-semibold ${i === idx ? 'ring-2 ring-white' : ''} ${answers[i] ? 'bg-cyan-500 text-snow' : 'bg-slate-800 text-slate-300'}`}
           >
             {i + 1}
-            {marked[i] && <span className="absolute -right-1 -top-1 text-[10px]">🚩</span>}
+            {marked[i] && <span className="absolute -right-1 -top-1 text-[11px]">🚩</span>}
           </button>
         ))}
       </nav>

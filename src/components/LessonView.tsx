@@ -87,7 +87,7 @@ function FlipCards({ c }: { c: Compare }) {
               className={`min-h-16 rounded-xl border-2 p-2 text-sm transition ${f ? 'border-emerald-500 bg-emerald-500/10' : 'border-slate-700 bg-slate-800'}`}
               aria-label={`${c.left}: ${l}. ${f ? `${c.right}: ${r}` : 'umdrehen'}`}
             >
-              <div className="text-[10px] uppercase tracking-wide text-slate-400">{f ? c.right : c.left}</div>
+              <div className="text-[11px] uppercase tracking-wide text-slate-400">{f ? c.right : c.left}</div>
               <div className="font-semibold">{f ? r : l}</div>
             </button>
           );

@@ -25,7 +25,10 @@ export function ChoiceQuestion({ q, onResult, locked }: QProps<SingleQuestion | 
         .map((id) => `„${text(id)}“: ${q.options.find((x) => x.id === id)!.whyWrong ?? FALLBACK_WRONG}`),
       ...(multi ? correctIds.filter((id) => !sel.includes(id)).map((id) => `Gefehlt hat: „${text(id)}“`) : []),
     ];
-    onResult({ correct, whyWrong, solution: correctIds.map(text).join(' · ') });
+    const others = q.options
+      .filter((o) => !correctIds.includes(o.id) && !sel.includes(o.id))
+      .map((o) => `„${o.text}“: ${o.whyWrong ?? FALLBACK_WRONG}`);
+    onResult({ correct, whyWrong, others, solution: correctIds.map(text).join(' · ') });
   };
 
   return (

@@ -115,6 +115,8 @@
 :root[data-theme="light"] .bg-slate-900 { box-shadow: 0 1px 2px rgb(0 0 0 / 0.04), 0 2px 12px rgb(0 0 0 / 0.04); }
 
 html, body, #root { min-height: 100%; }
+/* Etwas größere Grundschrift (17 px statt 16 px), skaliert alle rem-Größen mit und respektiert die Browser-Einstellung */
+html { font-size: 106.25%; }
 body {
   font-family: var(--font-sans);
   letter-spacing: -0.011em;

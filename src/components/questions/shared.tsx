@@ -8,6 +8,8 @@ export interface Result {
   solution: string;
   /** Warum die gewählten Antworten falsch waren. */
   whyWrong: string[];
+  /** Warum die übrigen, nicht gewählten Ablenker falsch sind (nur Auswahlfragen). */
+  others?: string[];
   /** Überschreibt q.explanation (z. B. generierter Rechenweg beim Subnetting). */
   explanation?: string;
 }

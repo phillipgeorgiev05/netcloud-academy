@@ -81,7 +81,7 @@ export function ProfilePage() {
                 <div className="text-2xl">{b.icon}</div>
                 <div className="text-sm font-semibold">{b.name}</div>
                 <div className="text-xs text-slate-400">{b.description}</div>
-                {got && <div className="mt-1 text-[10px] text-yellow-300">{got}</div>}
+                {got && <div className="mt-1 text-[11px] text-yellow-300">{got}</div>}
               </div>
             );
           })}
