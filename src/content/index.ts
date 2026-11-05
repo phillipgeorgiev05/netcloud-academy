@@ -1,9 +1,9 @@
 import type { Level, Track } from '../types/content';
 
-// Jede Datei unter basics/, network/, cloud/ und fisi/ exportiert `default` ein Level. Neue Dateien werden automatisch gefunden.
-const modules = import.meta.glob<{ default: Level }>(['./basics/*.ts', './network/*.ts', './cloud/*.ts', './fisi/*.ts'], { eager: true });
+// Jede Datei unter basics/, network/, cloud/, fisi/ und support/ exportiert `default` ein Level. Neue Dateien werden automatisch gefunden.
+const modules = import.meta.glob<{ default: Level }>(['./basics/*.ts', './network/*.ts', './cloud/*.ts', './fisi/*.ts', './support/*.ts'], { eager: true });
 
-const trackOrder: Track[] = ['basics', 'network', 'cloud', 'fisi'];
+const trackOrder: Track[] = ['basics', 'network', 'cloud', 'fisi', 'support'];
 
 export const levels: Level[] = Object.values(modules)
   .map((m) => m.default)
@@ -12,7 +12,7 @@ export const levels: Level[] = Object.values(modules)
 export const getLevel = (id: string) => levels.find((l) => l.id === id);
 
 /** Geplanter Lernpfad. Titel ohne passende Level-Datei erscheinen als „in Arbeit“.
- *  `basics`: Grundlagen aus Teil 0, die man vor diesem Teil kennen sollte (Level-IDs). */
+ *  `basics`: Vorwissen (Level-IDs, meist aus Teil 0), das man vor diesem Teil kennen sollte. */
 export const tracks: Record<Track, { title: string; subtitle: string; planned: string[]; basics?: string[] }> = {
   basics: {
     title: 'Teil 0 – Grundlagen',
@@ -50,6 +50,15 @@ export const tracks: Record<Track, { title: string; subtitle: string; planned: s
       'Windows Server & Active Directory', 'Gruppenrichtlinien & Berechtigungen', 'Linux-Administration',
       'Datensicherung & RAID', 'IT-Sicherheit & Datenschutz', 'Server-Hardware & USV', 'Skripte: PowerShell & Bash',
       'Projektmanagement & Kalkulation', 'Wirtschafts- und Sozialkunde', 'Arbeitsplatz einrichten (AP1)',
+    ],
+  },
+  support: {
+    title: 'Teil D – 2nd/3rd Level Support & Identity Management',
+    subtitle: 'Jobreif für den Hersteller-Support: AD, Fileserver, Exchange, Microsoft 365, IAM, PowerShell, SQL und Ticketarbeit',
+    basics: ['basics-06', 'fisi-01', 'fisi-02'],
+    planned: [
+      'Active Directory für den Support', 'Fileserver & effektive Rechte', 'Microsoft Exchange', 'Berechtigungen in Microsoft 365 & Entra ID',
+      'Identity & Access Management', 'PowerShell für den Support', 'SQL für Berechtigungsdaten', 'Professioneller 2nd/3rd Level Support',
     ],
   },
 };

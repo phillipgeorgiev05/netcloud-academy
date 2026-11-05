@@ -8,6 +8,7 @@ const shellNames: Record<Shell, string> = {
   linux: 'Linux (bash)',
   azcli: 'Azure CLI',
   awscli: 'AWS CLI',
+  sql: 'SQL (nur lesend)',
 };
 
 const norm = (s: string) => s.trim().replace(/\s+/g, ' ').toLowerCase();

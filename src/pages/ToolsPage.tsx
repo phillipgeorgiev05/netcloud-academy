@@ -3,7 +3,9 @@ import { Icon } from '../components/Icons';
 
 const tools = [
   { to: '/desk', icon: 'headset', tint: 'bg-emerald-500', title: 'Service Desk', text: 'Echte Support-Tickets lösen: Netzwerk, Cloud, allgemeine IT. Jeden Tag ein Ticket des Tages mit Bonus-XP.' },
-  { to: '/trainer', icon: 'calculator', tint: 'bg-amber-500', title: 'Trainer', text: 'Endlos-Übung mit Zufallsaufgaben: Subnetting, VLSM, IPv6, STP, NSG, IAM, RBAC, Kosten. Mit Bestzeit.' },
+  { to: '/support', icon: 'ticket', tint: 'bg-violet-500', title: 'Ticket-Simulator', text: '2nd/3rd Level Support beim IAM-Hersteller: Tickets von Kunden-Admins analysieren, lösen und dokumentieren, mit Bewertung. Teils auf Englisch.' },
+  { to: '/interview', icon: 'briefcase', tint: 'bg-sky-500', title: 'Bewerbungsmodus', text: 'Interviewfragen mit Musterantworten und Job-Readiness pro Anforderung (AD, Rechte, Troubleshooting, PowerShell/SQL, Englisch, IAM).' },
+  { to: '/trainer', icon: 'calculator', tint: 'bg-amber-500', title: 'Trainer', text: 'Endlos-Übung mit Zufallsaufgaben: Subnetting, VLSM, IPv6, STP, NSG, IAM, RBAC, effektive NTFS-Rechte, Kosten. Mit Bestzeit.' },
   { to: '/exam', icon: 'cap', tint: 'bg-cyan-500', title: 'Prüfungssimulation', text: 'Gemischte Fragen pro Zertifikat mit Zeitlimit und Auswertung nach Prüfungsbereichen.' },
   { to: '/glossary', icon: 'book', tint: 'bg-violet-500', title: 'Glossar', text: 'Alle Fachbegriffe Deutsch ↔ Englisch, mit Link zum Level.' },
   { to: '/decide', icon: 'compass', tint: 'bg-rose-500', title: 'Entscheidungshilfe', text: 'Welche Verbindung, welcher Load Balancer, welcher private Endpunkt? Azure und AWS im Vergleich.' },

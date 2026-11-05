@@ -5,6 +5,8 @@ import { certs } from './certs';
 import { glossary } from './glossary';
 import { decisionTree } from './decisions';
 import { tickets } from './tickets';
+import { supportTickets } from './support-tickets';
+import { interviewCards } from './interview';
 import type { Question } from '../types/content';
 
 const MIN_QUIZ = 15;
@@ -81,10 +83,10 @@ describe('Zusatzinhalte', () => {
     expect(ids).toContain('start');
   });
 
-  it('Grundlagen-Verweise der Tracks zeigen auf vorhandene Teil-0-Level', () => {
+  it('Vorwissen-Verweise der Tracks zeigen auf vorhandene Level', () => {
     const basicsIds = levels.filter((l) => l.track === 'basics').map((l) => l.id);
     expect(basicsIds.length).toBe(tracks.basics.planned.length);
-    const errs = Object.values(tracks).flatMap((t) => (t.basics ?? []).filter((id) => !basicsIds.includes(id)));
+    const errs = Object.values(tracks).flatMap((t) => (t.basics ?? []).filter((id) => !levels.some((l) => l.id === id)));
     expect(errs).toEqual([]);
   });
 });
@@ -110,10 +112,40 @@ describe('Service-Desk-Tickets', () => {
   }
 });
 
+describe('Ticket-Simulator (Teil D)', () => {
+  const areas = certs.jobready.domains.map((d) => d.id);
+  it('ca. 30 Tickets, eindeutige IDs, ein Teil auf Englisch, alle Bereiche', () => {
+    expect(supportTickets.length).toBeGreaterThanOrEqual(30);
+    expect(new Set(supportTickets.map((t) => t.id)).size).toBe(supportTickets.length);
+    expect(supportTickets.filter((t) => t.lang === 'en').length).toBeGreaterThanOrEqual(6);
+    expect(new Set(supportTickets.map((t) => t.difficulty))).toEqual(new Set([1, 2, 3]));
+  });
+  for (const t of supportTickets) {
+    it(`Ticket ${t.id} gültig`, () => {
+      expect(problems(t)).toEqual([]);
+      expect(t.title && t.requester && t.company && t.prompt && t.explanation && t.doc.model).toBeTruthy();
+      expect(areas).toContain(t.area);
+      expect(t.steps.length).toBeGreaterThanOrEqual(3);
+      expect(t.doc.points.length).toBeGreaterThanOrEqual(3);
+      t.doc.points.forEach((p) => expect(p.keywords.length).toBeGreaterThan(0));
+      if (t.learn) expect(levels.some((l) => l.id === t.learn)).toBe(true);
+    });
+  }
+});
+
+describe('Bewerbungsmodus', () => {
+  const areas = certs.jobready.domains.map((d) => d.id);
+  it('Karten: eindeutige IDs, jeder Bereich mit mind. 5 Karten', () => {
+    expect(new Set(interviewCards.map((c) => c.id)).size).toBe(interviewCards.length);
+    interviewCards.forEach((c) => expect(areas).toContain(c.area));
+    for (const a of areas) expect(interviewCards.filter((c) => c.area === a || (a === 'english' && c.lang === 'en')).length).toBeGreaterThanOrEqual(5);
+  });
+});
+
 describe('Inhalte', () => {
   it('Level-IDs eindeutig, Reihenfolge pro Track lückenlos', () => {
     expect(new Set(levels.map((l) => l.id)).size).toBe(levels.length);
-    for (const track of ['basics', 'network', 'cloud', 'fisi'] as const) {
+    for (const track of ['basics', 'network', 'cloud', 'fisi', 'support'] as const) {
       const orders = levels.filter((l) => l.track === track).map((l) => l.order);
       expect(orders).toEqual(orders.map((_, i) => i + 1));
     }

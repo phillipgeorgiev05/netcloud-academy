@@ -2,7 +2,10 @@ import { tablesOf } from './sheet';
 import { chmodOf, lsdouWinner } from './games';
 import { describe, expect, it } from 'vitest';
 import { broadcastOf, generateSubnetProblem, networkOf, prefixForHosts, prefixToMask, subnetAnswerMatches, usableHosts } from './subnet';
-import { addDays, emptyProgress, finishBoss, finishQuiz, isPassed, levelProgress, parseImport, playerLevel, recordAnswer, dailyXp, trackDaily, lastWeek, levelStars, emptyLevel, recordTicket, ticketOfDay } from './progress';
+import { addDays, emptyProgress, finishBoss, finishQuiz, isPassed, levelProgress, parseImport, playerLevel, recordAnswer, dailyXp, trackDaily, lastWeek, levelStars, emptyLevel, recordTicket, ticketOfDay, recordSupportTicket, markInterviewCard, XP } from './progress';
+import { docHits, readiness, ticketScore } from './support';
+import { effectiveAccess } from './generators';
+import type { InterviewCard, Level, SupportTicket } from '../types/content';
 import type { SubnetTask } from '../types/content';
 
 describe('subnet', () => {
@@ -157,5 +160,55 @@ describe('Mini-Spiele', () => {
     expect(lsdouWinner({ L: { value: 'blau' }, S: none, D: none, OU: none })).toEqual({ value: 'blau', from: 'L' });
     expect(lsdouWinner({ L: none, S: { value: 'gelb', enforced: true }, D: { value: 'rot', enforced: true }, OU: { value: 'grün' } })).toEqual({ value: 'gelb', from: 'S' });
     expect(lsdouWinner({ L: none, S: none, D: none, OU: none })).toEqual({ value: null, from: null });
+  });
+});
+
+describe('Teil D: Simulator, Interview, Readiness', () => {
+  it('Dokumentation und Bewertung', () => {
+    const points = [{ label: 'Ursache', keywords: ['token', 'kerberos'] }, { label: 'Lösung', keywords: ['klist purge'] }];
+    expect(docHits('Ursache: altes Kerberos-Ticket. Lösung: KLIST  PURGE', points)).toEqual([true, true]);
+    expect(docHits('neu gestartet', points)).toEqual([false, false]);
+    expect(ticketScore(4, 0, [true, true])).toBe(100);
+    expect(ticketScore(4, 1, [true, false])).toBe(65);
+    expect(ticketScore(4, 4, [false])).toBe(0);
+  });
+
+  it('XP nur beim ersten Lösen voll, beste Bewertung bleibt', () => {
+    let p = recordSupportTicket(emptyProgress(), 't1', 50);
+    expect(p.xp).toBe(0);
+    p = recordSupportTicket(p, 't1', 80);
+    expect(p.xp).toBe(XP.ticket);
+    p = recordSupportTicket(p, 't1', 75);
+    expect(p.xp).toBe(XP.ticket + XP.repeat);
+    expect(p.support.t1).toBe(80);
+    p = markInterviewCard(p, 'c1', true);
+    p = markInterviewCard(p, 'c1', true);
+    expect(p.xp).toBe(XP.ticket + XP.repeat + XP.practice);
+    expect(markInterviewCard(p, 'c1', false).interview).toEqual({});
+  });
+
+  it('Readiness gewichtet Fragen, Tickets, Karten und zählt Englisch doppelt', () => {
+    const level = { id: 'sup-x', certs: ['jobready'], domains: { jobready: 'infra' }, quiz: [{ id: 'q1' }, { id: 'q2', domain: 'english' }], boss: { questions: [] } } as unknown as Level;
+    const t = { id: 't1', area: 'infra', lang: 'en' } as SupportTicket;
+    const c = { id: 'c1', area: 'iam', lang: 'de' } as InterviewCard;
+    let p = emptyProgress();
+    p = { ...p, solved: { 'sup-x/q1': 1 }, support: { t1: 90 } };
+    const r = readiness(p, [level], [t], [c], ['infra', 'english', 'iam', 'perm']);
+    expect(r[0].value).toBeCloseTo(1); // Frage + Ticket gelöst, keine Karten
+    expect(r[1].value).toBeCloseTo(0.3 / 0.8); // englische Frage offen, englisches Ticket gelöst
+    expect(r[2].value).toBe(0);
+    expect(r[3]).toEqual({ area: 'perm', value: 0, parts: [] });
+  });
+
+  it('effektive Rechte: Netzwerk = strengeres, Verweigern gewinnt, lokal nur NTFS', () => {
+    const acl = [
+      { group: 'Jeder', share: 1, ntfs: 0 },
+      { group: 'RW', share: 0, ntfs: 2 },
+      { group: 'Prakt', share: 0, ntfs: 0, denyAll: true },
+    ];
+    expect(effectiveAccess(acl, ['Jeder', 'RW'], true).effective).toBe(1);
+    expect(effectiveAccess(acl, ['Jeder', 'RW'], false).effective).toBe(2);
+    expect(effectiveAccess(acl, ['Jeder', 'RW', 'Prakt'], false).effective).toBe(0);
+    expect(effectiveAccess(acl, ['Jeder'], true).effective).toBe(0);
   });
 });

@@ -390,6 +390,44 @@ function stp(rng: Rng): GenProblem {
   };
 }
 
+// ---------- NTFS + Freigabe: effektive Rechte ----------
+export const RIGHTS = ['Kein Zugriff', 'Lesen', 'Ändern', 'Vollzugriff'] as const;
+export interface AclEntry { group: string; share: number; ntfs: number; denyAll?: boolean }
+
+/** Effektives Recht (Index in RIGHTS): Rechte mehrerer Gruppen addieren sich, NTFS-Verweigern Vollzugriff sperrt alles,
+ *  übers Netzwerk gilt das strengere aus Freigabe und NTFS, lokal nur NTFS. Fehlende Gruppe = 0. */
+export function effectiveAccess(entries: AclEntry[], memberOf: string[], network: boolean) {
+  const mine = entries.filter((e) => memberOf.includes(e.group));
+  const ntfs = mine.some((e) => e.denyAll) ? 0 : Math.max(0, ...mine.map((e) => e.ntfs));
+  const share = Math.max(0, ...mine.map((e) => e.share));
+  return { share, ntfs, effective: network ? Math.min(share, ntfs) : ntfs };
+}
+
+function ntfs(rng: Rng): GenProblem {
+  const groups = ['Jeder', 'GG_Vertrieb', 'DL_Angebote_RW', 'DL_Angebote_R', 'GG_Praktikanten'];
+  const entries: AclEntry[] = [
+    { group: 'Jeder', share: pick(rng, [1, 2, 3]), ntfs: 0 },
+    { group: 'DL_Angebote_RW', share: 0, ntfs: pick(rng, [2, 3]) },
+    { group: 'DL_Angebote_R', share: 0, ntfs: 1 },
+  ];
+  if (rng() < 0.35) entries.push({ group: 'GG_Praktikanten', share: 0, ntfs: 0, denyAll: true });
+  const memberOf = ['Jeder', ...groups.slice(1).filter(() => rng() < 0.5)];
+  const network = rng() < 0.75;
+  const r = effectiveAccess(entries, memberOf, network);
+  const shareLines = entries.filter((e) => e.share > 0).map((e) => `| ${e.group} | ${RIGHTS[e.share]} |`).join('\n');
+  const ntfsLines = entries.filter((e) => e.ntfs > 0 || e.denyAll).map((e) => `| ${e.group} | ${e.denyAll ? 'Verweigern: Vollzugriff' : `Zulassen: ${RIGHTS[e.ntfs]}`} |`).join('\n');
+  return {
+    prompt: `Ordner \`D:\\Daten\\Angebote\`, freigegeben als \`\\\\FS01\\Angebote\`.\n\n**Freigabe:**\n| Gruppe | Recht |\n|---|---|\n${shareLines}\n\n**NTFS (explizit am Ordner):**\n| Gruppe | Eintrag |\n|---|---|\n${ntfsLines}\n\nMax ist Mitglied in: **${memberOf.join(', ')}**. Er greift **${network ? 'über das Netzwerk' : 'lokal am Server (RDP)'}** zu. Was darf er effektiv?`,
+    fields: [{ label: 'Effektives Recht', answer: RIGHTS[r.effective], options: [...RIGHTS] }],
+    explanation: [
+      'Rechte mehrerer Gruppen **addieren** sich: Es zählt das höchste Zulassen. Ein **Verweigern** schlägt aber jedes Zulassen auf derselben Ebene.',
+      'Über das **Netzwerk** gilt das **strengere** aus Freigabe und NTFS. **Lokal** wirkt die Freigabe nicht, nur NTFS.',
+      `Hier: Freigabe ${network ? `= ${RIGHTS[r.share]}` : 'spielt keine Rolle'}, NTFS = ${RIGHTS[r.ntfs]}${entries.some((e) => e.denyAll && memberOf.includes(e.group)) ? ' (Verweigern über GG_Praktikanten)' : ''}. Effektiv: **${RIGHTS[r.effective]}**.`,
+      'Im echten System prüfst du das unter Eigenschaften → Sicherheit → Erweitert → **Effektiver Zugriff**.',
+    ].join('\n\n'),
+  };
+}
+
 export function generate(id: GeneratorId, rng: Rng = Math.random): GenProblem {
   if (id === 'vlsm') return vlsm(rng);
   if (id.startsWith('ipv6-')) return ipv6(id, rng);
@@ -397,6 +435,7 @@ export function generate(id: GeneratorId, rng: Rng = Math.random): GenProblem {
   if (id === 'nsg') return nsg(rng);
   if (id === 'iam') return iam(rng);
   if (id === 'rbac') return rbac(rng);
+  if (id === 'ntfs') return ntfs(rng);
   return stp(rng);
 }
 
@@ -415,4 +454,5 @@ export const generatorNames: Record<GeneratorId, string> = {
   iam: 'IAM-Policy-Auswertung',
   rbac: 'RBAC & Sperren',
   stp: 'STP-Simulator',
+  ntfs: 'Effektive Rechte (NTFS + Freigabe)',
 };
