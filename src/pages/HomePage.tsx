@@ -168,7 +168,7 @@ function TrackSection({ track, current }: { track: Track; current?: string }) {
   );
 }
 
-/** Verweis auf Teil 0: Welche Grundlagen braucht dieser Teil, und sitzen sie schon? */
+/** Verweis auf Vorwissen (meist Teil 0): Welche Grundlagen braucht dieser Teil, und sitzen sie schon? */
 function BasicsRefresher({ ids }: { ids: string[] }) {
   const { progress } = useProgress();
   const items = ids.map(getLevel).filter((l): l is Level => !!l);
@@ -176,7 +176,7 @@ function BasicsRefresher({ ids }: { ids: string[] }) {
   return (
     <div className="mb-4 rounded-2xl bg-slate-900 p-4">
       <div className="mb-2 flex items-baseline justify-between gap-2">
-        <span className="text-sm font-semibold">Vorwissen aus Teil 0</span>
+        <span className="text-sm font-semibold">Vorwissen{ids.every((id) => id.startsWith('basics-')) ? ' aus Teil 0' : ''}</span>
         <span className="text-xs text-slate-400">{open === 0 ? 'alles sitzt' : `${open} offen`}</span>
       </div>
       <div className="flex flex-wrap gap-2">

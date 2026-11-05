@@ -32,6 +32,9 @@ src/
     network/NN-*.ts        Teil A, ein Level pro Datei
     cloud/NN-*.ts          Teil B, ein Level pro Datei
     fisi/NN-*.ts           Teil C (Fachinformatiker SI, IHK), ein Level pro Datei
+    support/NN-*.ts        Teil D (2nd/3rd Level Support & IAM, Track `support`, Zertifikats-Fokus `jobready`)
+    support-tickets.ts     Ticket-Simulator Teil D (/support): Kettentickets + Dokumentation, generisches IAM-Produkt
+    interview.ts           Bewerbungsmodus (/interview): Interviewkarten je Job-Readiness-Bereich
     index.ts               lädt Level automatisch (import.meta.glob), geplanter Lernpfad (`tracks`)
     certs.ts               Zertifikate, Prüfungsnummern, Prüfungsbereiche (domains)
     badges.ts              Abzeichen inkl. Bedingung
@@ -45,7 +48,7 @@ src/
     ProgressContext.tsx    React-Context + localStorage-Persistenz + Badge-Erkennung
     subnet.ts              IPv4-Subnetz-Mathe + Generator für Fragetyp `subnet`
     ipv6.ts                IPv6 parsen, kürzen (RFC 5952), EUI-64
-    generators.ts          Zufallsaufgaben für Fragetyp `generated` und Trainer (VLSM, IPv6, Kosten, NSG, IAM, RBAC, STP)
+    generators.ts          Zufallsaufgaben für Fragetyp `generated` und Trainer (VLSM, IPv6, Kosten, NSG, IAM, RBAC, STP, NTFS)
     dev.ts                 Testmodus-Schalter
     reminder.ts            Streak-Erinnerung (Notification API)
     games.ts               reine Logik der Mini-Spiele (chmod, LSDOU)

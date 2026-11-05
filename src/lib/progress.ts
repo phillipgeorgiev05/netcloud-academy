@@ -42,6 +42,8 @@ export interface Progress {
   desk: Record<string, 1>; // Service-Desk-Ticket einmal gelöst -> danach nur noch XP.repeat
   deskDaily: string; // Tag, an dem der Bonus für das Ticket des Tages vergeben wurde
   history: Record<string, number>; // YYYY-MM-DD -> an dem Tag verdiente XP (Wochenrückblick)
+  support: Record<string, number>; // Ticket-Simulator: beste Bewertung 0–100 pro Ticket
+  interview: Record<string, 1>; // Bewerbungsmodus: Karte als „konnte ich“ markiert
 }
 
 export const emptyProgress = (): Progress => ({
@@ -64,6 +66,8 @@ export const emptyProgress = (): Progress => ({
   desk: {},
   deskDaily: '',
   history: {},
+  support: {},
+  interview: {},
 });
 
 export const emptyLevel = (): LevelProgress => ({
@@ -190,6 +194,32 @@ export function recordTicket(p: Progress, ticketId: string, correct: boolean, is
 export function ticketOfDay<T>(tickets: T[], now = today()): T {
   const [y, m, d] = now.split('-').map(Number);
   return tickets[Math.floor(Date.UTC(y, m - 1, d) / 86_400_000) % tickets.length];
+}
+
+/** Ab dieser Bewertung (0–100) gilt ein Simulator-Ticket als gelöst. */
+export const SUPPORT_PASS = 70;
+
+/** Ticket-Simulator abgeschlossen. XP wie beim Service Desk: erstmals gelöst XP.ticket, danach XP.repeat. */
+export function recordSupportTicket(p: Progress, ticketId: string, score: number, now = today()): Progress {
+  const before = p.support[ticketId] ?? 0;
+  const solved = score >= SUPPORT_PASS;
+  const gain = !solved ? 0 : before >= SUPPORT_PASS ? XP.repeat : XP.ticket;
+  return {
+    ...p,
+    xp: p.xp + gain,
+    answered: p.answered + 1,
+    support: { ...p.support, [ticketId]: Math.max(before, score) },
+    streak: touchStreak(p, now),
+  };
+}
+
+/** Interview-Karte als gekonnt markieren oder zurücksetzen. Gibt einmalig XP.practice. */
+export function markInterviewCard(p: Progress, cardId: string, known: boolean): Progress {
+  const interview = { ...p.interview };
+  if (known) interview[cardId] = 1;
+  else delete interview[cardId];
+  const gain = known && !p.interview[cardId] ? XP.practice : 0;
+  return { ...p, xp: p.xp + gain, interview };
 }
 
 export function recordTrainerTime(p: Progress, generator: string, ms: number): Progress {

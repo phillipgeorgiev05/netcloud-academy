@@ -1,7 +1,7 @@
 // Datenmodell für alle Inhalte unter src/content/. Neue Fragen = nur Daten, kein UI-Code.
 
-export type CertId = 'ccna' | 'netplus' | 'az900' | 'az104' | 'aws-saa' | 'fisi';
-export type Track = 'basics' | 'network' | 'cloud' | 'fisi';
+export type CertId = 'ccna' | 'netplus' | 'az900' | 'az104' | 'aws-saa' | 'fisi' | 'jobready';
+export type Track = 'basics' | 'network' | 'cloud' | 'fisi' | 'support';
 
 export interface Cert {
   id: CertId;
@@ -121,7 +121,8 @@ export type GeneratorId =
   | 'nsg'
   | 'iam'
   | 'rbac'
-  | 'stp';
+  | 'stp'
+  | 'ntfs';
 
 export interface GeneratedQuestion extends Omit<QBase, 'prompt' | 'explanation'> {
   type: 'generated';
@@ -130,7 +131,7 @@ export interface GeneratedQuestion extends Omit<QBase, 'prompt' | 'explanation'>
   explanation?: string;
 }
 
-export type Shell = 'ios' | 'windows' | 'linux' | 'azcli' | 'awscli';
+export type Shell = 'ios' | 'windows' | 'linux' | 'azcli' | 'awscli' | 'sql';
 
 export interface CliQuestion extends QBase {
   type: 'cli';
@@ -200,6 +201,38 @@ export interface Ticket extends ChainQuestion {
   reporter: string;
   /** Level zum Nachlernen */
   learn?: string;
+}
+
+/** Bereiche der Job-Readiness (= Cert.domains von 'jobready'). */
+export type ReadinessArea = 'infra' | 'perm' | 'troubleshoot' | 'scripting' | 'english' | 'iam';
+
+/** Ticket im Simulator (Teil D): Kunden-Admin meldet sich beim Hersteller-Support eines generischen IAM-Produkts.
+ *  Ablauf: Kettenschritte (Rückfragen, Prüfschritte, Logs) → Ursache → Lösung, danach Freitext-Dokumentation. */
+export interface SupportTicket extends ChainQuestion {
+  title: string;
+  /** Fiktive Kundenfirma */
+  company: string;
+  /** Meldender Kunden-Admin (fiktiv) */
+  requester: string;
+  priority: 1 | 2 | 3 | 4;
+  lang: 'de' | 'en';
+  area: ReadinessArea;
+  /** Level zum Nachlernen */
+  learn?: string;
+  /** Pflichtpunkte der Dokumentation: zählt als getroffen, wenn ein Stichwort im Text vorkommt. */
+  doc: { points: { label: string; keywords: string[] }[]; model: string };
+}
+
+/** Bewerbungsmodus: Interviewfrage mit Musterantwort. */
+export interface InterviewCard {
+  id: string;
+  area: ReadinessArea;
+  lang: 'de' | 'en';
+  q: string;
+  /** Musterantwort (RichText) */
+  a: string;
+  /** Worauf Interviewer achten */
+  tip?: string;
 }
 
 export type Question =

@@ -132,4 +132,6 @@ Teil B: B6 Identität & Sicherheit · B7 Speicher & Datenbanken · B8 Container 
 
 Teil C (Fachinformatiker/in Systemintegration, IHK AP1/AP2): C1 Windows Server & Active Directory ✓ · C2 Gruppenrichtlinien & Berechtigungen ✓ · C3 Linux-Administration ✓ · C4 Datensicherung & RAID · C5 IT-Sicherheit & Datenschutz · C6 Server-Hardware & USV · C7 Skripte: PowerShell & Bash · C8 Projektmanagement & Kalkulation · C9 Wirtschafts- und Sozialkunde · C10 Arbeitsplatz einrichten (AP1). Passende Level aus Teil A und B (A1–A9, B1–B2) sind zusätzlich für den Zertifikats-Fokus „FISI“ markiert.
 
+Teil D (2nd/3rd Level Support & Identity Management, Zertifikats-Fokus „Job-Readiness“): D1 Active Directory für den Support ✓ · D2 Fileserver & NTFS ✓ · D3 Exchange ✓ · D4 Berechtigungen in Microsoft 365 & Entra ID ✓ · D5 Identity & Access Management ✓ · D6 PowerShell ✓ · D7 SQL ✓ · D8 Professioneller 2nd/3rd Level Support ✓. Dazu Ticket-Simulator (`/support`, 32 Tickets, teils Englisch) und Bewerbungsmodus (`/interview`) mit Job-Readiness je Anforderung.
+
 Ergänzend: der **Service Desk** (Seite `/desk`) übt das Gelernte an echten Support-Tickets.

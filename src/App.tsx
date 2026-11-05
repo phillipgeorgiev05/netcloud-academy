@@ -15,8 +15,10 @@ import { DecidePage } from './pages/DecidePage';
 import { DeskPage } from './pages/DeskPage';
 import { ExamPage } from './pages/ExamPage';
 import { GlossaryPage } from './pages/GlossaryPage';
+import { InterviewPage } from './pages/InterviewPage';
 import { ReviewPage } from './pages/ReviewPage';
 import { SheetPage } from './pages/SheetPage';
+import { SupportPage } from './pages/SupportPage';
 import { ToolsPage } from './pages/ToolsPage';
 import { TrainerPage } from './pages/TrainerPage';
 
@@ -37,6 +39,8 @@ export function App() {
             <Route path="/glossary" element={<GlossaryPage />} />
             <Route path="/decide" element={<DecidePage />} />
             <Route path="/desk" element={<DeskPage />} />
+            <Route path="/support" element={<SupportPage />} />
+            <Route path="/interview" element={<InterviewPage />} />
             <Route path="/sheet/:id" element={<SheetPage />} />
             <Route path="*" element={<HomePage />} />
           </Routes>

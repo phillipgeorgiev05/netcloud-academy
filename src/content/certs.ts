@@ -59,4 +59,16 @@ export const certs: Record<CertId, Cert> = {
       { id: 'ap2-wiso', name: 'AP2 – Wirtschafts- und Sozialkunde' },
     ],
   },
+  jobready: {
+    id: 'jobready', name: 'Job-Readiness IT-Support & IAM', exam: 'Interview-Check', vendor: 'Bewerbung',
+    // Kein Zertifikat: Anforderungen typischer Stellen „IT Support Specialist“ bei IAM-Softwareherstellern.
+    domains: [
+      { id: 'infra', name: 'AD, Exchange und Fileserver' },
+      { id: 'perm', name: 'Berechtigungsmanagement' },
+      { id: 'troubleshoot', name: '2nd/3rd Level Troubleshooting' },
+      { id: 'scripting', name: 'PowerShell und SQL' },
+      { id: 'english', name: 'Technisches Englisch' },
+      { id: 'iam', name: 'IAM-Wissen' },
+    ],
+  },
 };

@@ -1,6 +1,6 @@
 import type { Badge, Level } from '../types/content';
 import { tracks } from './index';
-import { isPassed, levelProgress, type Progress } from '../lib/progress';
+import { isPassed, levelProgress, SUPPORT_PASS, type Progress } from '../lib/progress';
 
 export interface BadgeDef extends Badge {
   earned: (p: Progress, levels: Level[]) => boolean;
@@ -28,4 +28,6 @@ export const badges: BadgeDef[] = [
   { id: 'cloud-complete', icon: '🚀', name: 'Cloud-Engineer', description: `Alle ${tracks.cloud.planned.length} Cloud-Level bestanden`, earned: (p, ls) => passedCount(p, ls, 'cloud') >= tracks.cloud.planned.length },
   { id: 'basics-complete', icon: '🌱', name: 'Fundament steht', description: `Alle ${tracks.basics.planned.length} Level von Teil 0 bestanden`, earned: (p, ls) => passedCount(p, ls, 'basics') >= tracks.basics.planned.length },
   { id: 'fisi-complete', icon: '🖥️', name: 'Systemintegrator', description: `Alle ${tracks.fisi.planned.length} Level von Teil C bestanden`, earned: (p, ls) => passedCount(p, ls, 'fisi') >= tracks.fisi.planned.length },
+  { id: 'support-complete', icon: '🔐', name: 'Identity-Profi', description: `Alle ${tracks.support.planned.length} Level von Teil D bestanden`, earned: (p, ls) => passedCount(p, ls, 'support') >= tracks.support.planned.length },
+  { id: 'simulator-10', icon: '🎫', name: '2nd Level', description: '10 Tickets im Ticket-Simulator gelöst', earned: (p) => Object.values(p.support).filter((s) => s >= SUPPORT_PASS).length >= 10 },
 ];
